@@ -47,30 +47,11 @@ async function submitMessage() {
         // Replace 'كورال' with 'منوفي' and 'coral' with 'Menoufy'
         botMessage = botMessage.replace(/كورال/gi, 'مينو').replace(/coral/gi, 'Meno');
         botMessage = botMessage.replace(/cohere/gi, 'scopead').replace(/كوهير/gi, 'سكوب');
+
         // Hide typing indicator
         typingIndicator.style.display = "none";
 
-        // Split the response into words
-        const words = botMessage.split(" ");
-
-        // Create a paragraph element for the bot's message
-        const messageDiv = document.createElement("div");
-        messageDiv.classList.add("message");
-        messageDiv.classList.add("bot");
-
-        const p = document.createElement("p");
-        messageDiv.appendChild(p);
-        messages.appendChild(messageDiv);
-
-        // Display each word gradually
-        for (let i = 0; i < words.length; i++) {
-            p.textContent += words[i] + " ";
-            await new Promise(resolve => setTimeout(resolve, 300)); // Delay between each word
-        }
-
-        messages.scrollTop = messages.scrollHeight;
-
-        input.value = ""; // Clear the input field after sending
+        addMessage(botMessage, "bot");
     }
 }
 
@@ -80,8 +61,25 @@ function addMessage(text, sender) {
     messageDiv.classList.add(sender);
 
     const p = document.createElement("p");
-    p.innerHTML = text;
+    p.textContent = text;
     messageDiv.appendChild(p);
     messages.appendChild(messageDiv);
     messages.scrollTop = messages.scrollHeight;
+}
+
+// دالة لقراءة آخر رسالة في الشات بوكس
+function readLastMessage() {
+    const messagesElements = messages.getElementsByClassName("message");
+    const lastMessage = messagesElements[messagesElements.length - 1];
+    if (lastMessage) {
+        const textToRead = lastMessage.textContent || lastMessage.innerText;
+        speak(textToRead);
+    }
+}
+
+// دالة لتحويل النص إلى كلام
+function speak(text) {
+    const msg = new SpeechSynthesisUtterance(text);
+    msg.lang = 'ar'; // تحديد اللغة العربية
+    window.speechSynthesis.speak(msg);
 }
