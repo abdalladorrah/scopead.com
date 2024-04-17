@@ -87,7 +87,7 @@ body {
 #submit, #read-last-message {
   border: none;
   color: #fff;
-  padding: 5px 15px;
+  padding: 5px 5px;
   border-radius: 10px;
   margin-left: 10px;
   cursor: pointer;
