@@ -69,8 +69,8 @@ function addMessage(text, sender) {
     p.textContent = text;
     messageDiv.appendChild(p);
     
-    // Append the message to the beginning of the messages container
-    messages.insertBefore(messageDiv, messages.firstChild);
+    // Append the message to the end of the messages container
+    messages.appendChild(messageDiv);
 
     messages.scrollTop = messages.scrollHeight;
 }
@@ -93,10 +93,6 @@ function speak(text) {
 }
 
 function writeMessageWordByWord(message) {
-    // Clear previous bot messages
-    const botMessages = messages.querySelectorAll('.bot');
-    botMessages.forEach(msg => msg.remove());
-
     // Create a new message element for the bot's message
     const messageDiv = document.createElement("div");
     messageDiv.classList.add("message");
@@ -114,8 +110,7 @@ function writeMessageWordByWord(message) {
             i++;
         } else {
             clearInterval(interval);
+            messages.scrollTop = messages.scrollHeight;
         }
     }, 300); // Adjust the speed as needed
-
-    messages.scrollTop = messages.scrollHeight;
 }
