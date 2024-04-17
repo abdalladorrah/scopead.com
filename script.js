@@ -50,7 +50,25 @@ async function submitMessage() {
         // Hide typing indicator
         typingIndicator.style.display = "none";
 
-        addMessage(`${coralName}: ${botMessage}`, "bot");
+        // Split the response into words
+        const words = botMessage.split(" ");
+
+        // Create a paragraph element for the bot's message
+        const messageDiv = document.createElement("div");
+        messageDiv.classList.add("message");
+        messageDiv.classList.add("bot");
+
+        const p = document.createElement("p");
+        messageDiv.appendChild(p);
+        messages.appendChild(messageDiv);
+
+        // Display each word gradually
+        for (let i = 0; i < words.length; i++) {
+            p.textContent += words[i] + " ";
+            await new Promise(resolve => setTimeout(resolve, 300)); // Delay between each word
+        }
+
+        messages.scrollTop = messages.scrollHeight;
 
         input.value = ""; // Clear the input field after sending
     }
