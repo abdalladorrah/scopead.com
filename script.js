@@ -46,7 +46,7 @@ async function submitMessage() {
 
         // Replace 'كورال' with 'منوفي' and 'coral' with 'Menoufy'
         botMessage = botMessage.replace(/كورال/gi, 'مينو').replace(/coral/gi, 'Meno');
-
+        botMessage = botMessage.replace(/cohere/gi, 'scopead').replace(/كوهير/gi, 'سكوب');
         // Hide typing indicator
         typingIndicator.style.display = "none";
 
