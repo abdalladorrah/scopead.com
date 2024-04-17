@@ -63,22 +63,15 @@
           </ul>
           <label for="menu-btn" class="btn menu-btn"><i class="fas fa-bars"></i></label>
         </div>
-      </nav>
-      
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meno Agent</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
+    </nav>
     <div id="chat-container">
         <div id="messages"></div>
         <div id="input-container">
             <div id="typing-indicator" style="display: none;">typing...</div>
             <input id="input" type="text" placeholder="Type your message...">
             <button id="submit">»</button>
+            <!-- زر جديد لقراءة آخر رسالة -->
+            <button id="read-last-message" onclick="readLastMessage()">اقرأ الرسالة الأخيرة</button>
         </div>
     </div>
 
