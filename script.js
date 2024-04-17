@@ -33,9 +33,6 @@ async function submitMessage() {
     const userInput = input.value.trim();
 
     if (userInput !== "") {
-        addMessage(userInput, "user");
-        input.value = ""; // Clear the input field after sending the message
-
         // Show typing indicator
         typingIndicator.style.display = "block";
 
@@ -52,8 +49,8 @@ async function submitMessage() {
         // Hide typing indicator
         typingIndicator.style.display = "none";
 
-        // Add the bot's message
-        addMessage(botMessage, "bot");
+        // Clear the input field after sending the message
+        input.value = "";
 
         // Write the bot's message word by word
         writeMessageWordByWord(botMessage);
@@ -90,7 +87,11 @@ function speak(text) {
 }
 
 function writeMessageWordByWord(message) {
-    const words = message.split(" ");
+    // Clear previous bot messages
+    const botMessages = messages.querySelectorAll('.bot');
+    botMessages.forEach(msg => msg.remove());
+
+    // Create a new message element for the bot's message
     const messageDiv = document.createElement("div");
     messageDiv.classList.add("message");
     messageDiv.classList.add("bot");
@@ -100,6 +101,7 @@ function writeMessageWordByWord(message) {
     messages.appendChild(messageDiv);
 
     let i = 0;
+    const words = message.split(" ");
     const interval = setInterval(() => {
         if (i < words.length) {
             p.textContent += words[i] + " ";
