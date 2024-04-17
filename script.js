@@ -54,6 +54,9 @@ async function submitMessage() {
 
         // Write the bot's message word by word
         writeMessageWordByWord(botMessage);
+        
+        // Display the user's message in the chat box
+        addMessage(userInput, 'user');
     }
 }
 
