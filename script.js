@@ -3,7 +3,7 @@ const input = document.getElementById("input");
 const submit = document.getElementById("submit");
 const typingIndicator = document.getElementById("typing-indicator");
 
-const coralPersonality = "friendly"; // يمكنك تغيير هذه القيمة إلى "professional" أو "witty" أو أي شخصية أخرى مدعومة
+const coralPersonality = "creative"; // يمكنك تغيير هذه القيمة إلى "professional" أو "witty" أو أي شخصية أخرى مدعومة
 const coralName = "Meno";
 
 async function sendMessageToCoral(message, apiKey) {
