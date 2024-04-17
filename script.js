@@ -33,6 +33,9 @@ async function submitMessage() {
     const userInput = input.value.trim();
 
     if (userInput !== "") {
+        // Display the user's message in the chat box
+        addMessage(userInput, 'user');
+
         // Show typing indicator
         typingIndicator.style.display = "block";
 
@@ -54,9 +57,6 @@ async function submitMessage() {
 
         // Write the bot's message word by word
         writeMessageWordByWord(botMessage);
-        
-        // Display the user's message in the chat box
-        addMessage(userInput, 'user');
     }
 }
 
@@ -68,7 +68,10 @@ function addMessage(text, sender) {
     const p = document.createElement("p");
     p.textContent = text;
     messageDiv.appendChild(p);
-    messages.appendChild(messageDiv);
+    
+    // Append the message to the beginning of the messages container
+    messages.insertBefore(messageDiv, messages.firstChild);
+
     messages.scrollTop = messages.scrollHeight;
 }
 
