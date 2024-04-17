@@ -34,6 +34,7 @@ async function submitMessage() {
 
     if (userInput !== "") {
         addMessage(userInput, "user");
+        input.value = ""; // Clear the input field after sending the message
 
         // Show typing indicator
         typingIndicator.style.display = "block";
@@ -51,7 +52,11 @@ async function submitMessage() {
         // Hide typing indicator
         typingIndicator.style.display = "none";
 
+        // Add the bot's message
         addMessage(botMessage, "bot");
+
+        // Write the bot's message word by word
+        writeMessageWordByWord(botMessage);
     }
 }
 
@@ -82,4 +87,27 @@ function speak(text) {
     const msg = new SpeechSynthesisUtterance(text);
     msg.lang = 'ar'; // تحديد اللغة العربية
     window.speechSynthesis.speak(msg);
+}
+
+function writeMessageWordByWord(message) {
+    const words = message.split(" ");
+    const messageDiv = document.createElement("div");
+    messageDiv.classList.add("message");
+    messageDiv.classList.add("bot");
+
+    const p = document.createElement("p");
+    messageDiv.appendChild(p);
+    messages.appendChild(messageDiv);
+
+    let i = 0;
+    const interval = setInterval(() => {
+        if (i < words.length) {
+            p.textContent += words[i] + " ";
+            i++;
+        } else {
+            clearInterval(interval);
+        }
+    }, 300); // Adjust the speed as needed
+
+    messages.scrollTop = messages.scrollHeight;
 }
