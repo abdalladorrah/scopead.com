@@ -3,8 +3,11 @@ const input = document.getElementById("input");
 const submit = document.getElementById("submit");
 const typingIndicator = document.getElementById("typing-indicator");
 
+const coralPersonality = "friendly"; // يمكنك تغيير هذه القيمة إلى "professional" أو "witty" أو أي شخصية أخرى مدعومة
+const coralName = "Meno";
+
 async function sendMessageToCoral(message, apiKey) {
-    const response = await fetch('https://api.cohere.ai/v1/chat', {
+    const response = await fetch(`https://api.cohere.ai/v1/chat?personality=${coralPersonality}`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -35,16 +38,19 @@ async function submitMessage() {
         // Show typing indicator
         typingIndicator.style.display = "block";
 
-        const response = await sendMessageToCoral(userInput, 'ONTHGbFAhxC54QlQxnEAZKGZrqIWe7ALERnUl22G'); // Replace 'ONTHGbFAhxC54QlQxnEAZKGZrqIWe7ALERnUl22G' with your own API key
+        const response = await sendMessageToCoral(userInput, 'ONTHGbFAhxC54QlQxnEAZKGZrqIWe7ALERnUl22G'); // استبدل 'ONTHGbFAhxC54QlQxnEAZKGZrqIWe7ALERnUl22G' بمفتاح API الخاص بك
 
         console.log(response); // Print the full response for verification
 
-        const botMessage = response && response.text ? response.text : "An error occurred while processing your request."; // Extract the message correctly
+        let botMessage = response && response.text ? response.text : "حدث خطأ أثناء معالجة طلبك.";
+
+        // Replace 'كورال' with 'منوفي' and 'coral' with 'Menoufy'
+        botMessage = botMessage.replace(/كورال/gi, 'مينو').replace(/coral/gi, 'Meno');
 
         // Hide typing indicator
         typingIndicator.style.display = "none";
 
-        addMessage(botMessage, "bot");
+        addMessage(`${coralName}: ${botMessage}`, "bot");
 
         input.value = ""; // Clear the input field after sending
     }
