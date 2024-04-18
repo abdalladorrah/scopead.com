@@ -43,7 +43,7 @@ async function submitMessage() {
         // جمع آخر 6 رسائل في الشات بوكس
         let lastSixMessages = "";
         const messagesElements = messages.getElementsByClassName("message");
-        const startIndex = Math.max(messagesElements.length - 6, 0);
+        const startIndex = Math.max(messagesElements.length - 4, 0);
         for (let i = startIndex; i < messagesElements.length; i++) {
             const messageText = messagesElements[i].textContent || messagesElements[i].innerText;
             lastSixMessages += messageText + "\n";
