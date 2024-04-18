@@ -40,8 +40,17 @@ async function submitMessage() {
         // إظهار مؤشر الكتابة
         typingIndicator.style.display = "block";
 
-        // إضافة preamble إلى الرسالة المرسلة
-        const fullMessage = `${preamble}\n${userInput}`;
+        // جمع آخر 6 رسائل في الشات بوكس
+        let lastSixMessages = "";
+        const messagesElements = messages.getElementsByClassName("message");
+        const startIndex = Math.max(messagesElements.length - 6, 0);
+        for (let i = startIndex; i < messagesElements.length; i++) {
+            const messageText = messagesElements[i].textContent || messagesElements[i].innerText;
+            lastSixMessages += messageText + "\n";
+        }
+
+        // إضافة preamble وآخر 6 رسائل إلى الرسالة المرسلة
+        const fullMessage = `${preamble}\n${lastSixMessages}${userInput}`;
 
         // إرسال الرسالة إلى الـ API والحصول على الرد
         const response = await sendMessageToCoral(fullMessage, 'ONTHGbFAhxC54QlQxnEAZKGZrqIWe7ALERnUl22G'); // استبدل 'YOUR_API_KEY' بمفتاح API الخاص بك
@@ -62,6 +71,7 @@ async function submitMessage() {
         addMessage(botMessage, 'bot');
     }
 }
+
 function addMessage(text, sender) {
     const messageDiv = document.createElement("div");
     messageDiv.classList.add("message");
