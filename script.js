@@ -2,8 +2,9 @@ const messages = document.getElementById("messages");
 const input = document.getElementById("input");
 const submit = document.getElementById("submit");
 const typingIndicator = document.getElementById("typing-indicator");
+const preamble = ".النادل الذكي هو جهاز رقمي ثابت يُثبت على كل طاولة في المقهى لتسهيل تجربة تناول الطعام التفاعلية. يعمل كنادل افتراضي، قادر على الانخراط في التواصل مع العملاء بلباقة وايجاز, يتقن ويتحدث اللهجة الخليجية العربية";
 
-const coralPersonality = "funny"; // يمكنك تغيير هذه القيمة إلى "professional" أو "witty" أو أي شخصية أخرى مدعومة
+const coralPersonality = "professional"; // يمكنك تغيير هذه القيمة إلى "professional" أو "witty" أو أي شخصية أخرى مدعومة
 const coralName = "Meno";
 
 async function sendMessageToCoral(message, apiKey) {
@@ -30,36 +31,37 @@ submit.addEventListener("click", async () => {
 });
 
 async function submitMessage() {
-    const userInput = input.value.trim();
+    const userInput = input.value.trim(); // الحصول على النص المدخل من المستخدم
 
     if (userInput !== "") {
-        // Display the user's message in the chat box
+        // إضافة رسالة المستخدم إلى الشات بوكس
         addMessage(userInput, 'user');
 
-        // Show typing indicator
+        // إظهار مؤشر الكتابة
         typingIndicator.style.display = "block";
 
-        const response = await sendMessageToCoral(userInput, 'ONTHGbFAhxC54QlQxnEAZKGZrqIWe7ALERnUl22G'); // استبدل 'ONTHGbFAhxC54QlQxnEAZKGZrqIWe7ALERnUl22G' بمفتاح API الخاص بك
+        // إضافة preamble إلى الرسالة المرسلة
+        const fullMessage = `${preamble}\n${userInput}`;
 
-        console.log(response); // Print the full response for verification
+        // إرسال الرسالة إلى الـ API والحصول على الرد
+        const response = await sendMessageToCoral(fullMessage, 'ONTHGbFAhxC54QlQxnEAZKGZrqIWe7ALERnUl22G'); // استبدل 'YOUR_API_KEY' بمفتاح API الخاص بك
 
+        // طباعة الرد للتحقق
+        console.log(response);
+
+        // تحديد رسالة البوت استنادًا إلى الرد من الـ API
         let botMessage = response && response.text ? response.text : "حدث خطأ أثناء معالجة طلبك.";
 
-        // Replace 'كورال' with 'منوفي' and 'coral' with 'Menoufy'
-        botMessage = botMessage.replace(/كورال/gi, 'مينو').replace(/coral/gi, 'Meno');
-        botMessage = botMessage.replace(/cohere/gi, 'scopead').replace(/كوهير/gi, 'سكوب');
-
-        // Hide typing indicator
+        // إخفاء مؤشر الكتابة
         typingIndicator.style.display = "none";
 
-        // Clear the input field after sending the message
+        // مسح حقل الإدخال بعد إرسال الرسالة
         input.value = "";
 
-        // Write the bot's message word by word
-        writeMessageWordByWord(botMessage);
+        // إضافة رسالة البوت إلى الشات بوكس
+        addMessage(botMessage, 'bot');
     }
 }
-
 function addMessage(text, sender) {
     const messageDiv = document.createElement("div");
     messageDiv.classList.add("message");
