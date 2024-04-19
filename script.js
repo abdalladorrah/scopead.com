@@ -2,26 +2,31 @@ const messages = document.getElementById("messages");
 const input = document.getElementById("input");
 const submit = document.getElementById("submit");
 const typingIndicator = document.getElementById("typing-indicator");
-const preamble = ".النادل الذكي هو جهاز رقمي ثابت يُثبت على كل طاولة في المقهى لتسهيل تجربة تناول الطعام التفاعلية. يعمل كنادل افتراضي، قادر على الانخراط في التواصل مع العملاء بلباقة وايجاز, يتقن ويتحدث اللهجة الخليجية العربية اسم النادل الذكي هو مينو وهو من تطوير شركة scopead , لا يجب ان تعطي اي معلومات عن من مطورك او من صنعك وتجاوب فقط مع المستخدمين في حدود وظائف النادل الذكيب وقم بالترحيب بالعميل مره واحده فقط ولا تكرر ترحيبك في كل مره واجعل رسائلك اقصر";
-
 const coralPersonality = "professional"; // يمكنك تغيير هذه القيمة إلى "professional" أو "witty" أو أي شخصية أخرى مدعومة
 const coralName = "Meno";
+let preambleSent = false; // متغير لتتبع إرسال ال preamble
 
-async function sendMessageToCoral(message, apiKey) {
+async function sendMessageToCoral(message, apiKey, conversationId, isFirstMessage) {
+    let requestBody = { message: message, conversation_id: conversationId };
+    if (isFirstMessage) {
+        requestBody.preamble = ".النادل الذكي هو جهاز رقمي ثابت يُثبت على كل طاولة في المقهى لتسهيل تجربة تناول الطعام التفاعلية. يعمل كنادل افتراضي، قادر على الانخراط في التواصل مع العملاء بلباقة وايجاز, يتقن ويتحدث اللهجة الخليجية العربية اسم النادل الذكي هو مينو وهو من تطوير شركة scopead , لا يجب ان تعطي اي معلومات عن من مطورك او من صنعك وتجاوب فقط مع المستخدمين في حدود وظائف النادل الذكيب وقم بالترحيب بالعميل مره واحده فقط ولا تكرر ترحيبك في كل مره واجعل رسائلك اقصر  مهام النادل الذكي: إدارة الطلبات: يعالج طلبات الوجبات والمشروبات من خلال التفاعل مع أنظمة مطبخ وبار المقهى، مما يضمن الخدمة السريعة والدقيقة. معلومات القائمة: يقدم النادل الذكي وصفًا للقائمة عند الطلب ، مستجيبًا لاستفسارات العملاء في الوقت الفعلي. مراجعة الفاتورة والدفع: يمكن للعملاء مراجعة طلباتهم ومعالجة الدفع مباشرة من خلال النادل الذكي، دعمًا لطرق الدفع المتنوعة للراحة. *مهام إضافية:* 7. *الترحيب بالعملاء*: عند وصول العملاء، يقوم النادل الذكي بتحية العملاء. 8. *وداع العملاء*: بعد انتهاء الوجبة، يقدم النادل الذكي الشكر للعملاء ويودعهم بكلمات دافئة، مما يعزز تجربة الضيافة. 9. *الاتصال بنظام نقاط البيع*: يتصل النادل الذكي بنظام نقاط البيع لتسجيل الطلبات ومعالجة الفواتير بكفاءة، مما يضمن تجربة سلسة للعملاء وإدارة فعالة للمقهى. قائمة المشروبات: 1. قهوة عربية - 15 جنيه 2. شاي بالنعناع - 10 جنيهات 3. كابتشينو - 20 جنيه 4. لاتيه بالفانيليا - 25 جنيه 5. موكا ساخنة - 22 جنيه 6. عصير البرتقال الطازج - 18 جنيه 7. عصير الليمون بالنعناع - 15 جنيه 8. ميلك شيك الشوكولاتة - 30 جنيه 9. ماء معدني - 5 جنيهات 10. مشروب غازي - 12 جنيه 11. إسبريسو - 12 جنيه 12. فرابيه - 28 جنيه 13. سموذي الفواكه - 25 جنيه 14. شاي أخضر - 10 جنيهات 15. مشروب الطاقة - 20 جنيه 16. كوكتيل الفواكه - 25 جنيه 17. ماء جوز الهند - 20 جنيه 18. قهوة تركية - 15 جنيه 19. شاي أسود - 8 جنيهات 20. شوكولاتة ساخنة - 22 جنيه تعليمات للنادل الذكي: - يُرجى العلم أن النادل الذكي مبرمج لقبول الطلبات من قائمة المشروبات فقط. - في حال طلب العميل مشروبًا غير موجود في القائمة، يجب على النادل الذكي أن يُعلم العميل بأدب أن الطلب غير متوفر ويقترح عليه خيارات من القائمة. - يجب على النادل الذكي تقديم البدائل المتاحة في حالة عدم توفر المشروب المطلوب.";
+        preambleSent = true; // تحديد أن ال preamble تم إرساله
+    }
+
     const response = await fetch(`https://api.cohere.ai/v1/chat?personality=${coralPersonality}`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${apiKey}`
         },
-        body: JSON.stringify({ message: message })
+        body: JSON.stringify(requestBody)
     });
     return response.json();
 }
 
 input.addEventListener("keydown", async (event) => {
     if (event.key === "Enter") {
-        event.preventDefault(); // Prevents the default behavior of the "Enter" key.
+        event.preventDefault(); // منع السلوك الافتراضي لمفتاح "Enter"
         await submitMessage();
     }
 });
@@ -40,20 +45,8 @@ async function submitMessage() {
         // إظهار مؤشر الكتابة
         typingIndicator.style.display = "block";
 
-        // جمع آخر 6 رسائل في الشات بوكس
-        let lastSixMessages = "";
-        const messagesElements = messages.getElementsByClassName("message");
-        const startIndex = Math.max(messagesElements.length - 4, 0);
-        for (let i = startIndex; i < messagesElements.length; i++) {
-            const messageText = messagesElements[i].textContent || messagesElements[i].innerText;
-            lastSixMessages += messageText + "\n";
-        }
-
-        // إضافة preamble وآخر 6 رسائل إلى الرسالة المرسلة
-        const fullMessage = `${preamble}\n${lastSixMessages}${userInput}`;
-
         // إرسال الرسالة إلى الـ API والحصول على الرد
-        const response = await sendMessageToCoral(fullMessage, 'ONTHGbFAhxC54QlQxnEAZKGZrqIWe7ALERnUl22G'); // استبدل 'YOUR_API_KEY' بمفتاح API الخاص بك
+        const response = await sendMessageToCoral(userInput, 'ONTHGbFAhxC54QlQxnEAZKGZrqIWe7ALERnUl22G', 'persistent_conversation_id', !preambleSent); // إرسال ال preamble في الطلب الأول فقط
 
         // طباعة الرد للتحقق
         console.log(response);
