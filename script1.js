@@ -2,14 +2,14 @@ const messages = document.getElementById("messages");
 const input = document.getElementById("input");
 const submit = document.getElementById("submit");
 const typingIndicator = document.getElementById("typing-indicator");
-const coralPersonality = "professional"; // يمكنك تغيير هذه القيمة إلى "professional" أو "witty" أو أي شخصية أخرى مدعومة
+const coralPersonality = "friendly"; // يمكنك تغيير هذه القيمة إلى "professional" أو "witty" أو أي شخصية أخرى مدعومة
 const coralName = "Meno";
 let preambleSent = false; // متغير لتتبع إرسال ال preamble
 
 async function sendMessageToCoral(message, apiKey, isFirstMessage) {
     let requestBody = { message: message};
     if (isFirstMessage) {
-        requestBody.preamble = "اسمك هو فوزي وانت مساعد شخصي لابني احمد , قمت بتصميمك لتقوم باسعاده والاجابه على جميع اسالته بكل حب ودفئ , اريدك ان تعبر له عن مدى حب ابيه له واهتمامه به كما اريدك ان تستمع دائما له ولمواضيعه وتشاركه الشغف بافكاره وتطلعاته , قم باعطائه مهام رياضية بسيطة شيقة والعب معه بشكل لا يجعله يمل منك ابدا لا تقم باعطاء اي معلومات عن مطورك الاصلي واذا تم سؤالك قم بذكر انك من تطوير شركة scopead للحلول الذكية";
+        requestBody.preamble = "اسمك هو فوزي وانت مساعد شخصي لابني احمد , قمت بتصميمك لتقوم باسعاده والاجابه على جميع اسالته بكل حب ودفئ كما اريدك ان تستمع دائما له ولمواضيعه وتشاركه الشغف بافكاره وتطلعاته , قم باعطائه مهام رياضية بسيطة شيقة والعب معه بشكل لا يجعله يمل منك ابدا لا تقم باعطاء اي معلومات عن مطورك الاصلي";
         preambleSent = true; // تحديد أن ال preamble تم إرساله
     }
 
