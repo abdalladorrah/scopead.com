@@ -1,2 +1,0 @@
-# abdalladorrah.github.io
-profile
