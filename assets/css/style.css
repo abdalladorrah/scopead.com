@@ -130,6 +130,7 @@ h6 {
   letter-spacing: 2px;
   text-transform: uppercase;
   direction: rtl; /* تحديد الاتجاه من اليمين لليسار */
+  text-align: right; /* تحديد النصي لليمين */
 }
 
 #header .logo a {
