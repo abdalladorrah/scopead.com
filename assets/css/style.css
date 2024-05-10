@@ -131,18 +131,21 @@ h6 {
   text-transform: uppercase;
   direction: rtl; /* تحديد الاتجاه من اليمين لليسار */
   text-align: right; /* تحديد النصي لليمين */
+  float: right;
 }
 
 #header .logo a {
   color: #fff;
   direction: rtl; /* تحديد الاتجاه من اليمين لليسار */
   text-align: right; /* تحديد النصي لليمين */
+  float: right;
 }
 
 #header .logo img {
   max-height: 40px;
   direction: rtl; /* تحديد الاتجاه من اليمين لليسار */
   text-align: right; /* تحديد النصي لليمين */
+  float: right;
 }
 
 /*--------------------------------------------------------------
