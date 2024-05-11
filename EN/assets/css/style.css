@@ -1825,23 +1825,22 @@ section {
 }
 
 #language-bar {
-  position: fixed;
-  top: 20px;
-  : 20px;
-  background-color: rgba(255, 255, 255, 0.8);
+  position: sticky;
+  bottom: 20px;
+  left: 20px;
+  background-color: rgba(40, 58, 90, 0.9); /* استخدم اللون المعطى بدلاً من اللون الأزرق */
   padding: 10px 20px;
   border-radius: 5px;
   font-size: 16px;
   font-weight: bold;
   text-decoration: none;
-  color: #333;
+  color: #fff;
   transition: background-color 0.3s ease;
   z-index: 1000;
 }
 
 #language-bar:hover {
-  background-color: rgba(255, 255, 255, 1);
-  color: #000;
+  background-color: rgba(13, 110, 253, 1); /* تغيير اللون عند التحويم */
 }
 
 @media (max-width: 768px) {
@@ -1852,3 +1851,4 @@ section {
     left: 10px;
   }
 }
+
