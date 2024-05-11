@@ -1849,7 +1849,7 @@ section {
 @media (max-width: 768px) {
   #language-bar {
     font-size: 14px;
-    padding: 4px 8px;
+    padding: 8px 16px;
     bottom: 10px;
     right: 10px;
   }
