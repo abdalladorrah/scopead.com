@@ -130,22 +130,19 @@ h6 {
   letter-spacing: 2px;
   text-transform: uppercase;
   direction: rtl; /* تحديد الاتجاه من اليمين لليسار */
-  text-align: right; /* تحديد النصي لليمين */
-  float: right;
+  text-align: right; /* محاذاة النص إلى اليمين */
+  float: right; /* تغيير اتجاه الطفو إلى اليمين */
 }
 
 #header .logo a {
   color: #fff;
   direction: rtl; /* تحديد الاتجاه من اليمين لليسار */
-  text-align: right; /* تحديد النصي لليمين */
-  float: right;
+  text-align: right; /* محاذاة النص إلى اليمين */
 }
 
 #header .logo img {
   max-height: 40px;
-  direction: rtl; /* تحديد الاتجاه من اليمين لليسار */
-  text-align: right; /* تحديد النصي لليمين */
-  float: right;
+  float: right; /* تغيير اتجاه الطفو إلى اليمين */
 }
 
 /*--------------------------------------------------------------
