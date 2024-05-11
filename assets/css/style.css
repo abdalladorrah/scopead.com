@@ -1850,10 +1850,11 @@ section {
 @media (max-width: 768px) {
   #language-bar {
     font-size: 14px;
-    padding: 4px 8px;
-    bottom: 10px;
-    right: 10px; /* تم تغيير left إلى right هنا */
-    display: inline-block; 
+    padding: 8px 16px;
+    bottom: 18px; /* Position at the bottom */
+    right: 10px; /* Position on the right */
+    left: auto; /* Reset left position */
+    width: auto; /* Reset width */
   }
 }
 
