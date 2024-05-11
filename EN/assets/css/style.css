@@ -1848,7 +1848,7 @@ section {
   #language-bar {
     font-size: 14px;
     padding: 8px 16px;
-    top: 10px;
+    bottom: 10px;
     left: 10px;
   }
 }
