@@ -1,0 +1,51 @@
+HTTrack3.49-2+htsswf+htsjava launched on Sat, 15 Mar 2025 12:09:16 at https://salamaeng.com/ +*.png +*.gif +*.jpg +*.jpeg +*.css +*.js -ad.doubleclick.net/* -mime:application/foobar
+(winhttrack -qwC2%Ps2u1%s%uN0%I0p3DaK0H0%kf2A25000%f#f -F "Mozilla/4.5 (compatible; HTTrack 3.0x; Windows 98)" -%F "<!-- Mirrored from %s%s by HTTrack Website Copier/3.x [XR&CO'2014], %s -->" -%l "en, *" https://salamaeng.com/ -O1 "C:\Users\Abo Ahmed\Desktop\scopead.com-main\salama" +*.png +*.gif +*.jpg +*.jpeg +*.css +*.js -ad.doubleclick.net/* -mime:application/foobar )
+
+Information, Warnings and Errors reported for this mirror:
+note:	the hts-log.txt file, and hts-cache folder, may contain sensitive information,
+	such as username/password authentication for websites mirrored in this project
+	do not share these files/folders if you want these information to remain private
+
+12:10:36	Error: 	"Forbidden" (403) at link https://salamaeng.com/xmlrpc.php?rsd (from https://salamaeng.com/)
+12:10:36	Error: 	"Bad Request" (400) at link https://salamaeng.com/wp-admin/admin-ajax.php (from https://salamaeng.com/)
+12:10:36	Error: 	"Not Found" (404) at link https://salamaeng.com/revslider/revslider.php (from https://salamaeng.com/)
+12:13:43	Error: 	"Not Found" (404) at link https://salamaeng.com/events/revslider/revslider.php (from https://salamaeng.com/events/?_bg%3F_image_src%7D)
+12:13:53	Warning: 	Moved Permanently for https://salamaeng.com/?p=587
+12:13:53	Warning: 	File has moved from https://salamaeng.com/?p=587 to https://salamaeng.com/about-us/
+12:13:53	Error: 	"Not Found" (404) at link https://salamaeng.com/about-us/revslider/revslider.php (from https://salamaeng.com/about-us/)
+12:13:53	Warning: 	Moved Permanently for https://salamaeng.com/?p=714
+12:13:53	Warning: 	File has moved from https://salamaeng.com/?p=714 to https://salamaeng.com/divisions/
+12:13:53	Error: 	"Not Found" (404) at link https://salamaeng.com/divisions/revslider/revslider.php (from https://salamaeng.com/divisions/)
+12:13:53	Warning: 	Moved Permanently for https://salamaeng.com/?p=778
+12:13:53	Warning: 	File has moved from https://salamaeng.com/?p=778 to https://salamaeng.com/our-products/
+12:13:53	Error: 	"Not Found" (404) at link https://salamaeng.com/our-products/revslider/revslider.php (from https://salamaeng.com/our-products/)
+12:13:53	Warning: 	Moved Permanently for https://salamaeng.com/?p=1276
+12:13:53	Warning: 	File has moved from https://salamaeng.com/?p=1276 to https://salamaeng.com/capabilities/
+12:13:53	Error: 	"Not Found" (404) at link https://salamaeng.com/capabilities/revslider/revslider.php (from https://salamaeng.com/capabilities/)
+12:13:54	Warning: 	Moved Permanently for https://salamaeng.com/?p=839
+12:13:54	Warning: 	File has moved from https://salamaeng.com/?p=839 to https://salamaeng.com/clientele/
+12:13:54	Error: 	"Not Found" (404) at link https://salamaeng.com/clientele/revslider/revslider.php (from https://salamaeng.com/clientele/)
+12:13:54	Warning: 	Moved Permanently for https://salamaeng.com/?p=891
+12:13:54	Warning: 	File has moved from https://salamaeng.com/?p=891 to https://salamaeng.com/contact-us/
+12:13:54	Error: 	"Not Found" (404) at link https://salamaeng.com/contact-us/revslider/revslider.php (from https://salamaeng.com/contact-us/)
+12:13:54	Warning: 	Moved Permanently for https://salamaeng.com/?p=722
+12:13:54	Warning: 	File has moved from https://salamaeng.com/?p=722 to https://salamaeng.com/process-equipment/
+12:13:54	Error: 	"Not Found" (404) at link https://salamaeng.com/process-equipment/revslider/revslider.php (from https://salamaeng.com/process-equipment/)
+12:13:56	Warning: 	Moved Permanently for https://salamaeng.com/?p=762
+12:13:56	Warning: 	File has moved from https://salamaeng.com/?p=762 to https://salamaeng.com/hvac-r-coils/
+12:13:56	Error: 	"Not Found" (404) at link https://salamaeng.com/hvac-r-coils/revslider/revslider.php (from https://salamaeng.com/hvac-r-coils/)
+12:13:56	Warning: 	Moved Permanently for https://salamaeng.com/?p=764
+12:13:56	Warning: 	File has moved from https://salamaeng.com/?p=764 to https://salamaeng.com/plate-heat-exchangers/
+12:13:56	Error: 	"Not Found" (404) at link https://salamaeng.com/plate-heat-exchangers/revslider/revslider.php (from https://salamaeng.com/plate-heat-exchangers/)
+12:13:56	Warning: 	Moved Permanently for https://salamaeng.com/?p=3320
+12:13:56	Warning: 	File has moved from https://salamaeng.com/?p=3320 to https://salamaeng.com/sabic-technical-meeting-2025/
+12:13:56	Error: 	"Not Found" (404) at link https://salamaeng.com/sabic-technical-meeting-2025/revslider/revslider.php (from https://salamaeng.com/sabic-technical-meeting-2025/)
+12:13:56	Warning: 	Moved Permanently for https://salamaeng.com/?p=705
+12:13:56	Warning: 	File has moved from https://salamaeng.com/?p=705 to https://salamaeng.com/salama-engineering-at-static-arabia-2024/
+12:13:56	Error: 	"Not Found" (404) at link https://salamaeng.com/salama-engineering-at-static-arabia-2024/revslider/revslider.php (from https://salamaeng.com/salama-engineering-at-static-arabia-2024/)
+12:13:56	Warning: 	Moved Permanently for https://salamaeng.com/?p=703
+12:13:56	Warning: 	File has moved from https://salamaeng.com/?p=703 to https://salamaeng.com/salama-engineering-at-hvac-r-expo-saudi-2024/
+12:13:56	Error: 	"Not Found" (404) at link https://salamaeng.com/salama-engineering-at-hvac-r-expo-saudi-2024/revslider/revslider.php (from https://salamaeng.com/salama-engineering-at-hvac-r-expo-saudi-2024/)
+
+HTTrack Website Copier/3.49-2 mirror complete in 4 minutes 41 seconds : 420 links scanned, 391 files written (80954733 bytes overall) [73806611 bytes received at 262656 bytes/sec], 12660521 bytes transferred using HTTP compression in 213 files, ratio 28%, 7.9 requests per connection
+(16 errors, 24 warnings, 0 messages)
