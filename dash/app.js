@@ -385,22 +385,62 @@ function handleFileUpload(file){
   reader.readAsText(file, 'utf-8');
 }
 
-async function handleUrlLoad(url){
-  msg('جاري تحميل CSV من الرابط ...');
-  try {
-    const res = await fetch(url);
-    if (!res.ok) throw new Error('Fetch failed: ' + res.status);
-    const txt = await res.text();
-    const parsed = parseCSVText(txt);
-    rawRows = normalizeRows(parsed);
-    kpis = computeKPIs(rawRows);
-    signals = computeSignals(kpis);
-    const active = document.querySelector('.tab.active').dataset.tab;
-    routeTo(active);
-  } catch(err){
-    msg('فشل تحميل CSV: ' + err.message);
+// ----------------- Replace or add this function in app.js -----------------
+async function handleUrlLoad(url) {
+  // If user provided a URL use it (converted if Google Sheet),
+  // otherwise try common relative paths inside the repo/site.
+  const tryPaths = [];
+  let finalUrl = (url || '').trim();
+
+  if (finalUrl) {
+    // Convert Google Sheets share link to CSV export if possible
+    if (finalUrl.includes('docs.google.com/spreadsheets')) {
+      // convert to export?format=csv
+      if (finalUrl.includes('/edit')) finalUrl = finalUrl.replace('/edit', '/export');
+      if (!finalUrl.includes('format=csv')) {
+        finalUrl += (finalUrl.includes('?') ? '&' : '?') + 'format=csv';
+      }
+    }
+    tryPaths.push(finalUrl);
+  } else {
+    // No URL provided -> try relative paths (these files should be committed to the repo)
+    tryPaths.push('./daily.csv');
+    tryPaths.push('./data.csv');
+    tryPaths.push('./platforms.csv');
+    tryPaths.push('./data.csv');
+    tryPaths.push('./daily.csv');
   }
+
+  // Try fetching each candidate until one succeeds
+  msg('جاري محاولة تحميل CSV... (محلي/نسبي أو عبر URL)');
+  for (let p of tryPaths) {
+    try {
+      const res = await fetch(p, {cache: "no-store"});
+      if (!res.ok) {
+        // try next
+        console.warn('fetch failed', p, res.status);
+        continue;
+      }
+      const txt = await res.text();
+      // parse and load
+      const parsed = parseCSVText(txt);
+      rawRows = normalizeRows(parsed);
+      kpis = computeKPIs(rawRows);
+      signals = computeSignals(kpis);
+      const active = document.querySelector('.tab.active').dataset.tab;
+      routeTo(active);
+      console.log('Loaded CSV from', p);
+      return; // success
+    } catch (err) {
+      console.warn('error fetching', p, err);
+      continue; // try next
+    }
+  }
+
+  // if we reach here no candidate succeeded
+  msg('فشل تحميل CSV. تأكد من وضع الملف داخل الريبو (مثلاً: /data/daily.csv) أو ضع رابط مباشر إلى raw CSV ثم اضغط تحميل.');
 }
+
 
 function loadSampleData(){
   // generate synthetic realistic sample data (60 days)
