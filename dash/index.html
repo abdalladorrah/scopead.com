@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="ar">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>لوحة إعلانات - Dashboard (Static)</title>
+  <link rel="stylesheet" href="styles.css" />
+  <!-- Plotly -->
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <!-- PapaParse for CSV parsing -->
+  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <div class="title-block">
+        <h1>لوحة مراقبة إعلانات المنصات</h1>
+        <p class="subtitle">نسخة ثابتة تعمل على GitHub Pages — جلب البيانات من CSV أو Google Sheets</p>
+      </div>
+      <div class="top-actions">
+        <label class="small">تحميل ملف CSV محلي</label>
+        <input id="file-input" type="file" accept=".csv" />
+        <label class="small">أو رابط CSV (Raw GitHub / Google Sheet export)</label>
+        <input id="csv-url" type="text" placeholder="https://raw.githubusercontent.com/your/repo/main/data.csv" />
+        <div class="btn-row">
+          <button id="load-url-btn" class="btn">تحميل من الرابط</button>
+          <button id="load-sample-btn" class="btn ghost">تحميل بيانات نموذجية</button>
+          <button id="clear-btn" class="btn danger">مسح البيانات</button>
+        </div>
+      </div>
+    </header>
+
+    <nav id="tabs" class="tabs" role="tablist" aria-label="Dashboard tabs">
+      <button data-tab="overview" class="tab active">نظرة عامة</button>
+      <button data-tab="funnel" class="tab">القمع (Funnel)</button>
+      <button data-tab="trends" class="tab">الاتجاهات</button>
+      <button data-tab="health" class="tab">الصحة والتنبيهات</button>
+      <button data-tab="data" class="tab">البيانات الخام</button>
+    </nav>
+
+    <main id="content" class="content">
+      <!-- content rendered by app.js -->
+    </main>
+
+    <footer class="footer">
+      <div>Static Ads Dashboard • مصمم للعمل على GitHub Pages — تأكد أن روابط CSV عامة (public).</div>
+      <div>إذا البيانات حساسة — لا تستخدم GitHub Pages بهذه الطريقة.</div>
+    </footer>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
