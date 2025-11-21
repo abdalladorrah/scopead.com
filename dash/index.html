@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="ar">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Marketing Dashboard — No Purchases Line</title>
+
+  <!-- ربط ملف الـ CSS الخارجي -->
+  <link rel="stylesheet" href="css/style.css" />
+
+  <!-- مكتبات خارجية -->
+  <script src="https://unpkg.com/papaparse@5.4.1/papaparse.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
+</head>
+<body>
+  <div class="container">
+    <header class="page-header">
+      <h1>Marketing Dashboard — بدون Purchases على الخط</h1>
+    </header>
+
+    <div class="layout">
+      <!-- Sidebar -->
+      <aside class="sidebar">
+        <div class="side-card">
+          <h3>Filters</h3>
+          <div class="side-card-section">
+            <label>
+              ملف CSV
+              <input id="fileInput" type="file" accept=".csv" title="رفع CSV (اختياري)"/>
+              <small>لو ما رفعتش ملف، الداتا التجريبية هتستخدم تلقائيًا</small>
+            </label>
+          </div>
+
+          <div class="side-card-section">
+            <label>
+              الفترة السريعة
+              <select id="presetSelect" class="small" title="اختيارات سريعة للفترة">
+                <option value="custom">مخصص</option>
+                <option value="7">آخر 7 أيام</option>
+                <option value="14">آخر 14 يوم</option>
+                <option value="30">آخر 30 يوم</option>
+                <option value="month">هذا الشهر</option>
+                <option value="all">الكل</option>
+              </select>
+            </label>
+          </div>
+
+          <div class="side-card-section">
+            <label>من:
+              <input id="dateFrom" type="date" />
+            </label>
+            <label>إلى:
+              <input id="dateTo" type="date" />
+            </label>
+          </div>
+
+          <div class="filters-actions">
+            <button id="applyRange" class="btn" title="تطبيق الفترة">تطبيق</button>
+            <button id="resetBtn" class="btn" title="إعادة الضبط">إعادة</button>
+          </div>
+        </div>
+
+        <div class="side-card">
+          <h3>Platforms</h3>
+          <div id="platformTabs" class="tabs"></div>
+        </div>
+      </aside>
+
+      <!-- Main content -->
+      <main class="main">
+        <section class="kpi-grid">
+          <div class="card kpi">
+            <div style="color:#6b7280">Total Spend</div>
+            <div id="kpiSpend" style="font-weight:700;font-size:18px">-</div>
+          </div>
+          <div class="card kpi">
+            <div style="color:#6b7280">Total Impressions</div>
+            <div id="kpiImpr" style="font-weight:700;font-size:18px">-</div>
+          </div>
+          <div class="card kpi">
+            <div style="color:#6b7280">Total Purchases</div>
+            <div id="kpiPurch" style="font-weight:700;font-size:18px">-</div>
+          </div>
+          <div class="card kpi">
+            <div style="color:#6b7280">Total Purchase Value</div>
+            <div id="kpiValue" style="font-weight:700;font-size:18px">-</div>
+          </div>
+        </section>
+
+        <section>
+          <h2 class="section-title">Platform Metrics (كل بيان في كرت)</h2>
+          <div id="platformMetrics" class="platform-metric-grid"></div>
+        </section>
+
+        <section class="grid-2">
+          <div class="card">
+            <h4>Spend Over Time</h4>
+            <canvas id="tsChart"></canvas>
+            <div id="tsMsg" class="note"></div>
+          </div>
+          <div class="card">
+            <h4>Impressions by Platform</h4>
+            <canvas id="barChart"></canvas>
+            <div id="barMsg" class="note"></div>
+          </div>
+        </section>
+
+        <section>
+  <h2 class="section-title">Cross-Platform Comparison</h2>
+
+  <div class="grid-2" style="margin-bottom:12px">
+    <div class="card">
+      <h4>Impressions by Platform</h4>
+      <canvas id="cmpImprChart"></canvas>
+    </div>
+    <div class="card">
+      <h4>Reach by Platform</h4>
+      <canvas id="cmpReachChart"></canvas>
+    </div>
+  </div>
+
+  <div class="grid-2" style="margin-bottom:12px">
+    <div class="card">
+      <h4>Link Clicks by Platform</h4>
+      <canvas id="cmpClicksChart"></canvas>
+    </div>
+    <div class="card">
+      <h4>Add To Carts by Platform</h4>
+      <canvas id="cmpATCChart"></canvas>
+    </div>
+  </div>
+
+  <div class="grid-2" style="margin-bottom:12px">
+    <div class="card">
+      <h4>Purchase Value by Platform</h4>
+      <canvas id="cmpPurchValChart"></canvas>
+    </div>
+    <div class="card">
+      <h4>Purchases by Platform</h4>
+      <canvas id="cmpPurchChart"></canvas>
+    </div>
+  </div>
+
+  <div class="card">
+    <h4>Initial Checkpoints (Landing Views) by Platform</h4>
+    <canvas id="cmpLandingChart"></canvas>
+  </div>
+</section>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- ربط ملفات الجافاسكربت بتاعة المشروع -->
+  <script src="js/dataUtils.js"></script>
+  <script src="js/app.js"></script>
+
+</body>
+</html>
