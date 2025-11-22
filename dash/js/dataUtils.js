@@ -107,7 +107,7 @@ window.aggregate = function(rows, platformFilter, dateFrom, dateTo){
   const totalLandingView = filtered.reduce((s,r)=>s+window.toNum(r['Landing View']),0);
   const totalATC         = filtered.reduce((s,r)=>s+window.toNum(r['Add to Carts']),0);
   // إضافة Initiate Checkout هنا
-  const totalInitiateCheckout = filtered.reduce((s,r)=>s+window.toNum(r['Initiate Checkout']),0);
+  const totalInitiateCheckout = filtered.reduce((s,r)=>s+window.toNum(r['Initial Checkpoint']),0);
   const totalFreq        = filtered.reduce((s,r)=>s+window.toNum(r['Frequency']),0);
   const totalReach       = filtered.reduce((s,r)=>s+window.toNum(r['Reach']),0);
   const totalCount       = filtered.length;
@@ -166,7 +166,7 @@ window.aggregate = function(rows, platformFilter, dateFrom, dateTo){
     byPlatform[p].LandingView    += window.toNum(r['Landing View']);
     byPlatform[p].AddToCarts     += window.toNum(r['Add to Carts']);
     // تجميع Initiate Checkout لكل منصة
-    byPlatform[p].InitiateCheckout += window.toNum(r['Initiate Checkout']);
+    byPlatform[p].InitiateCheckout += window.toNum(r['Initial Checkpoint']);
     byPlatform[p].Purchases      += window.toNum(r['Purchases']);
     byPlatform[p].PurchaseValue  += window.toNum(r['Purchase Value']);
     byPlatform[p].FrequencySum   += window.toNum(r['Frequency']);
@@ -185,8 +185,9 @@ window.aggregate = function(rows, platformFilter, dateFrom, dateTo){
     const CPM          = m.Impressions ? (m.AmountSpent / m.Impressions) * 1000 : 0;
     const ROAS         = m.AmountSpent ? (m.PurchaseValue / m.AmountSpent) : 0;
     const PurchaseRate = m.LandingView ? (m.Purchases / m.LandingView) : 0;
-    const ATCRate      = m.LandingView ? (m.AddToCarts / m.LandingView) : 0;
-    const AvgFrequency = m.Count       ? (m.FrequencySum / m.Count) : 0;
+    const ATCRate      = m.LandingView ? (m.AddToCarts / m.LandingView) : 0; 
+    const AvgFrequency = m.Reach ? (m.Impressions / m.Reach) : 0; 
+
 
     const AvgOrdersPerDay = m.Purchases     ? (m.Purchases / platDays) : 0;
     const AvgATCPerDay    = m.AddToCarts    ? (m.AddToCarts / platDays) : 0;
@@ -233,7 +234,7 @@ window.aggregate = function(rows, platformFilter, dateFrom, dateTo){
   overallMetrics.ROAS         = overallMetrics.AmountSpent ? (overallMetrics.PurchaseValue / overallMetrics.AmountSpent) : 0;
   overallMetrics.PurchaseRate = overallMetrics.LandingView ? (overallMetrics.Purchases / overallMetrics.LandingView) : 0;
   overallMetrics.ATCRate      = overallMetrics.LandingView ? (overallMetrics.AddToCarts / overallMetrics.LandingView) : 0;
-  overallMetrics.AvgFrequency = overallMetrics.Count       ? (overallMetrics.FrequencySum / overallMetrics.Count) : 0;
+  overallMetrics.AvgFrequency = overallMetrics.Reach       ? (overallMetrics.Impressions/ overallMetrics.Reach) : 0;
 
   // ميتريكس per day على مستوى All
   overallMetrics.AvgOrdersPerDay = totalPurch     ? (totalPurch     / totalDays) : 0;

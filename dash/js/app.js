@@ -36,6 +36,7 @@ let chartCmpPurchVal = null;
 let chartCmpPurch = null;
 let chartCmpLanding = null;
 
+let chartCmpFunnelAll = null;
 // شارتات صفحة المنصة الواحدة
 let chartSpSpend = null;
 let chartSpPurch = null;
@@ -168,6 +169,9 @@ function renderCrossPlatformCharts(overallResult, selectedResult) {
   drawCmpChart('cmpPurchValChart', chartCmpPurchVal, 'PurchaseValue', 'Purchase Value', 'rgba(56,189,248,0.9)', (c) => chartCmpPurchVal = c);
   drawCmpChart('cmpPurchChart', chartCmpPurch, 'Purchases', 'Purchases', 'rgba(251,191,36,0.9)', (c) => chartCmpPurch = c);
   drawCmpChart('cmpLandingChart', chartCmpLanding, 'LandingView', 'Landing Views', 'rgba(96,165,250,0.9)', (c) => chartCmpLanding = c);
+
+  // رسم Funnel مجمّع لكل المنصات (All)
+  drawFunnelChart('allFunnelChart', chartCmpFunnelAll, overallResult.overallMetrics, (c)=> chartCmpFunnelAll = c);
 }
 
 // دالة لرسم شارتات صفحة المنصة الواحدة (الجديدة)
@@ -234,10 +238,10 @@ function drawTimeLineChart(canvasId, msgId, chartInstance, timeseriesData, dataK
         responsive: true,
         maintainAspectRatio: false,
         scales: {
-          y: { beginAtZero: true, ticks: { color: '#ffffff' } },
-          x: { ticks: { color: '#ffffff' } }
+          y: { beginAtZero: true, ticks: { color: '#000000' } },
+          x: { ticks: { color: '#000000' } }
         },
-        plugins: { legend: { labels: { color: '#ffffff' } } }
+        plugins: { legend: { labels: { color: '#000000' } } }
       }
     });
     setChartInstance(newChart);
@@ -302,11 +306,11 @@ function drawFunnelChart(canvasId, chartInstance, metrics, setChartInstance) {
         x: { // المحور الأفقي (القيم)
             beginAtZero: true,
             grid: { color: 'rgba(255, 255, 255, 0.1)' },
-            ticks: { color: '#ffffff' }
+            ticks: { color: '#000000' }
         },
         y: { // المحور الرأسي (المراحل)
             grid: { display: false },
-            ticks: { color: '#ffffff', font: { size: 12, weight: 'bold' } }
+            ticks: { color: '#000000', font: { size: 12, weight: 'bold' } }
         }
       },
       plugins: {
@@ -358,20 +362,20 @@ function renderBottomMetrics(selectedResult) {
 
   // تعريف الميتريكس
   const metricDefs = [
-      { key: 'Impressions', label: 'الظهور (Impressions)', fmt: (v) => v.toLocaleString(), sub: 'عدد مرات الظهور' },
-      { key: 'Reach', label: 'الوصول (Reach)', fmt: (v) => v.toLocaleString(), sub: 'عدد المستخدمين الفريدين' },
-      { key: 'LinkClicks', label: 'النقرات (Link Clicks)', fmt: (v) => v.toLocaleString(), sub: 'عدد النقرات على الرابط' },
-      { key: 'LandingView', label: 'مشاهدة صفحة الهبوط (Landing Views)', fmt: (v) => v.toLocaleString(), sub: 'عدد مرات مشاهدة الصفحة المقصودة' },
-      { key: 'AddToCarts', label: 'إجمالي الإضافات للسلة (ATC)', fmt: (v) => v.toLocaleString(), sub: 'إجمالي عدد مرات الإضافة للسلة' },
-      { key: 'InitiateCheckout', label: 'بدء الدفع (Initiate Checkout)', fmt: (v) => v.toLocaleString(), sub: 'عدد مرات بدء عملية الدفع' },
-      { key: 'Purchases', label: 'عدد الطلبات (Purchases)', fmt: (v) => v.toLocaleString(), sub: 'إجمالي عدد الطلبات المكتملة' },
-      { key: 'CPA', label: 'تكلفة الاستحواذ (CPA)', fmt: (v) => v.toFixed(2), sub: 'Cost Per Acquisition' },
-      { key: 'CPM', label: 'التكلفة لكل ألف ظهور (CPM)', fmt: (v) => v.toFixed(2), sub: 'Cost per 1000 Impressions' },
-      { key: 'AvgFrequency', label: 'معدل التكرار (Frequency)', fmt: (v) => v.toFixed(2), sub: 'متوسط مرات الظهور للفرد' },
-      { key: 'AvgOrdersPerDay', label: 'متوسط الطلبات/يوم', fmt: (v) => v.toFixed(2), sub: 'Avg Orders Per Day' },
-      { key: 'AvgATCPerDay', label: 'متوسط الإضافة للسلة/يوم', fmt: (v) => v.toFixed(2), sub: 'Avg ATC Per Day' },
-      { key: 'AvgSalesPerDay', label: 'متوسط المبيعات/يوم', fmt: (v) => v.toFixed(2), sub: 'Avg Sales Per Day' },
-      { key: 'AOV', label: 'متوسط قيمة الطلب (AOV)', fmt: (v) => v.toFixed(2), sub: 'Average Order Value' }
+      { key: 'Impressions', label: ' IMP', fmt: (v) => v.toLocaleString(), sub: 'Impressions' },
+      { key: 'Reach', label: 'Reach', fmt: (v) => v.toLocaleString(), sub: '' },
+      { key: 'LinkClicks', label: 'Clicks', fmt: (v) => v.toLocaleString(), sub: 'Link Clicks' },
+      { key: 'LandingView', label: ' Landing Views', fmt: (v) => v.toLocaleString(), sub: '' },
+      { key: 'AddToCarts', label: 'ATC', fmt: (v) => v.toLocaleString(), sub: 'Add To Cart' },
+      { key: 'InitiateCheckout', label: 'Initiate Checkout', fmt: (v) => v.toLocaleString(), sub: '' },
+      { key: 'Purchases', label: 'Purchases', fmt: (v) => v.toLocaleString(), sub: 'Total Purchases' },
+      { key: 'CPA', label: 'CPA', fmt: (v) => v.toFixed(2), sub: 'Cost Per Acquisition' },
+      { key: 'CPM', label: 'CPM', fmt: (v) => v.toFixed(2), sub: 'Cost per 1000 Impressions' },
+      { key: 'AvgFrequency', label: 'Frequency', fmt: (v) => v.toFixed(2), sub: '' },
+      { key: 'AvgOrdersPerDay', label: 'Average', fmt: (v) => v.toFixed(2), sub: 'Avg Orders Per Day' },
+      { key: 'AvgATCPerDay', label: 'Daily ATC', fmt: (v) => v.toFixed(2), sub: 'Avg ATC Per Day' },
+      { key: 'AvgSalesPerDay', label: 'Daily Purchases', fmt: (v) => v.toFixed(2), sub: 'Avg Sales Per Day' },
+      { key: 'AOV', label: 'AOV', fmt: (v) => v.toFixed(2), sub: 'Average Order Value' }
   ];
 
   // تحديد البيانات التي ستعرض (إما للمنصة المختارة أو إجمالي الكل إذا كانت All)
