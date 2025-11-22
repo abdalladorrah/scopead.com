@@ -1,7 +1,8 @@
 /* ===== تفعيل الـ DataLabels على مستوى كل الشارتات ===== */
 Chart.register(ChartDataLabels);
 
-Chart.defaults.set('plugins.datalabels', {
+// إعدادات عامة للـ DataLabels
+const commonDataLabelsConfig = {
   color: '#111827',
   anchor: 'end',
   align: 'end',
@@ -15,15 +16,18 @@ Chart.defaults.set('plugins.datalabels', {
       if (Math.abs(value) >= 1000) {
         return Math.round(value).toLocaleString();
       }
-      return value.toFixed(1);
+      return (value !== null && value !== undefined) ? value.toFixed(1) : value;
     }
     return value;
   }
-});
+};
 
-// ========== Global State ==========
-let chartTS = null;
-let chartBar = null;
+Chart.defaults.set('plugins.datalabels', commonDataLabelsConfig);
+
+// ========== Global State (للشارتات عشان نعملها destroy قبل إعادة الرسم) ==========
+// شارتات صفحة All
+let chartTSAll = null;
+let chartBarAll = null;
 let chartCmpImpr = null;
 let chartCmpReach = null;
 let chartCmpClicks = null;
@@ -31,6 +35,12 @@ let chartCmpATC = null;
 let chartCmpPurchVal = null;
 let chartCmpPurch = null;
 let chartCmpLanding = null;
+
+// شارتات صفحة المنصة الواحدة
+let chartSpSpend = null;
+let chartSpPurch = null;
+let chartSpCPA = null;
+let chartSpFunnel = null;
 
 let isoToDisplay = {};
 let currentPlatform = 'All';
@@ -40,139 +50,184 @@ window._rows = [];
 // render(overallResult, selectedResult)
 // =============================
 function render(overallResult, selectedResult) {
-  // ===== KPIs (All) =====
-  const kpiROAS =
-    overallResult.overallMetrics &&
-    typeof overallResult.overallMetrics.ROAS === 'number'
-      ? overallResult.overallMetrics.ROAS
-      : 0;
+  // 1. تحديث الكروت العلوية (KPIs) - تعتمد دائماً على selectedResult
+  renderTopKPIs(selectedResult);
 
-  // 1) Total Spend
-  document.getElementById('kpiSpend').textContent =
-    overallResult.totalSpend.toFixed(2);
-  // 2) Total Revenue (Purchase Value)
-  document.getElementById('kpiImpr').textContent =
-    overallResult.totalValue.toFixed(2);
-  // 3) Total Purchases
-  document.getElementById('kpiPurch').textContent =
-    overallResult.totalPurch;
-  // 4) ROAS
-  document.getElementById('kpiValue').textContent =
-    kpiROAS.toFixed(2) + 'x';
+  // 2. تحديث كروت المقاييس السفلية (Platform Metrics) - تعتمد دائماً على selectedResult
+  renderBottomMetrics(selectedResult);
 
-  // ===== Time Series: حسب المنصة المختارة =====
-  const ts = selectedResult;
-  const tsLabels = ts.timeseries.map(
-    (d) => isoToDisplay[d.Date] || d.Date || 'Unknown'
-  );
-  const spendData = ts.timeseries.map((d) => d.AmountSpent);
+  // 3. التحكم في ظهور الحاويات ورسم الشارتات المناسبة
+  const crossPlatformContainer = document.getElementById('crossPlatformContainer');
+  const singlePlatformContainer = document.getElementById('singlePlatformContainer');
 
-  const tsCanvas = document.getElementById('tsChart');
-  if (tsCanvas) {
-    if (chartTS) chartTS.destroy();
-    const ctx = tsCanvas.getContext('2d');
-    const datasets = [];
+  if (currentPlatform === 'All') {
+    // إظهار حاوية الكل وإخفاء حاوية المنصة
+    crossPlatformContainer.style.display = 'block';
+    singlePlatformContainer.style.display = 'none';
+    document.getElementById('metricsTitle').textContent = 'Platform Metrics (All Platforms)';
 
-    if (spendData.length) {
-      datasets.push({
-        label: `Amount Spent (${currentPlatform === 'All' ? 'All' : currentPlatform})`,
-        data: spendData,
-        borderColor: 'rgba(56,189,248,1)',
-        backgroundColor: 'rgba(56,189,248,0.18)',
-        tension: 0.25,
-        fill: true
-      });
-    }
+    // رسم شارتات المقارنة (تعتمد على overallResult)
+    renderCrossPlatformCharts(overallResult, selectedResult);
 
-    if (!datasets.length) {
-      document.getElementById('tsMsg').textContent =
-        'لا توجد بيانات زمنية لتعرض.';
-      ctx.clearRect(0, 0, tsCanvas.width, tsCanvas.height);
-    } else {
-      document.getElementById('tsMsg').textContent = '';
-      chartTS = new Chart(ctx, {
-        type: 'line',
-        data: { labels: tsLabels, datasets },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          scales: {
-            y: { beginAtZero: true, ticks: { color: '#ffffff' } },
-            x: { ticks: { color: '#ffffff' } }
-          },
-          plugins: { legend: { labels: { color: '#ffffff' } } }
-        }
-      });
-    }
+  } else {
+    // إظهار حاوية المنصة وإخفاء حاوية الكل
+    crossPlatformContainer.style.display = 'none';
+    singlePlatformContainer.style.display = 'block';
+    document.getElementById('metricsTitle').textContent = `Platform Metrics (${currentPlatform})`;
+    document.getElementById('singlePlatformTitle').textContent = `تحليلات مفصلة لـ ${currentPlatform}`;
+
+    // رسم شارتات المنصة الواحدة (تعتمد على selectedResult)
+    renderSinglePlatformCharts(selectedResult);
   }
+}
 
-  // ===== Summary: Impressions + Spend by platform (الكارت اللي فوق على اليمين) =====
+// ==================================================================
+// دوال مساعدة للرسم (Helper Functions for Rendering)
+// ==================================================================
+
+// دالة لرسم الكروت العلوية
+function renderTopKPIs(selectedResult) {
+  document.getElementById('kpiSpend').textContent =
+    selectedResult.totalSpend.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+  document.getElementById('kpiPurchases').textContent =
+    selectedResult.totalPurch.toLocaleString();
+
+  document.getElementById('kpiPurchaseValue').textContent =
+    selectedResult.totalValue.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+  const kpiROAS = selectedResult.totalSpend ? (selectedResult.totalValue / selectedResult.totalSpend) : 0;
+  document.getElementById('kpiROAS').textContent = kpiROAS.toFixed(2) + 'x';
+}
+
+// دالة لرسم شارتات صفحة "All"
+function renderCrossPlatformCharts(overallResult, selectedResult) {
+  // أ) رسم الشارت الزمني العام (Spend Over Time - All)
+  // نستخدم selectedResult هنا لأنه حتى في صفحة All، قد يكون هناك فلتر زمني مطبق
+  drawTimeLineChart(
+    'tsChartAll',
+    'tsMsgAll',
+    chartTSAll,
+    selectedResult.timeseries,
+    'AmountSpent',
+    'Amount Spent (All)',
+    'rgba(56,189,248,1)',
+    (newChart) => { chartTSAll = newChart; }
+  );
+
+  // ب) رسم شارت المقارنة الرئيسي (Impressions & Spend)
   const platLabels = overallResult.platformArr.map((p) => p.Platform);
   const imprs = overallResult.platformArr.map((p) => p.Impressions || 0);
   const spends = overallResult.platformArr.map((p) => p.AmountSpent || 0);
 
-  const barCanvas = document.getElementById('barChart');
+  const barCanvas = document.getElementById('barChartAll');
   if (barCanvas) {
-    if (chartBar) chartBar.destroy();
-    const ctx2 = barCanvas.getContext('2d');
-
+    if (chartBarAll) chartBarAll.destroy();
+    const ctx = barCanvas.getContext('2d');
     if (!platLabels.length) {
-      document.getElementById('barMsg').textContent =
-        'لا توجد بيانات للمنصات لعرضها.';
-      ctx2.clearRect(0, 0, barCanvas.width, barCanvas.height);
+      document.getElementById('barMsgAll').textContent = 'لا توجد بيانات للمنصات.';
+      ctx.clearRect(0, 0, barCanvas.width, barCanvas.height);
     } else {
-      document.getElementById('barMsg').textContent = '';
-      chartBar = new Chart(ctx2, {
+      document.getElementById('barMsgAll').textContent = '';
+      chartBarAll = new Chart(ctx, {
         type: 'bar',
         data: {
           labels: platLabels,
           datasets: [
-            {
-              label: 'Impressions',
-              data: imprs,
-              backgroundColor: 'rgba(96,165,250,0.95)'
-            },
-            {
-              label: 'Amount Spent',
-              data: spends,
-              backgroundColor: 'rgba(45,212,191,0.9)'
-            }
+            { label: 'Impressions', data: imprs, backgroundColor: 'rgba(96,165,250,0.95)' },
+            { label: 'Amount Spent', data: spends, backgroundColor: 'rgba(45,212,191,0.9)' }
           ]
         },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          scales: {
-            y: { beginAtZero: true, ticks: { color: '#ffffff' } },
-            x: { ticks: { color: '#ffffff' } }
-          },
-          plugins: { legend: { labels: { color: '#ffffff' } } }
-        }
+        options: { responsive: true, maintainAspectRatio: false, scales: { y: { beginAtZero: true, ticks: { color: '#ffffff' } }, x: { ticks: { color: '#ffffff' } } }, plugins: { legend: { labels: { color: '#ffffff' } } } }
       });
     }
   }
 
-  // ===== Cross-platform Comparison (الـ 7 Charts) =====
-  const reachArr    = overallResult.platformArr.map(p => p.Reach || 0);
-  const clicksArr   = overallResult.platformArr.map(p => p.LinkClicks || 0);
-  const atcArr      = overallResult.platformArr.map(p => p.AddToCarts || 0);
-  const purchValArr = overallResult.platformArr.map(p => p.PurchaseValue || 0);
-  const purchArr    = overallResult.platformArr.map(p => p.Purchases || 0);
-  const landingArr  = overallResult.platformArr.map(p => p.LandingView || 0);
-
-  // 1) Impressions by Platform
-  const cmpImprCanvas = document.getElementById('cmpImprChart');
-  if (cmpImprCanvas) {
-    if (chartCmpImpr) chartCmpImpr.destroy();
-    const ctxImpr = cmpImprCanvas.getContext('2d');
-    chartCmpImpr = new Chart(ctxImpr, {
+  // ج) رسم باقي شارتات المقارنة الـ 7 (باستخدام دالة مساعدة لتقليل التكرار)
+  const drawCmpChart = (canvasId, chartInstance, dataKey, label, color, setChartInstance) => {
+    const canvas = document.getElementById(canvasId);
+    if (!canvas) return;
+    if (chartInstance) chartInstance.destroy();
+    const ctx = canvas.getContext('2d');
+    const dataArr = overallResult.platformArr.map(p => p[dataKey] || 0);
+    const newChart = new Chart(ctx, {
       type: 'bar',
       data: {
         labels: platLabels,
+        datasets: [{ label: label, data: dataArr, backgroundColor: color }]
+      },
+      options: { responsive: true, maintainAspectRatio: false, scales: { y: { beginAtZero: true, ticks: { color: '#ffffff' } }, x: { ticks: { color: '#ffffff' } } }, plugins: { legend: { labels: { color: '#ffffff' } } } }
+    });
+    setChartInstance(newChart);
+  };
+
+  drawCmpChart('cmpImprChart', chartCmpImpr, 'Impressions', 'Impressions', 'rgba(96,165,250,0.95)', (c) => chartCmpImpr = c);
+  drawCmpChart('cmpReachChart', chartCmpReach, 'Reach', 'Reach', 'rgba(52,211,153,0.9)', (c) => chartCmpReach = c);
+  drawCmpChart('cmpClicksChart', chartCmpClicks, 'LinkClicks', 'Link Clicks', 'rgba(129,140,248,0.9)', (c) => chartCmpClicks = c);
+  drawCmpChart('cmpATCChart', chartCmpATC, 'AddToCarts', 'Add To Carts', 'rgba(248,113,113,0.9)', (c) => chartCmpATC = c);
+  drawCmpChart('cmpPurchValChart', chartCmpPurchVal, 'PurchaseValue', 'Purchase Value', 'rgba(56,189,248,0.9)', (c) => chartCmpPurchVal = c);
+  drawCmpChart('cmpPurchChart', chartCmpPurch, 'Purchases', 'Purchases', 'rgba(251,191,36,0.9)', (c) => chartCmpPurch = c);
+  drawCmpChart('cmpLandingChart', chartCmpLanding, 'LandingView', 'Landing Views', 'rgba(96,165,250,0.9)', (c) => chartCmpLanding = c);
+}
+
+// دالة لرسم شارتات صفحة المنصة الواحدة (الجديدة)
+function renderSinglePlatformCharts(selectedResult) {
+  const tsData = selectedResult.timeseries;
+  const metrics = selectedResult.overallMetrics;
+
+  // 1. رسم شارت الصرف خلال الوقت للمنصة
+  drawTimeLineChart(
+    'spSpendChart', 'spSpendMsg', chartSpSpend, tsData, 'AmountSpent', `Amount Spent (${currentPlatform})`, 'rgba(56,189,248,1)', (c) => chartSpSpend = c
+  );
+
+  // 2. رسم شارت المبيعات (Purchases) خلال الوقت للمنصة
+  drawTimeLineChart(
+    'spPurchChart', 'spPurchMsg', chartSpPurch, tsData, 'Purchases', `Purchases (${currentPlatform})`, 'rgba(251,191,36,1)', (c) => chartSpPurch = c
+  );
+
+  // 3. رسم شارت CPA خلال الوقت (يحتاج حساب يومي)
+  // نقوم بتجهيز البيانات اليومية للـ CPA
+  const cpaTimeSeries = tsData.map(d => ({
+    Date: d.Date,
+    CPA: d.Purchases > 0 ? (d.AmountSpent / d.Purchases) : 0
+  }));
+
+  drawTimeLineChart(
+    'spCPAChart', 'spCPAMsg', chartSpCPA, cpaTimeSeries, 'CPA', `CPA (${currentPlatform})`, 'rgba(248, 113, 113, 1)', (c) => chartSpCPA = c
+  );
+
+
+  // 4. رسم قمع التحويل (Conversion Funnel)
+  drawFunnelChart('spFunnelChart', chartSpFunnel, metrics, (c) => chartSpFunnel = c);
+}
+
+
+// دالة مساعدة عامة لرسم أي Line Chart زمني
+function drawTimeLineChart(canvasId, msgId, chartInstance, timeseriesData, dataKey, label, color, setChartInstance) {
+  const canvas = document.getElementById(canvasId);
+  if (!canvas) return;
+  if (chartInstance) chartInstance.destroy();
+  const ctx = canvas.getContext('2d');
+
+  const labels = timeseriesData.map((d) => isoToDisplay[d.Date] || d.Date || 'Unknown');
+  const data = timeseriesData.map((d) => d[dataKey]);
+
+  if (!data.length || data.every(v => v === 0)) {
+    document.getElementById(msgId).textContent = 'لا توجد بيانات للعرض.';
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+  } else {
+    document.getElementById(msgId).textContent = '';
+    const newChart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: labels,
         datasets: [{
-          label: 'Impressions',
-          data: imprs,
-          backgroundColor: 'rgba(96,165,250,0.95)'
+          label: label,
+          data: data,
+          borderColor: color,
+          backgroundColor: color.replace('1)', '0.18)'),
+          tension: 0.25,
+          fill: true
         }]
       },
       options: {
@@ -185,292 +240,174 @@ function render(overallResult, selectedResult) {
         plugins: { legend: { labels: { color: '#ffffff' } } }
       }
     });
-  }
-
-  // 2) Reach by Platform
-  const cmpReachCanvas = document.getElementById('cmpReachChart');
-  if (cmpReachCanvas) {
-    if (chartCmpReach) chartCmpReach.destroy();
-    const ctxReach = cmpReachCanvas.getContext('2d');
-    chartCmpReach = new Chart(ctxReach, {
-      type: 'bar',
-      data: {
-        labels: platLabels,
-        datasets: [{
-          label: 'Reach',
-          data: reachArr,
-          backgroundColor: 'rgba(52,211,153,0.9)'
-        }]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        scales: {
-          y: { beginAtZero: true, ticks: { color: '#ffffff' } },
-          x: { ticks: { color: '#ffffff' } }
-        },
-        plugins: { legend: { labels: { color: '#ffffff' } } }
-      }
-    });
-  }
-
-  // 3) Link Clicks by Platform
-  const cmpClicksCanvas = document.getElementById('cmpClicksChart');
-  if (cmpClicksCanvas) {
-    if (chartCmpClicks) chartCmpClicks.destroy();
-    const ctxClicks = cmpClicksCanvas.getContext('2d');
-    chartCmpClicks = new Chart(ctxClicks, {
-      type: 'bar',
-      data: {
-        labels: platLabels,
-        datasets: [{
-          label: 'Link Clicks',
-          data: clicksArr,
-          backgroundColor: 'rgba(129,140,248,0.9)'
-        }]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        scales: {
-          y: { beginAtZero: true, ticks: { color: '#ffffff' } },
-          x: { ticks: { color: '#ffffff' } }
-        },
-        plugins: { legend: { labels: { color: '#ffffff' } } }
-      }
-    });
-  }
-
-  // 4) Add To Carts by Platform
-  const cmpATCCanvas = document.getElementById('cmpATCChart');
-  if (cmpATCCanvas) {
-    if (chartCmpATC) chartCmpATC.destroy();
-    const ctxATC = cmpATCCanvas.getContext('2d');
-    chartCmpATC = new Chart(ctxATC, {
-      type: 'bar',
-      data: {
-        labels: platLabels,
-        datasets: [{
-          label: 'Add To Carts',
-          data: atcArr,
-          backgroundColor: 'rgba(248,113,113,0.9)'
-        }]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        scales: {
-          y: { beginAtZero: true, ticks: { color: '#ffffff' } },
-          x: { ticks: { color: '#ffffff' } }
-        },
-        plugins: { legend: { labels: { color: '#ffffff' } } }
-      }
-    });
-  }
-
-  // 5) Purchase Value by Platform
-  const cmpPurchValCanvas = document.getElementById('cmpPurchValChart');
-  if (cmpPurchValCanvas) {
-    if (chartCmpPurchVal) chartCmpPurchVal.destroy();
-    const ctxPurchVal = cmpPurchValCanvas.getContext('2d');
-    chartCmpPurchVal = new Chart(ctxPurchVal, {
-      type: 'bar',
-      data: {
-        labels: platLabels,
-        datasets: [{
-          label: 'Purchase Value',
-          data: purchValArr,
-          backgroundColor: 'rgba(56,189,248,0.9)'
-        }]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        scales: {
-          y: { beginAtZero: true, ticks: { color: '#ffffff' } },
-          x: { ticks: { color: '#ffffff' } }
-        },
-        plugins: { legend: { labels: { color: '#ffffff' } } }
-      }
-    });
-  }
-
-  // 6) Purchases by Platform
-  const cmpPurchCanvas = document.getElementById('cmpPurchChart');
-  if (cmpPurchCanvas) {
-    if (chartCmpPurch) chartCmpPurch.destroy();
-    const ctxPurch = cmpPurchCanvas.getContext('2d');
-    chartCmpPurch = new Chart(ctxPurch, {
-      type: 'bar',
-      data: {
-        labels: platLabels,
-        datasets: [{
-          label: 'Purchases',
-          data: purchArr,
-          backgroundColor: 'rgba(251,191,36,0.9)'
-        }]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        scales: {
-          y: { beginAtZero: true, ticks: { color: '#ffffff' } },
-          x: { ticks: { color: '#ffffff' } }
-        },
-        plugins: { legend: { labels: { color: '#ffffff' } } }
-      }
-    });
-  }
-
-  // 7) Landing Views by Platform (Initial Checkpoints)
-  const cmpLandingCanvas = document.getElementById('cmpLandingChart');
-  if (cmpLandingCanvas) {
-    if (chartCmpLanding) chartCmpLanding.destroy();
-    const ctxLanding = cmpLandingCanvas.getContext('2d');
-    chartCmpLanding = new Chart(ctxLanding, {
-      type: 'bar',
-      data: {
-        labels: platLabels,
-        datasets: [{
-          label: 'Landing Views',
-          data: landingArr,
-          backgroundColor: 'rgba(96,165,250,0.9)'
-        }]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        scales: {
-          y: { beginAtZero: true, ticks: { color: '#ffffff' } },
-          x: { ticks: { color: '#ffffff' } }
-        },
-        plugins: { legend: { labels: { color: '#ffffff' } } }
-      }
-    });
-  }
-
-  // ===== Platform Metric Cards =====
-  const metricsContainer = document.getElementById('platformMetrics');
-  if (metricsContainer) {
-    metricsContainer.innerHTML = '';
-
-    const metricDefs = [
-      {
-        key: 'AvgOrdersPerDay',
-        label: 'Avg Orders/Day',
-        fmt: (v) => v.toFixed(2),
-        sub: 'متوسط عدد الطلبات في اليوم'
-      },
-      {
-        key: 'AvgATCPerDay',
-        label: 'Avg ATC/Day',
-        fmt: (v) => v.toFixed(2),
-        sub: 'متوسط الإضافات للسلة في اليوم'
-      },
-      {
-        key: 'AvgSalesPerDay',
-        label: 'Avg Sales/Day',
-        fmt: (v) => v.toFixed(2),
-        sub: 'متوسط قيمة المبيعات في اليوم'
-      },
-      {
-        key: 'AOV',
-        label: 'AOV',
-        fmt: (v) => v.toFixed(2),
-        sub: 'متوسط قيمة الطلب الواحد'
-      },
-      {
-        key: 'CPA',
-        label: 'CPA',
-        fmt: (v) => v.toFixed(2),
-        sub: 'Cost Per Acquisition'
-      },
-      {
-        key: 'AddToCarts',
-        label: 'ATC',
-        fmt: (v) => v.toLocaleString(),
-        sub: 'إجمالي الإضافات للسلة'
-      },
-      {
-        key: 'Impressions',
-        label: 'Impressions',
-        fmt: (v) => v.toLocaleString(),
-        sub: 'عدد مرات الظهور'
-      },
-      {
-        key: 'Reach',
-        label: 'Reach',
-        fmt: (v) => v.toLocaleString(),
-        sub: 'عدد المستخدمين (Reach)'
-      },
-      {
-        key: 'AvgFrequency',
-        label: 'Avg Freq.',
-        fmt: (v) => v.toFixed(2),
-        sub: 'متوسط مرات الظهور للفرد'
-      },
-      {
-        key: 'CTR',
-        label: 'Avg CTR',
-        fmt: (v) => (v * 100).toFixed(2) + '%',
-        sub: 'متوسط Click Through Rate'
-      },
-      {
-        key: 'CPM',
-        label: 'CPM',
-        fmt: (v) => v.toFixed(2),
-        sub: 'Cost per 1000 Impr.'
-      },
-      {
-        key: 'CPC',
-        label: 'CPC',
-        fmt: (v) => v.toFixed(2),
-        sub: 'Cost per Click'
-      }
-    ];
-
-    let platformsMetrics;
-    if (currentPlatform === 'All') {
-      platformsMetrics = overallResult.overallMetrics
-        ? [overallResult.overallMetrics]
-        : [];
-    } else {
-      const one = selectedResult.platformArr.find(
-        (p) => p.Platform === currentPlatform
-      );
-      platformsMetrics = one ? [one] : [];
-    }
-
-    platformsMetrics.forEach((p) => {
-      metricDefs.forEach((m) => {
-        const raw = p[m.key];
-        if (
-          raw === undefined ||
-          raw === null ||
-          (typeof raw === 'number' && isNaN(raw))
-        )
-          return;
-
-        const val =
-          typeof raw === 'number' ? raw : Number(raw) || 0;
-        const platformKey = (p.Platform || 'unknown').toLowerCase();
-        const div = document.createElement('div');
-
-        div.className = `platform-metric-card platform-card--${platformKey}`;
-        div.innerHTML = `
-          <div class="platform-metric-header">
-            <span class="platform-badge platform-badge--${platformKey}">${p.Platform}</span>
-            <span class="metric-label">${m.label}</span>
-          </div>
-          <div class="metric-value">${m.fmt(val)}</div>
-          <div class="metric-sub">${m.sub}</div>
-        `;
-
-        metricsContainer.appendChild(div);
-      });
-    });
+    setChartInstance(newChart);
   }
 }
+
+// دالة خاصة لرسم قمع التحويل (Funnel Chart)
+function drawFunnelChart(canvasId, chartInstance, metrics, setChartInstance) {
+  const canvas = document.getElementById(canvasId);
+  if (!canvas) return;
+  if (chartInstance) chartInstance.destroy();
+
+  // ترتيب مراحل القمع
+  const funnelStages = [
+    { key: 'Impressions', label: '1. Impressions' },
+    { key: 'LinkClicks', label: '2. Link Clicks' },
+    { key: 'LandingView', label: '3. Landing Views' },
+    { key: 'AddToCarts', label: '4. Add To Carts' },
+    { key: 'InitiateCheckout', label: '5. Initiate Checkout' },
+    { key: 'Purchases', label: '6. Purchases' }
+  ];
+
+  const labels = funnelStages.map(s => s.label);
+  // استخراج البيانات مع التأكد من أنها أرقام
+  const data = funnelStages.map(s => Number(metrics[s.key]) || 0);
+
+  // حساب نسب الفقد (Drop-off Rate) للمرحلة التالية
+  const dropOffRates = data.map((val, index) => {
+    if (index === data.length - 1) return null; // آخر مرحلة ليس لها فقد
+    const nextVal = data[index + 1];
+    if (val === 0) return 'N/A';
+    const dropOff = ((val - nextVal) / val) * 100;
+    return dropOff.toFixed(1) + '% Drop';
+  });
+
+
+  const ctx = canvas.getContext('2d');
+  const newChart = new Chart(ctx, {
+    type: 'bar', // نستخدم Bar chart لتمثيل القمع (يمكن تغييره لـ horizontalBar لو الشاشة عريضة)
+    data: {
+      labels: labels,
+      datasets: [{
+        label: 'Conversion Volume',
+        data: data,
+        // تدرج لوني بسيط للقمع
+        backgroundColor: [
+            'rgba(96, 165, 250, 0.9)',  // Blue (Impr)
+            'rgba(129, 140, 248, 0.9)', // Indigo (Clicks)
+            'rgba(52, 211, 153, 0.9)',  // Green (Landing)
+            'rgba(251, 191, 36, 0.9)',  // Yellow (ATC)
+            'rgba(248, 113, 113, 0.9)', // Red (IC)
+            'rgba(236, 72, 153, 0.9)'   // Pink (Purchases)
+        ],
+        barPercentage: 0.8, // جعل الأعمدة أعرض قليلاً
+      }]
+    },
+    options: {
+      indexAxis: 'y', // جعل الشارت أفقي (Horizontal Bar) لتمثيل أفضل للقمع
+      responsive: true,
+      maintainAspectRatio: false,
+      scales: {
+        x: { // المحور الأفقي (القيم)
+            beginAtZero: true,
+            grid: { color: 'rgba(255, 255, 255, 0.1)' },
+            ticks: { color: '#ffffff' }
+        },
+        y: { // المحور الرأسي (المراحل)
+            grid: { display: false },
+            ticks: { color: '#ffffff', font: { size: 12, weight: 'bold' } }
+        }
+      },
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+            callbacks: {
+                // إضافة نسبة الفقد في الـ Tooltip
+                afterLabel: function(context) {
+                    const dropOff = dropOffRates[context.dataIndex];
+                    if (dropOff) {
+                        return `\n▼ Next Step Drop-off: ${dropOff}`;
+                    }
+                    return '';
+                }
+            }
+        },
+        // تخصيص الـ DataLabels للقمع لعرض القيم ونسب الفقد
+        datalabels: {
+            ...commonDataLabelsConfig, // استخدام الإعدادات العامة كأساس
+            anchor: 'end',
+            align: 'right', // وضع النص على يمين العمود
+            color: '#ffffff', // لون النص أبيض ليظهر على الخلفية الداكنة
+            formatter: (value, context) => {
+                 let label = value.toLocaleString();
+                 // إضافة نسبة التحويل من المرحلة السابقة (اختياري - يجعل الشكل مزدحم قليلاً)
+                 /*
+                 if (context.dataIndex > 0) {
+                    const prevVal = context.dataset.data[context.dataIndex - 1];
+                    if (prevVal > 0) {
+                        const convRate = ((value / prevVal) * 100).toFixed(1) + '%';
+                        label += ` (Conv: ${convRate})`;
+                    }
+                 }
+                 */
+                 return label;
+            }
+        }
+      }
+    }
+  });
+  setChartInstance(newChart);
+}
+
+// دالة لرسم الكروت السفلية (Platform Metrics)
+function renderBottomMetrics(selectedResult) {
+  const metricsContainer = document.getElementById('platformMetrics');
+  if (!metricsContainer) return;
+  metricsContainer.innerHTML = '';
+
+  // تعريف الميتريكس
+  const metricDefs = [
+      { key: 'Impressions', label: 'الظهور (Impressions)', fmt: (v) => v.toLocaleString(), sub: 'عدد مرات الظهور' },
+      { key: 'Reach', label: 'الوصول (Reach)', fmt: (v) => v.toLocaleString(), sub: 'عدد المستخدمين الفريدين' },
+      { key: 'LinkClicks', label: 'النقرات (Link Clicks)', fmt: (v) => v.toLocaleString(), sub: 'عدد النقرات على الرابط' },
+      { key: 'LandingView', label: 'مشاهدة صفحة الهبوط (Landing Views)', fmt: (v) => v.toLocaleString(), sub: 'عدد مرات مشاهدة الصفحة المقصودة' },
+      { key: 'AddToCarts', label: 'إجمالي الإضافات للسلة (ATC)', fmt: (v) => v.toLocaleString(), sub: 'إجمالي عدد مرات الإضافة للسلة' },
+      { key: 'InitiateCheckout', label: 'بدء الدفع (Initiate Checkout)', fmt: (v) => v.toLocaleString(), sub: 'عدد مرات بدء عملية الدفع' },
+      { key: 'Purchases', label: 'عدد الطلبات (Purchases)', fmt: (v) => v.toLocaleString(), sub: 'إجمالي عدد الطلبات المكتملة' },
+      { key: 'CPA', label: 'تكلفة الاستحواذ (CPA)', fmt: (v) => v.toFixed(2), sub: 'Cost Per Acquisition' },
+      { key: 'CPM', label: 'التكلفة لكل ألف ظهور (CPM)', fmt: (v) => v.toFixed(2), sub: 'Cost per 1000 Impressions' },
+      { key: 'AvgFrequency', label: 'معدل التكرار (Frequency)', fmt: (v) => v.toFixed(2), sub: 'متوسط مرات الظهور للفرد' },
+      { key: 'AvgOrdersPerDay', label: 'متوسط الطلبات/يوم', fmt: (v) => v.toFixed(2), sub: 'Avg Orders Per Day' },
+      { key: 'AvgATCPerDay', label: 'متوسط الإضافة للسلة/يوم', fmt: (v) => v.toFixed(2), sub: 'Avg ATC Per Day' },
+      { key: 'AvgSalesPerDay', label: 'متوسط المبيعات/يوم', fmt: (v) => v.toFixed(2), sub: 'Avg Sales Per Day' },
+      { key: 'AOV', label: 'متوسط قيمة الطلب (AOV)', fmt: (v) => v.toFixed(2), sub: 'Average Order Value' }
+  ];
+
+  // تحديد البيانات التي ستعرض (إما للمنصة المختارة أو إجمالي الكل إذا كانت All)
+  let platformsMetricsData;
+  if (currentPlatform === 'All') {
+      // في حالة All، نستخدم الإجماليات المحسوبة في overallMetrics الخاصة بـ selectedResult
+      // التي تمثل مجموع البيانات المفلترة زمنياً لكل المنصات
+      platformsMetricsData = selectedResult.overallMetrics ? [selectedResult.overallMetrics] : [];
+      // ملاحظة: لو أردت عرض كارت لكل منصة في صفحة All (كما كان سابقاً)، استخدم الكود القديم هنا.
+      // الكود الحالي يعرض كروت إجمالية فقط في صفحة All بناء على طلبك في المرات السابقة.
+  } else {
+      // في حالة منصة محددة، نستخدم بيانات المنصة من platformArr
+      const one = selectedResult.platformArr.find((p) => p.Platform === currentPlatform);
+      platformsMetricsData = one ? [one] : [];
+  }
+
+  platformsMetricsData.forEach((p) => {
+    metricDefs.forEach((m) => {
+      const raw = p[m.key];
+      const val = (raw !== undefined && raw !== null && !isNaN(raw)) ? Number(raw) : 0;
+      const platformKey = (p.Platform || 'unknown').toLowerCase();
+      const div = document.createElement('div');
+      div.className = `platform-metric-card platform-card--${platformKey}`;
+      div.innerHTML = `
+        <div class="platform-metric-header">
+          <span class="platform-badge platform-badge--${platformKey}">${p.Platform}</span>
+          <span class="metric-label">${m.label}</span>
+        </div>
+        <div class="metric-value">${m.fmt(val)}</div>
+        <div class="metric-sub">${m.sub}</div>
+      `;
+      metricsContainer.appendChild(div);
+    });
+  });
+}
+
 
 // ===== Helper لريندر حسب الفلاتر الحالية =====
 function renderWithCurrentFilters() {
@@ -510,7 +447,8 @@ function buildTabsFromPlatforms(platformSet) {
 
 // ===== INIT =====
 async function init() {
-  const resp = await fetch('marketing.csv'); // عدّل المسار لو الملف في مكان تاني
+  // عدّل المسار لو الملف في مكان تاني
+  const resp = await fetch('marketing.csv');
   const text = await resp.text();
 
   const rows = await parseCsv(text);

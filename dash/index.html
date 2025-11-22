@@ -1,14 +1,14 @@
 <!doctype html>
-<html lang="ar">
+<html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Marketing Dashboard — No Purchases Line</title>
+  <title>KPI Dashboard</title>
 
-  <!-- ربط ملف الـ CSS الخارجي -->
+  <!-- external CSS -->
   <link rel="stylesheet" href="css/style.css" />
 
-  <!-- مكتبات خارجية -->
+  <!-- external libs -->
   <script src="https://unpkg.com/papaparse@5.4.1/papaparse.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
@@ -16,48 +16,58 @@
 <body>
   <div class="container">
     <header class="page-header">
-      <h1>Marketing Dashboard — بدون Purchases على الخط</h1>
+      <div class="header-left">
+        <h1>KPI Dashboard</h1>
+      </div>
+      <div class="header-actions">
+        <!-- Button to open filters modal (keeps existing logic intact) -->
+        <button id="openFiltersBtn" class="btn small" title="Open Filters">Filters</button>
+      </div>
     </header>
 
     <div class="layout">
-      <!-- Sidebar -->
-      <aside class="sidebar">
+      <!-- NOTE: Sidebar moved to modal (keeps same IDs and structure) -->
+      <aside class="sidebar modal" id="sidebarModal" aria-hidden="true" role="dialog" aria-label="Filters & Platforms">
         <div class="side-card">
-          <h3>Filters</h3>
+          <div class="modal-header">
+            <h3>Filters</h3>
+            <button id="closeFiltersBtn" class="btn small" title="Close Filters">Close</button>
+          </div>
+
           <div class="side-card-section">
             <label>
-              ملف CSV
-              <input id="fileInput" type="file" accept=".csv" title="رفع CSV (اختياري)"/>
-              <small>لو ما رفعتش ملف، الداتا التجريبية هتستخدم تلقائيًا</small>
+              CSV File
+              <input id="fileInput" type="file" accept=".csv" title="Upload CSV (optional)"/>
+              <small>If no file uploaded, demo data will be used automatically</small>
             </label>
           </div>
 
           <div class="side-card-section">
             <label>
-              الفترة السريعة
-              <select id="presetSelect" class="small" title="اختيارات سريعة للفترة">
-                <option value="custom">مخصص</option>
-                <option value="7">آخر 7 أيام</option>
-                <option value="14">آخر 14 يوم</option>
-                <option value="30">آخر 30 يوم</option>
-                <option value="month">هذا الشهر</option>
-                <option value="all">الكل</option>
+              Quick Range
+              <select id="presetSelect" class="small" title="Quick range presets">
+                <option value="custom">Custom</option>
+                <option value="7">Last 7 days</option>
+                <option value="14">Last 14 days</option>
+                <option value="30">Last 30 days</option>
+                <option value="month">This month</option>
+                <option value="all">All</option>
               </select>
             </label>
           </div>
 
           <div class="side-card-section">
-            <label>من:
+            <label>From:
               <input id="dateFrom" type="date" />
             </label>
-            <label>إلى:
+            <label>To:
               <input id="dateTo" type="date" />
             </label>
           </div>
 
           <div class="filters-actions">
-            <button id="applyRange" class="btn" title="تطبيق الفترة">تطبيق</button>
-            <button id="resetBtn" class="btn" title="إعادة الضبط">إعادة</button>
+            <button id="applyRange" class="btn" title="Apply Range">Apply</button>
+            <button id="resetBtn" class="btn" title="Reset">Reset</button>
           </div>
         </div>
 
@@ -67,94 +77,164 @@
         </div>
       </aside>
 
-      <!-- Main content -->
+      <!-- modal backdrop -->
+      <div id="modalBackdrop" class="modal-backdrop" tabindex="-1" aria-hidden="true"></div>
+
       <main class="main">
+        <h2 class="section-title" id="metricsTitle">Platform Metrics</h2>
+
+        <!-- Unified KPI cards (now use same .card structure as other cards) -->
         <section class="kpi-grid">
-          <div class="card kpi">
-            <div style="color:#6b7280">Total Spend</div>
-            <div id="kpiSpend" style="font-weight:700;font-size:18px">-</div>
+          <div class="card">
+            <h4 class="kpi-label">Total Spend (Spend)</h4>
+            <div id="kpiSpend" class="kpi-value">-</div>
           </div>
-          <div class="card kpi">
-            <div style="color:#6b7280">Total Impressions</div>
-            <div id="kpiImpr" style="font-weight:700;font-size:18px">-</div>
+          <div class="card">
+            <h4 class="kpi-label">Purchases</h4>
+            <div id="kpiPurchases" class="kpi-value">-</div>
           </div>
-          <div class="card kpi">
-            <div style="color:#6b7280">Total Purchases</div>
-            <div id="kpiPurch" style="font-weight:700;font-size:18px">-</div>
+          <div class="card">
+            <h4 class="kpi-label">Purchase Value</h4>
+            <div id="kpiPurchaseValue" class="kpi-value">-</div>
           </div>
-          <div class="card kpi">
-            <div style="color:#6b7280">Total Purchase Value</div>
-            <div id="kpiValue" style="font-weight:700;font-size:18px">-</div>
+          <div class="card">
+            <h4 class="kpi-label">ROAS</h4>
+            <div id="kpiROAS" class="kpi-value">-</div>
           </div>
         </section>
 
         <section>
-          <h2 class="section-title">Platform Metrics (كل بيان في كرت)</h2>
           <div id="platformMetrics" class="platform-metric-grid"></div>
         </section>
 
-        <section class="grid-2">
-          <div class="card">
-            <h4>Spend Over Time</h4>
-            <canvas id="tsChart"></canvas>
-            <div id="tsMsg" class="note"></div>
+        <div id="crossPlatformContainer">
+          <h2 class="section-title">Cross-Platform Comparison</h2>
+
+          <section class="grid-2">
+            <div class="card">
+              <h4>Spend Over Time (All Platforms)</h4>
+              <canvas id="tsChartAll"></canvas>
+              <div id="tsMsgAll" class="note"></div>
+            </div>
+            <div class="card">
+              <h4>Impressions & Spend by Platform</h4>
+              <canvas id="barChartAll"></canvas>
+              <div id="barMsgAll" class="note"></div>
+            </div>
+          </section>
+
+          <div class="grid-2" style="margin-bottom:12px; margin-top:12px;">
+            <div class="card">
+              <h4>Impressions by Platform</h4>
+              <canvas id="cmpImprChart"></canvas>
+            </div>
+            <div class="card">
+              <h4>Reach by Platform</h4>
+              <canvas id="cmpReachChart"></canvas>
+            </div>
           </div>
-          <div class="card">
-            <h4>Impressions by Platform</h4>
-            <canvas id="barChart"></canvas>
-            <div id="barMsg" class="note"></div>
+
+          <div class="grid-2" style="margin-bottom:12px">
+            <div class="card">
+              <h4>Link Clicks by Platform</h4>
+              <canvas id="cmpClicksChart"></canvas>
+            </div>
+            <div class="card">
+              <h4>Add To Carts by Platform</h4>
+              <canvas id="cmpATCChart"></canvas>
+            </div>
           </div>
-        </section>
 
-        <section>
-  <h2 class="section-title">Cross-Platform Comparison</h2>
+          <div class="grid-2" style="margin-bottom:12px">
+            <div class="card">
+              <h4>Purchase Value by Platform</h4>
+              <canvas id="cmpPurchValChart"></canvas>
+            </div>
+            <div class="card">
+              <h4>Purchases by Platform</h4>
+              <canvas id="cmpPurchChart"></canvas>
+            </div>
+          </div>
 
-  <div class="grid-2" style="margin-bottom:12px">
-    <div class="card">
-      <h4>Impressions by Platform</h4>
-      <canvas id="cmpImprChart"></canvas>
-    </div>
-    <div class="card">
-      <h4>Reach by Platform</h4>
-      <canvas id="cmpReachChart"></canvas>
-    </div>
-  </div>
+          <div class="card">
+            <h4>Initial Checkpoints (Landing Views) by Platform</h4>
+            <canvas id="cmpLandingChart"></canvas>
+          </div>
+        </div>
 
-  <div class="grid-2" style="margin-bottom:12px">
-    <div class="card">
-      <h4>Link Clicks by Platform</h4>
-      <canvas id="cmpClicksChart"></canvas>
-    </div>
-    <div class="card">
-      <h4>Add To Carts by Platform</h4>
-      <canvas id="cmpATCChart"></canvas>
-    </div>
-  </div>
+        <div id="singlePlatformContainer" style="display: none;">
+          <h2 class="section-title" id="singlePlatformTitle">Platform Analytics</h2>
 
-  <div class="grid-2" style="margin-bottom:12px">
-    <div class="card">
-      <h4>Purchase Value by Platform</h4>
-      <canvas id="cmpPurchValChart"></canvas>
-    </div>
-    <div class="card">
-      <h4>Purchases by Platform</h4>
-      <canvas id="cmpPurchChart"></canvas>
-    </div>
-  </div>
+          <section class="grid-2">
+            <div class="card">
+              <h4>Spend Over Time</h4>
+              <canvas id="spSpendChart"></canvas>
+              <div id="spSpendMsg" class="note"></div>
+            </div>
+            <div class="card">
+              <h4>Purchases Over Time</h4>
+              <canvas id="spPurchChart"></canvas>
+              <div id="spPurchMsg" class="note"></div>
+            </div>
+          </section>
 
-  <div class="card">
-    <h4>Initial Checkpoints (Landing Views) by Platform</h4>
-    <canvas id="cmpLandingChart"></canvas>
-  </div>
-</section>
+          <section class="grid-2" style="margin-top: 20px;">
+            <div class="card" style="grid-column: span 2;">
+              <h4>Conversion Funnel</h4>
+              <div style="height: 400px;">
+                <canvas id="spFunnelChart"></canvas>
+              </div>
+            </div>
+            <div class="card" style="grid-column: span 2; margin-top: 20px;">
+              <h4>CPA Over Time</h4>
+              <canvas id="spCPAChart"></canvas>
+              <div id="spCPAMsg" class="note"></div>
+            </div>
+          </section>
+        </div>
 
       </main>
     </div>
   </div>
 
-  <!-- ربط ملفات الجافاسكربت بتاعة المشروع -->
+  <!-- keep project scripts; added a tiny inline script to toggle modal -->
+  <script>
+    (function(){
+      const openBtn = document.getElementById('openFiltersBtn');
+      const closeBtn = document.getElementById('closeFiltersBtn');
+      const modal = document.getElementById('sidebarModal');
+      const backdrop = document.getElementById('modalBackdrop');
+
+      function openModal(){
+        modal.classList.add('open');
+        modal.setAttribute('aria-hidden','false');
+        backdrop.classList.add('open');
+        backdrop.setAttribute('aria-hidden','false');
+      }
+      function closeModal(){
+        modal.classList.remove('open');
+        modal.setAttribute('aria-hidden','true');
+        backdrop.classList.remove('open');
+        backdrop.setAttribute('aria-hidden','true');
+      }
+
+      openBtn && openBtn.addEventListener('click', openModal);
+      closeBtn && closeBtn.addEventListener('click', closeModal);
+      backdrop && backdrop.addEventListener('click', closeModal);
+
+      // allow Escape to close modal
+      document.addEventListener('keydown', function(e){
+        if(e.key === 'Escape' && modal.classList.contains('open')) closeModal();
+      });
+    })();
+  </script>
+
   <script src="js/dataUtils.js"></script>
   <script src="js/app.js"></script>
+
+<footer class="page-footer">
+  <p>Done with Love ❤️ by <strong>Yassein, Yousef & Elkhal</strong></p>
+</footer>
 
 </body>
 </html>

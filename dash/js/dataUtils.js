@@ -106,6 +106,8 @@ window.aggregate = function(rows, platformFilter, dateFrom, dateTo){
   const totalClicks      = filtered.reduce((s,r)=>s+window.toNum(r['Link Clicks']),0);
   const totalLandingView = filtered.reduce((s,r)=>s+window.toNum(r['Landing View']),0);
   const totalATC         = filtered.reduce((s,r)=>s+window.toNum(r['Add to Carts']),0);
+  // إضافة Initiate Checkout هنا
+  const totalInitiateCheckout = filtered.reduce((s,r)=>s+window.toNum(r['Initiate Checkout']),0);
   const totalFreq        = filtered.reduce((s,r)=>s+window.toNum(r['Frequency']),0);
   const totalReach       = filtered.reduce((s,r)=>s+window.toNum(r['Reach']),0);
   const totalCount       = filtered.length;
@@ -148,6 +150,7 @@ window.aggregate = function(rows, platformFilter, dateFrom, dateTo){
         LinkClicks: 0,
         LandingView: 0,
         AddToCarts: 0,
+        InitiateCheckout: 0, // إضافة الحقل هنا
         Purchases: 0,
         PurchaseValue: 0,
         FrequencySum: 0,
@@ -162,6 +165,8 @@ window.aggregate = function(rows, platformFilter, dateFrom, dateTo){
     byPlatform[p].LinkClicks     += window.toNum(r['Link Clicks']);
     byPlatform[p].LandingView    += window.toNum(r['Landing View']);
     byPlatform[p].AddToCarts     += window.toNum(r['Add to Carts']);
+    // تجميع Initiate Checkout لكل منصة
+    byPlatform[p].InitiateCheckout += window.toNum(r['Initiate Checkout']);
     byPlatform[p].Purchases      += window.toNum(r['Purchases']);
     byPlatform[p].PurchaseValue  += window.toNum(r['Purchase Value']);
     byPlatform[p].FrequencySum   += window.toNum(r['Frequency']);
@@ -215,6 +220,7 @@ window.aggregate = function(rows, platformFilter, dateFrom, dateTo){
     LinkClicks: totalClicks,
     LandingView: totalLandingView,
     AddToCarts: totalATC,
+    InitiateCheckout: totalInitiateCheckout, // إضافتها هنا أيضاً
     Purchases: totalPurch,
     PurchaseValue: totalValue,
     FrequencySum: totalFreq,
