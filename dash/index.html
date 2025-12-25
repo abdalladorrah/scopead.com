@@ -282,24 +282,46 @@
   </script>
 
   <!-- flatpickr init -->
-  <script>
-    document.addEventListener("DOMContentLoaded", function(){
-      flatpickr("#dateRange", {
-        mode:"range",
-        dateFormat:"Y-m-d",
-        onClose:function(sel){
-          const df=document.getElementById('dateFrom');
-          const dt=document.getElementById('dateTo');
-          if(sel.length===2){ df.value=sel[0].toISOString().slice(0,10); dt.value=sel[1].toISOString().slice(0,10); }
-          else if(sel.length===1){ df.value=sel[0].toISOString().slice(0,10); dt.value=""; }
-          else { df.value=""; dt.value=""; }
-          const preset=document.getElementById('presetSelect');
-          if(preset) preset.value='custom';
-          if(typeof renderWithCurrentFilters==='function') renderWithCurrentFilters();
+<script>
+  document.addEventListener("DOMContentLoaded", function(){
+
+    function toLocalDate(d){
+      const y = d.getFullYear();
+      const m = String(d.getMonth() + 1).padStart(2, '0');
+      const day = String(d.getDate()).padStart(2, '0');
+      return `${y}-${m}-${day}`;
+    }
+
+    flatpickr("#dateRange", {
+      mode:"range",
+      dateFormat:"Y-m-d",
+      onClose:function(sel){
+        const df=document.getElementById('dateFrom');
+        const dt=document.getElementById('dateTo');
+
+        if(sel.length===2){
+          df.value = toLocalDate(sel[0]);
+          dt.value = toLocalDate(sel[1]);
         }
-      });
+        else if(sel.length===1){
+          df.value = toLocalDate(sel[0]);
+          dt.value = "";
+        }
+        else{
+          df.value = "";
+          dt.value = "";
+        }
+
+        const preset=document.getElementById('presetSelect');
+        if(preset) preset.value='custom';
+        if(typeof renderWithCurrentFilters==='function')
+          renderWithCurrentFilters();
+      }
     });
-  </script>
+
+  });
+</script>
+
 
   <!-- SYNC: mirror Chart.js -> ECharts (no defaults). This polls for Chart.js instances created by app.js and creates/updates ECharts accordingly. -->
   <script>
