@@ -423,7 +423,7 @@
   }
 
   // poller - picks up chart instances created by app.js
-  const POLL_INTERVAL = 800;
+  const POLL_INTERVAL = 80000;
   const poller = setInterval(()=> {
     MAP.forEach(syncOne);
   }, POLL_INTERVAL);
@@ -449,4 +449,5 @@
 
 </body>
 </html>
+
 
