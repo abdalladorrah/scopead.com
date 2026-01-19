@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lenci | Customer Personas</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Inter:wght@400;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="lenci.css">
+    <style>
+        .personas-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .persona-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            border: 1px solid #e5e7eb;
+            transition: transform 0.2s;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .persona-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        .persona-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #f3f4f6;
+            padding-bottom: 15px;
+        }
+
+        .avatar {
+            width: 60px;
+            height: 60px;
+            background: #e0f2fe;
+            color: var(--primary-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            flex-shrink: 0;
+        }
+
+        .persona-info h3 {
+            margin: 0;
+            font-size: 1.1rem;
+            color: var(--text-dark);
+        }
+
+        .persona-role {
+            font-size: 0.85rem;
+            color: #64748b;
+            font-weight: 600;
+        }
+
+        .tag-list {
+            display: flex;
+            gap: 5px;
+            flex-wrap: wrap;
+            margin-top: 8px;
+        }
+
+        .p-tag {
+            background: #f1f5f9;
+            color: #475569;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            border: 1px solid #e2e8f0;
+        }
+
+        .quote-box {
+            background: #fffbeb;
+            border: 1px dashed #fcd34d;
+            padding: 10px;
+            border-radius: 6px;
+            font-style: italic;
+            text-align: center;
+            margin-bottom: 15px;
+            color: #b45309;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        .pain-goals-box {
+            background: #f8fafc;
+            padding: 15px;
+            border-radius: 8px;
+            flex-grow: 1;
+        }
+
+        .pg-title {
+            font-weight: bold;
+            font-size: 0.85rem;
+            margin-bottom: 5px;
+            color: var(--primary-color);
+            display: block;
+        }
+
+        .pg-list {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 15px 0;
+            font-size: 0.85rem;
+        }
+
+        .pg-list li {
+            margin-bottom: 5px;
+            position: relative;
+            padding-right: 15px;
+        }
+
+        body.lang-en .pg-list li {
+            padding-right: 0;
+            padding-left: 15px;
+        }
+
+        .pg-list li::before {
+            content: "•";
+            position: absolute;
+            right: 0;
+            color: #94a3b8;
+        }
+
+        body.lang-en .pg-list li::before {
+            right: auto;
+            left: 0;
+        }
+
+        .solution-match {
+            margin-top: auto;
+            background: var(--primary-color);
+            color: white;
+            text-align: center;
+            padding: 8px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Nav injected by nav.js -->
+
+    <div class="container">
+
+        <!-- ARABIC CONTENT -->
+        <div id="content-ar" class="visible">
+            <header class="hero" style="padding: 20px 0;">
+                <h1>معرض الشخصيات (Persona Gallery) 👥</h1>
+                <div class="subtitle">شرائح العملاء المستهدفة</div>
+            </header>
+
+            <div class="personas-grid">
+
+                <!-- 1. OMAR -->
+                <div class="persona-card">
+                    <div class="persona-header">
+                        <div class="avatar">🌙</div>
+                        <div class="persona-info">
+                            <h3>عمر (Omar)</h3>
+                            <span class="persona-role">تاجر المواسم (The Seasonal)</span>
+                            <div class="tag-list">
+                                <span class="p-tag">موظف + تاجر</span>
+                                <span class="p-tag">سلة / زد</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="quote-box">"أبي أبيع، ما أبي أوجع راسي بالتصوير والترتيب."</div>
+                    <div class="pain-goals-box">
+                        <span class="pg-title">نقاط الألم 😫</span>
+                        <ul class="pg-list">
+                            <li>عقدة المصورين والانتظار الطويل.</li>
+                            <li>ضياع الوقت قبل المواسم (رمضان/الأعياد).</li>
+                        </ul>
+                        <span class="pg-title">الهدف 🎯</span>
+                        <ul class="pg-list">
+                            <li>تجهيز المتجر للموسم "أمس قبل اليوم".</li>
+                        </ul>
+                    </div>
+                    <div class="solution-match">✨ الحل: الرابط السحري</div>
+                </div>
+
+                <!-- 2. SARAH -->
+                <div class="persona-card">
+                    <div class="persona-header">
+                        <div class="avatar">💰</div>
+                        <div class="persona-info">
+                            <h3>سارة (Sarah)</h3>
+                            <span class="persona-role">التاجرة المبتدئة (The Bootstrap)</span>
+                            <div class="tag-list">
+                                <span class="p-tag">بداية الطريق</span>
+                                <span class="p-tag">انستقرام</span>
+                                <span class="p-tag">0 ميزانية</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="quote-box">"كل ريال أوفره هو ريال زيادة للإعلانات."</div>
+                    <div class="pain-goals-box">
+                        <span class="pg-title">نقاط الألم 😫</span>
+                        <ul class="pg-list">
+                            <li>أسعار المصورين خيالية (3000 ريال = رأس مالي!).</li>
+                            <li>تصوير الجوال غير احترافي.</li>
+                        </ul>
+                        <span class="pg-title">الهدف 🎯</span>
+                        <ul class="pg-list">
+                            <li>صور احترافية "ببلاش" أو بتكلفة رمزية.</li>
+                        </ul>
+                    </div>
+                    <div class="solution-match">💸 الحل: موفر التكاليف (Cost Saver)</div>
+                </div>
+
+                <!-- 3. KHALED -->
+                <div class="persona-card">
+                    <div class="persona-header">
+                        <div class="avatar">👔</div>
+                        <div class="persona-info">
+                            <h3>خالد (Khaled)</h3>
+                            <span class="persona-role">مدير التسويق (The Manager)</span>
+                            <div class="tag-list">
+                                <span class="p-tag">B2B</span>
+                                <span class="p-tag">وكالة / براند متوسط</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="quote-box">"كيف أطلع كولكشن كامل بأقل تكلفة وأسرع وقت؟"</div>
+                    <div class="pain-goals-box">
+                        <span class="pg-title">نقاط الألم 😫</span>
+                        <ul class="pg-list">
+                            <li>الهدر المالي في جلسات التصوير التقليدية.</li>
+                            <li>بطء التسليم (Turnaround Time).</li>
+                        </ul>
+                        <span class="pg-title">الهدف 🎯</span>
+                        <ul class="pg-list">
+                            <li>الكفاءة (Efficiency) وإبهار الإدارة بالأرقام.</li>
+                        </ul>
+                    </div>
+                    <div class="solution-match">💼 الحل: الإدارة الذكية (AI Scaling)</div>
+                </div>
+
+                <!-- 4. FAISAL -->
+                <div class="persona-card">
+                    <div class="persona-header">
+                        <div class="avatar">📦</div>
+                        <div class="persona-info">
+                            <h3>فيصل (Faisal)</h3>
+                            <span class="persona-role">الدروبشيبينغ (The Drop-shipper)</span>
+                            <div class="tag-list">
+                                <span class="p-tag">100+ منتج</span>
+                                <span class="p-tag">AliExpress</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="quote-box">"عندي 100 منتج، مستحيل أصورهم واحد واحد!"</div>
+                    <div class="pain-goals-box">
+                        <span class="pg-title">نقاط الألم 😫</span>
+                        <ul class="pg-list">
+                            <li>تشتت صور الموردين (ضعف الهوية).</li>
+                            <li>استحالة التصوير الفعلي للكميات الكبيرة.</li>
+                        </ul>
+                        <span class="pg-title">الهدف 🎯</span>
+                        <ul class="pg-list">
+                            <li>توحيد شكل المتجر بضغطة زر.</li>
+                        </ul>
+                    </div>
+                    <div class="solution-match">📚 الحل: تحديث الكتالوج (Catalog Flip)</div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- ENGLISH CONTENT -->
+        <div id="content-en" class="hidden">
+            <header class="hero" style="padding: 20px 0;">
+                <h1>Persona Gallery 👥</h1>
+                <div class="subtitle">Target Audience Segments</div>
+            </header>
+
+            <div class="personas-grid">
+
+                <!-- 1. OMAR -->
+                <div class="persona-card">
+                    <div class="persona-header">
+                        <div class="avatar">🌙</div>
+                        <div class="persona-info">
+                            <h3>Omar</h3>
+                            <span class="persona-role">The Seasonal Merchant</span>
+                            <div class="tag-list">
+                                <span class="p-tag">Side Hustler</span>
+                                <span class="p-tag">Salla/Zid</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="quote-box">"I need to sell, not get a headache coordinating shoots."</div>
+                    <div class="pain-goals-box">
+                        <span class="pg-title">Pain Points 😫</span>
+                        <ul class="pg-list">
+                            <li>Photographer delays & booking hassle.</li>
+                            <li>Missing crucial seasons (Ramadan/Eid).</li>
+                        </ul>
+                        <span class="pg-title">Goal 🎯</span>
+                        <ul class="pg-list">
+                            <li>Get store season-ready "Yesterday".</li>
+                        </ul>
+                    </div>
+                    <div class="solution-match">✨ Solution: The Magic Link</div>
+                </div>
+
+                <!-- 2. SARAH -->
+                <div class="persona-card">
+                    <div class="persona-header">
+                        <div class="avatar">💰</div>
+                        <div class="persona-info">
+                            <h3>Sarah</h3>
+                            <span class="persona-role">The Bootstrap Starter</span>
+                            <div class="tag-list">
+                                <span class="p-tag">Newbie</span>
+                                <span class="p-tag">Instagram</span>
+                                <span class="p-tag">0 Budget</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="quote-box">"Every riyal saved is a riyal for Ads."</div>
+                    <div class="pain-goals-box">
+                        <span class="pg-title">Pain Points 😫</span>
+                        <ul class="pg-list">
+                            <li>Studio costs (3000 SAR is my capital!).</li>
+                            <li>Amateur-looking mobile photos.</li>
+                        </ul>
+                        <span class="pg-title">Goal 🎯</span>
+                        <ul class="pg-list">
+                            <li>Pro photos for free/cheap.</li>
+                        </ul>
+                    </div>
+                    <div class="solution-match">💸 Solution: The Cost Saver</div>
+                </div>
+
+                <!-- 3. KHALED -->
+                <div class="persona-card">
+                    <div class="persona-header">
+                        <div class="avatar">👔</div>
+                        <div class="persona-info">
+                            <h3>Khaled</h3>
+                            <span class="persona-role">The Marketing Manager (B2B)</span>
+                            <div class="tag-list">
+                                <span class="p-tag">Agency</span>
+                                <span class="p-tag">Mid-size Brand</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="quote-box">"How to launch a collection fast & under budget?"</div>
+                    <div class="pain-goals-box">
+                        <span class="pg-title">Pain Points 😫</span>
+                        <ul class="pg-list">
+                            <li>Financial bloat in traditional shoots.</li>
+                            <li>Slow Turnaround Time.</li>
+                        </ul>
+                        <span class="pg-title">Goal 🎯</span>
+                        <ul class="pg-list">
+                            <li>Efficiency & Operational Excellence.</li>
+                        </ul>
+                    </div>
+                    <div class="solution-match">💼 Solution: AI Scaling</div>
+                </div>
+
+                <!-- 4. FAISAL -->
+                <div class="persona-card">
+                    <div class="persona-header">
+                        <div class="avatar">📦</div>
+                        <div class="persona-info">
+                            <h3>Faisal</h3>
+                            <span class="persona-role">The Dropshipper</span>
+                            <div class="tag-list">
+                                <span class="p-tag">100+ SKUs</span>
+                                <span class="p-tag">AliExpress</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="quote-box">"I have 100 products, I can't shoot them one by one!"</div>
+                    <div class="pain-goals-box">
+                        <span class="pg-title">Pain Points 😫</span>
+                        <ul class="pg-list">
+                            <li>Inconsistent supplier photos.</li>
+                            <li>Impossible logistics for bulk shooting.</li>
+                        </ul>
+                        <span class="pg-title">Goal 🎯</span>
+                        <ul class="pg-list">
+                            <li>Unified Storefront Identity instantly.</li>
+                        </ul>
+                    </div>
+                    <div class="solution-match">📚 Solution: The Catalog Flip</div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        <p>© 2026 Lenci. All rights reserved.</p>
+    </footer>
+
+    <script src="nav.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lenci | Campaign Timeline</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Inter:wght@400;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="lenci.css">
+    <style>
+        .timeline-item {
+            position: relative;
+            padding-bottom: 30px;
+            padding-right: 30px;
+            border-right: 2px solid #e5e7eb;
+        }
+
+        body.lang-en .timeline-item {
+            padding-right: 0;
+            padding-left: 30px;
+            border-right: none;
+            border-left: 2px solid #e5e7eb;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            top: 5px;
+            right: -9px;
+            border: 4px solid white;
+        }
+
+        body.lang-en .timeline-item::before {
+            right: auto;
+            left: -9px;
+        }
+
+        .timeline-date {
+            font-size: 0.9rem;
+            color: var(--primary-color);
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .timeline-content h3 {
+            margin: 0 0 10px 0;
+            font-size: 1.25rem;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Nav injected by nav.js -->
+
+    <div class="container">
+
+        <div id="content-ar" class="visible">
+            <header class="hero" style="padding: 20px 0;">
+                <h1>الجدول الزمني (Execution Sprints) 📅</h1>
+                <div class="subtitle">4 أسابيع من الانضباط</div>
+            </header>
+
+            <div class="card">
+                <div class="section-title">مراحل التنفيذ (The 4 Sprints)</div>
+
+                <div class="timeline-item">
+                    <div class="timeline-date">الأسبوع 1</div>
+                    <div class="timeline-content">
+                        <h3>التجهيز (Foundation) 🏗️</h3>
+                        <p>تركيب الـ Pixels. تجهيز فيديوهات "المنقذ" و "اختبار الأجواء". إعداد حملة <strong>LinkedIn
+                                Pilot</strong> لاستهداف (خالد).</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-date">الأسبوع 2</div>
+                    <div class="timeline-content">
+                        <h3>التغذية (The Feeding - 20%) 👻</h3>
+                        <p>إطلاق <strong>The Sweeper (سناب شات)</strong> لجلب ترافيك ضخم. الهدف: اختبار "الرابط السحري"
+                            وجمع بيانات (Cost Per Trial).</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-date">الأسبوع 3</div>
+                    <div class="timeline-content">
+                        <h3>الحصاد والهجوم (Harvesting - 80%) ⚔️</h3>
+                        <p>تفعيل <strong>The Showroom (انستقرام)</strong> للتحويل. إطلاق <strong>The Sniper (لينكد
+                                إن)</strong> لصيد عقود الشركات. تشغيل واتساب (Closer).</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item" style="border: none;">
+                    <div class="timeline-date">الأسبوع 4</div>
+                    <div class="timeline-content">
+                        <h3>الكميات (Scale & Volume) 📦</h3>
+                        <p>استهداف تجار الدروبشيبينغ (فيصل) بميزة <strong>The Catalog Flip</strong>. زيادة ميزانية
+                            الإعلانات الرابحة فقط.</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div id="content-en" class="hidden">
+            <header class="hero" style="padding: 20px 0;">
+                <h1>Campaign Timeline 📅</h1>
+                <div class="subtitle">4 Weeks of Discipline</div>
+            </header>
+
+            <div class="card">
+                <div class="section-title">Execution Sprints</div>
+
+                <div class="timeline-item">
+                    <div class="timeline-date">Week 1</div>
+                    <div class="timeline-content">
+                        <h3>Foundation 🏗️</h3>
+                        <p>Pixel Setup. Produce "Savior" & "Vibe Check" creatives. Setup <strong>LinkedIn Pilot</strong>
+                            for (Khaled).</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-date">Week 2</div>
+                    <div class="timeline-content">
+                        <h3>Feeding (20% Budget) 👻</h3>
+                        <p>Launch <strong>The Sweeper (Snapchat)</strong> for mass traffic. Goal: Test Magic Link &
+                            gather data (CPT).</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-date">Week 3</div>
+                    <div class="timeline-content">
+                        <h3>Harvesting (80% Budget) ⚔️</h3>
+                        <p>Activate <strong>The Showroom (IG)</strong> for conversions. Launch <strong>The Sniper
+                                (LinkedIn)</strong> for B2B. Turn on WhatsApp (Closer).</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item" style="border: none;">
+                    <div class="timeline-date">Week 4</div>
+                    <div class="timeline-content">
+                        <h3>Scale & Volume 📦</h3>
+                        <p>Target Dropshippers (Faisal) with <strong>Catalog Flip</strong> feature. Scale winning ads
+                            only.</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        <p>© 2026 Lenci. All rights reserved.</p>
+    </footer>
+
+    <script src="nav.js"></script>
+</body>
+
+</html>

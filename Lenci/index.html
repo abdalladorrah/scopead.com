@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lenci | Marketing Dashboard</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Inter:wght@400;600;700;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="lenci.css">
+
+    <style>
+        .countdown-container {
+            text-align: center;
+            margin: 30px 0;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .quick-access-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 15px;
+            margin-top: 40px;
+        }
+
+        .access-card {
+            background: white;
+            padding: 20px 15px;
+            border-radius: 12px;
+            text-align: center;
+            text-decoration: none;
+            color: var(--text-dark);
+            border: 1px solid #e5e7eb;
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 140px;
+        }
+
+        .access-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            border-color: var(--primary-color);
+        }
+
+        .access-icon {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .access-title {
+            font-weight: 700;
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+        }
+
+        .access-desc {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Nav injected by JS -->
+
+    <div class="container">
+
+        <div id="content-ar" class="visible">
+            <header class="hero">
+                <h1>لوحة قيادة لنسي (Dashboard) 🚀</h1>
+                <div class="tagline">مركز العمليات - رمضان 2026</div>
+            </header>
+
+            <section class="countdown-container">
+                <h3>الوقت المتبقي للإطلاق</h3>
+                <div class="countdown" id="countdown">30d 00h 00m</div>
+                <p>لنكن مستعدين للحظة الصفر</p>
+            </section>
+
+            <div class="dashboard-grid">
+                <div class="metric-card">
+                    <div class="metric-value">1,000</div>
+                    <div class="metric-label">هدف التجارب (Trials)</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">1.5%</div>
+                    <div class="metric-label">معدل التحويل (الواقعي)</div>
+                </div>
+                <div class="metric-card missing-data"
+                    style="background: rgba(252, 211, 77, 0.1); border-color: rgba(252, 211, 77, 0.5);">
+                    <div class="metric-value" style="color: #f59e0b;">؟ ريال</div>
+                    <div class="metric-label" style="color: #d97706;">الميزانية (TBD)</div>
+                </div>
+            </div>
+
+            <div class="section-title" style="margin-top: 40px; text-align: center;">الملفات الرئيسية (Quick Access)
+            </div>
+            <div class="quick-access-grid">
+                <a href="Lenci.html" class="access-card">
+                    <span class="access-icon">📑</span>
+                    <span class="access-title">الاستراتيجية الشاملة</span>
+                    <span class="access-desc">Master Strategy</span>
+                </a>
+                <a href="plan.html" class="access-card">
+                    <span class="access-icon">⚔️</span>
+                    <span class="access-title">خطة العمل</span>
+                    <span class="access-desc">The Action Plan</span>
+                </a>
+                <a href="budget.html" class="access-card">
+                    <span class="access-icon">📊</span>
+                    <span class="access-title">الميزانية</span>
+                    <span class="access-desc">Budget & Allocation</span>
+                </a>
+                <a href="persona.html" class="access-card">
+                    <span class="access-icon">👥</span>
+                    <span class="access-title">الشخصيات</span>
+                    <span class="access-desc">Customer Personas</span>
+                </a>
+                <a href="creatives.html" class="access-card">
+                    <span class="access-icon">🎨</span>
+                    <span class="access-title">المكتبة الإعلانية</span>
+                    <span class="access-desc">Ad Creatives</span>
+                </a>
+                <a href="competitors.html" class="access-card">
+                    <span class="access-icon">⚖️</span>
+                    <span class="access-title">المنافسون</span>
+                    <span class="access-desc">Competitors Verdict</span>
+                </a>
+            </div>
+        </div>
+
+        <div id="content-en" class="hidden">
+            <header class="hero">
+                <h1>Lenci Marketing Dashboard 🚀</h1>
+                <div class="tagline">Operations Center - Ramadan 2026</div>
+            </header>
+
+            <section class="countdown-container">
+                <h3>Launch Countdown</h3>
+                <div class="countdown" id="countdown-en">30d 00h 00m</div>
+                <p>Preparing for Zero Hour</p>
+            </section>
+
+            <div class="dashboard-grid">
+                <div class="metric-card">
+                    <div class="metric-value">1,000</div>
+                    <div class="metric-label">Target Trials</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">1.5%</div>
+                    <div class="metric-label">Realistic Conv. Rate</div>
+                </div>
+                <div class="metric-card missing-data"
+                    style="background: rgba(252, 211, 77, 0.1); border-color: rgba(252, 211, 77, 0.5);">
+                    <div class="metric-value" style="color: #f59e0b;">? SAR</div>
+                    <div class="metric-label" style="color: #d97706;">Budget (TBD)</div>
+                </div>
+            </div>
+
+            <div class="section-title" style="margin-top: 40px; text-align: center;">Quick Access Files</div>
+            <div class="quick-access-grid">
+                <a href="Lenci.html" class="access-card">
+                    <span class="access-icon">📑</span>
+                    <span class="access-title">Master Strategy</span>
+                    <span class="access-desc">Executive Summary</span>
+                </a>
+                <a href="plan.html" class="access-card">
+                    <span class="access-icon">⚔️</span>
+                    <span class="access-title">The Action Plan</span>
+                    <span class="access-desc">Funnel & Roles</span>
+                </a>
+                <a href="budget.html" class="access-card">
+                    <span class="access-icon">📊</span>
+                    <span class="access-title">Budget</span>
+                    <span class="access-desc">Fund Allocation</span>
+                </a>
+                <a href="persona.html" class="access-card">
+                    <span class="access-icon">👥</span>
+                    <span class="access-title">Personas</span>
+                    <span class="access-desc">Target Segments</span>
+                </a>
+                <a href="creatives.html" class="access-card">
+                    <span class="access-icon">🎨</span>
+                    <span class="access-title">Ad Library</span>
+                    <span class="access-desc">Creatives & Angles</span>
+                </a>
+                <a href="competitors.html" class="access-card">
+                    <span class="access-icon">⚖️</span>
+                    <span class="access-title">Competitors</span>
+                    <span class="access-desc">The Verdict</span>
+                </a>
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        <p>© 2026 Lenci. All rights reserved.</p>
+    </footer>
+
+    <script src="nav.js"></script>
+    <script>
+        // Simple Countdown Logic
+        const launchDate = new Date();
+        launchDate.setDate(launchDate.getDate() + 30); // 30 days from now
+
+        function updateCountdown() {
+            const now = new Date();
+            const diff = launchDate - now;
+
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+
+            const text = `${days}d ${hours}h ${minutes}m`;
+            document.getElementById('countdown').innerText = text;
+            if (document.getElementById('countdown-en')) document.getElementById('countdown-en').innerText = text;
+        }
+        setInterval(updateCountdown, 1000 * 60); // Update every minute
+        updateCountdown();
+    </script>
+</body>
+
+</html>

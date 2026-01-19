@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lenci | Strategic Plan</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Inter:wght@400;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="lenci.css">
+    <style>
+        .tactic-box {
+            background: rgba(59, 130, 246, 0.05);
+            border-left: 4px solid var(--primary-color);
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 0 10px 10px 0;
+            transition: transform 0.2s;
+        }
+
+        .tactic-box:hover {
+            transform: translateX(-5px);
+        }
+
+        body.lang-en .tactic-box {
+            border-left: none;
+            border-right: 4px solid var(--primary-color);
+            border-radius: 10px 0 0 10px;
+        }
+
+        body.lang-en .tactic-box:hover {
+            transform: translateX(5px);
+        }
+
+        .tactic-title {
+            font-weight: bold;
+            font-size: 1.15rem;
+            color: var(--secondary-color);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .channel-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .channel-card {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+        }
+
+        .role-tag {
+            font-size: 0.8rem;
+            padding: 2px 8px;
+            border-radius: 4px;
+            background: #e2e8f0;
+            color: #475569;
+            font-weight: 600;
+        }
+
+        .matrix-header {
+            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Nav injected by nav.js -->
+
+    <div class="container">
+
+        <!-- ARABIC CONTENT -->
+        <div id="content-ar" class="visible">
+            <header class="hero" style="padding: 20px 0;">
+                <h1>خطة العمل (The Plan) 📄</h1>
+                <div class="subtitle">استراتيجية القمع المعكوس (Inverted Funnel)</div>
+            </header>
+
+            <!-- 1. Attack Strategy -->
+            <div class="card">
+                <div class="section-title">1. استراتيجية الهجوم (Attack Strategy) 🛡️</div>
+
+                <div class="tactic-box">
+                    <span class="tactic-title">📊 قاعدة الـ 20/80 (Budget Split)</span>
+                    <ul>
+                        <li><strong>20% (مرحلة التغذية - Feeding):</strong><br>
+                            <em>الهدف:</em> جلب أكبر عدد من الزوار لـ "تجربة" الرابط السحري.<br>
+                            <em>القنوات:</em> تركيز قوي على Snapchat (للرخص والانتشار) و Instagram Views.
+                        </li>
+                        <li style="margin-top:10px;"><strong>80% (مرحلة الحصاد - Harvesting):</strong><br>
+                            <em>الهدف:</em> تحويل من جربوا الرابط إلى مشتركين (Sales).<br>
+                            <em>القنوات:</em> Instagram Conversion + WhatsApp Retargeting.
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="tactic-box">
+                    <span class="tactic-title">✨ الخطاف السحري (The Magic Input)</span>
+                    <p>المعادلة بسيطة:</p>
+                    <p><strong>"رابط متجرك فقط = صور احترافية فوراً"</strong></p>
+                    <p>(بدون رفع صور، بدون تعقيد).</p>
+                </div>
+            </div>
+
+            <!-- 2. Channel Matrix -->
+            <div class="card">
+                <div class="matrix-header">
+                    <span>💎 مصفوفة القنوات (Channel Matrix)</span>
+                </div>
+
+                <div class="channel-grid">
+                    <!-- Snapchat -->
+                    <div class="channel-card">
+                        <div
+                            style="color: #eab308; text-shadow: 0px 0px 1px black; font-weight:bold; margin-bottom:5px;">
+                            Snapchat 👻</div>
+                        <span class="role-tag">الهجوم الكاسح (The Sweeper)</span>
+                        <p style="margin-top:10px; font-size:0.9rem;"><strong>الدور:</strong> جلب "الترافيك" والانتشار
+                            السريع.</p>
+                        <p style="font-size:0.85rem; color:#666;"><strong>التكتيك:</strong> إعلانات عفوية تركز على
+                            "سهولة الاستخدام" و "النتيجة الفورية".</p>
+                    </div>
+
+                    <!-- Instagram -->
+                    <div class="channel-card">
+                        <div style="color: #E1306C; font-weight:bold; margin-bottom:5px;">Instagram 📸</div>
+                        <span class="role-tag">واجهة العرض (The Showroom)</span>
+                        <p style="margin-top:10px; font-size:0.9rem;"><strong>الدور:</strong> الإقناع البصري والجودة
+                            (Quality Assurance).</p>
+                        <p style="font-size:0.85rem; color:#666;"><strong>التكتيك:</strong> Reels تعرض "الدمو" والتحول
+                            المذهل (Before/After).</p>
+                    </div>
+
+                    <!-- LinkedIn -->
+                    <div class="channel-card" style="border: 2px solid #0077b5;">
+                        <div style="color: #0077b5; font-weight:bold; margin-bottom:5px;">LinkedIn 💼</div>
+                        <span class="role-tag" style="background:#0077b5; color:white;">قناص الشركات (The Sniper)</span>
+                        <p style="margin-top:10px; font-size:0.9rem;"><strong>الدور:</strong> استهداف الوكالات
+                            والبراندات المتوسطة (High Ticket).</p>
+                        <p style="font-size:0.85rem; color:#666;"><strong>الرسالة:</strong> "وفر ميزانية التصوير السنوية
+                            بذكاء اصطناعي".</p>
+                    </div>
+
+                    <!-- WhatsApp -->
+                    <div class="channel-card">
+                        <div style="color: #25D366; font-weight:bold; margin-bottom:5px;">WA & Email 💬</div>
+                        <span class="role-tag">الإغلاق (The Closer)</span>
+                        <p style="margin-top:10px; font-size:0.9rem;"><strong>الدور:</strong> شبكة الأمان (Retention).
+                        </p>
+                        <p style="font-size:0.85rem; color:#666;"><strong>التكتيك:</strong> رسالة أوتوماتيكية لمن يخرج:
+                            "صورك جاهزة، حملها الآن".</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. Execution Phasing -->
+            <div class="card">
+                <div class="section-title">3. مراحل التنفيذ (Execution Phasing) 🚀</div>
+
+                <div class="tactic-box">
+                    <span class="tactic-title">المرحلة الأولى: اختبار الشهية (Validation)</span>
+                    <p>تشغيل إعلانات Snapchat و Instagram بهدف (Traffic).</p>
+                    <p><strong>المقياس:</strong> كم شخص وضع رابط متجره؟ (Cost Per Trial).</p>
+                </div>
+
+                <div class="tactic-box" style="border-right-color: #10b981;">
+                    <span class="tactic-title">المرحلة الثانية: تشغيل محركات البيع (Conversion)</span>
+                    <p>تحويل الميزانية (الـ 80%) لاستهداف من تفاعلوا.</p>
+                    <p>تشغيل رسائل الواتساب الآلية + إطلاق حملات LinkedIn لجذب أول 5 عقود شركات.</p>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ENGLISH CONTENT -->
+        <div id="content-en" class="hidden">
+            <header class="hero" style="padding: 20px 0;">
+                <h1>The Plan 📄</h1>
+                <div class="subtitle">Inverted Funnel Strategy</div>
+            </header>
+
+            <!-- 1. Attack Strategy -->
+            <div class="card">
+                <div class="section-title">1. Attack Strategy 🛡️</div>
+
+                <div class="tactic-box">
+                    <span class="tactic-title">📊 20/80 Budget Split Rule</span>
+                    <ul>
+                        <li><strong>20% (Feeding Phase):</strong><br>
+                            <em>Goal:</em> Max visitors to "Try" the Magic Link.<br>
+                            <em>Channels:</em> Snapchat (Cheap Reach) & Instagram Views.
+                        </li>
+                        <li style="margin-top:10px;"><strong>80% (Harvesting Phase):</strong><br>
+                            <em>Goal:</em> Convert trials to Subscribers (Sales).<br>
+                            <em>Channels:</em> Instagram Conversion + WhatsApp Retargeting.
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="tactic-box">
+                    <span class="tactic-title">✨ The Magic Input Hook</span>
+                    <p>The Formula:</p>
+                    <p><strong>"Your Store Link Only = Pro Photos Instantly"</strong></p>
+                    <p>(No uploads, No friction).</p>
+                </div>
+            </div>
+
+            <!-- 2. Channel Matrix -->
+            <div class="card">
+                <div class="matrix-header">
+                    <span>💎 Channel Matrix</span>
+                </div>
+
+                <div class="channel-grid">
+                    <!-- Snapchat -->
+                    <div class="channel-card">
+                        <div style="color: #eab308; font-weight:bold; margin-bottom:5px;">Snapchat 👻</div>
+                        <span class="role-tag">The Sweeper</span>
+                        <p style="margin-top:10px; font-size:0.9rem;"><strong>Role:</strong> Traffic & Rapid Mass Reach.
+                        </p>
+                        <p style="font-size:0.85rem; color:#666;"><strong>Tactic:</strong> Spontaneous Story Ads
+                            focusing on "Ease" & "Instant Result".</p>
+                    </div>
+
+                    <!-- Instagram -->
+                    <div class="channel-card">
+                        <div style="color: #E1306C; font-weight:bold; margin-bottom:5px;">Instagram 📸</div>
+                        <span class="role-tag">The Showroom</span>
+                        <p style="margin-top:10px; font-size:0.9rem;"><strong>Role:</strong> Visual Persuasion & Quality
+                            Assurance.</p>
+                        <p style="font-size:0.85rem; color:#666;"><strong>Tactic:</strong> Reels showing "The Demo" &
+                            Amazing Transformations (Before/After).</p>
+                    </div>
+
+                    <!-- LinkedIn -->
+                    <div class="channel-card" style="border: 2px solid #0077b5;">
+                        <div style="color: #0077b5; font-weight:bold; margin-bottom:5px;">LinkedIn 💼</div>
+                        <span class="role-tag" style="background:#0077b5; color:white;">The B2B Sniper</span>
+                        <p style="margin-top:10px; font-size:0.9rem;"><strong>Role:</strong> High Ticket Targeting
+                            (Agencies/Brands).</p>
+                        <p style="font-size:0.85rem; color:#666;"><strong>Msg:</strong> "Save Annual Shoot Budget with
+                            AI".</p>
+                    </div>
+
+                    <!-- WhatsApp -->
+                    <div class="channel-card">
+                        <div style="color: #25D366; font-weight:bold; margin-bottom:5px;">WA & Email 💬</div>
+                        <span class="role-tag">The Closer</span>
+                        <p style="margin-top:10px; font-size:0.9rem;"><strong>Role:</strong> Safety Net (Retention).</p>
+                        <p style="font-size:0.85rem; color:#666;"><strong>Tactic:</strong> Auto-msg to drop-offs: "Your
+                            photos are ready, download now".</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. Execution Phasing -->
+            <div class="card">
+                <div class="section-title">3. Execution Phasing 🚀</div>
+
+                <div class="tactic-box">
+                    <span class="tactic-title">Phase 1: Validation</span>
+                    <p>Run Snapchat & Instagram ads for (Traffic).</p>
+                    <p><strong>Metric:</strong> How many pasted their store link? (Cost Per Trial).</p>
+                </div>
+
+                <div class="tactic-box" style="border-left: 4px solid #10b981;">
+                    <span class="tactic-title">Phase 2: Conversion Engine</span>
+                    <p>Shift budget (the 80%) to retarget interactors.</p>
+                    <p>Activate Auto-WhatsApp msgs + Launch LinkedIn campaigns for first 5 B2B contracts.</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        <p>© 2026 Lenci. All rights reserved.</p>
+    </footer>
+
+    <script src="nav.js"></script>
+</body>
+
+</html>

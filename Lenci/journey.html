@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lenci | User Journey</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Inter:wght@400;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="lenci.css">
+    <style>
+        .step {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: rgba(59, 130, 246, 0.05);
+            border-radius: 12px;
+            border-right: 4px solid var(--primary-color);
+        }
+
+        body.lang-en .step {
+            border-right: none;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .step-number {
+            font-size: 2rem;
+            font-weight: 900;
+            color: var(--primary-color);
+            min-width: 50px;
+            text-align: center;
+        }
+
+        .step-content h3 {
+            margin: 0 0 5px 0;
+            font-size: 1.2rem;
+        }
+
+        .step-content p {
+            margin: 0;
+            font-size: 1rem;
+            color: var(--text-muted);
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Nav injected by nav.js -->
+
+    <div class="container">
+
+        <!-- ARABIC CONTENT -->
+        <div id="content-ar" class="visible">
+            <header class="hero" style="padding: 20px 0;">
+                <h1>رحلة العميل 🛒</h1>
+                <div class="subtitle">المسار النفسي: من الإعلان إلى الاشتراك</div>
+            </header>
+
+            <div class="card">
+                <div class="section-title">خطوات التجربة (The Experience)</div>
+
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3>الشرارة (The Spark) ✨</h3>
+                        <p>"عمر" يرى إعلان <strong>"المنقذ" (The Savior)</strong> على انستقرام. الرسالة تلامس ألمه: "لا
+                            تنتظر المصور، صور لرمضان الآن".</p>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3>الرابط السحري (Magic Frictionless) 🔗</h3>
+                        <p>يدخل الصفحة.. لا يوجد تسجيل! فقط خانة واحدة: <strong>"ضع رابط منتجك من سلة/زد"</strong>.</p>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3>الصدمة الثقافية (Localized Aha!) 🇸🇦</h3>
+                        <p>خلال ثوانٍ.. الذكاء الاصطناعي يضع منتجه في مجلس رمضاني مع <strong>قهوة وبخور</strong>. (ليست
+                            مجرد صورة، بل هوية).</p>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h3>الفخ الناعم (The Soft Gate) 🚪</h3>
+                        <p>عمر ينبهر ويريد التحميل. الآن تظهر النافذة: "سجل مجاناً لتحميل الصور بدون علامة مائية".</p>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">5</div>
+                    <div class="step-content">
+                        <h3>شبكة الأمان (The Closer) 💬</h3>
+                        <p>إذا خرج قبل التسجيل؟ <strong>واتساب</strong> يرسل له تلقائياً: "يا عمر، صورة منتجك جاهزة.. لا
+                            تضيعها!".</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- ENGLISH CONTENT -->
+        <div id="content-en" class="hidden">
+            <header class="hero" style="padding: 20px 0;">
+                <h1>Customer Journey 🛒</h1>
+                <div class="subtitle">Psychological Path: From Ad to Sub</div>
+            </header>
+
+            <div class="card">
+                <div class="section-title">The Experience Flow</div>
+
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3>The Spark ✨</h3>
+                        <p>"Omar" sees <strong>"The Savior"</strong> ad on IG. It hits home: "Don't wait for the
+                            photographer, shoot for Ramadan NOW."</p>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3>Magic Link (Frictionless) 🔗</h3>
+                        <p>Lands on app.. No SignUp! Just ONE field: <strong>"Paste your Salla/Zid Product
+                                Link"</strong>.</p>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3>Localized Aha! Moment 🇸🇦</h3>
+                        <p>Seconds later.. AI places his product in a Ramadan setting with <strong>Arabic Coffee &
+                                Oud</strong>. (It's Identity, not just pixels).</p>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h3>The Soft Gate 🚪</h3>
+                        <p>Omar is wowed & clicks Download. Popup appears: "Sign up Free to remove watermark".</p>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">5</div>
+                    <div class="step-content">
+                        <h3>The Closer (Safety Net) 💬</h3>
+                        <p>Left before signup? <strong>WhatsApp</strong> auto-msgs: "Hey Omar, your product photo is
+                            ready.. don't lose it!".</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        <p>© 2026 Lenci. All rights reserved.</p>
+    </footer>
+
+    <script src="nav.js"></script>
+</body>
+
+</html>

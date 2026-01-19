@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lenci | Budget Allocation</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Inter:wght@400;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="lenci.css">
+    <style>
+        .percentage-bar {
+            display: flex;
+            height: 30px;
+            border-radius: 15px;
+            overflow: hidden;
+            margin: 20px 0;
+            font-weight: bold;
+            color: white;
+            text-align: center;
+            line-height: 30px;
+            font-size: 0.8rem;
+        }
+
+        .bar-segment {
+            height: 100%;
+            transition: width 1s;
+        }
+
+        .bg-meta {
+            background-color: #E1306C;
+            width: 50%;
+        }
+
+        .bg-snap {
+            background-color: #FFFC00;
+            width: 25%;
+            color: black;
+        }
+
+        .bg-link {
+            background-color: #0077b5;
+            width: 15%;
+        }
+
+        .bg-wa {
+            background-color: #25D366;
+            width: 10%;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th,
+        td {
+            text-align: left;
+            padding: 12px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        th {
+            background-color: #f9fafb;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        body[dir="rtl"] th,
+        body[dir="rtl"] td {
+            text-align: right;
+        }
+
+        .budget-phase {
+            margin-top: 30px;
+            padding: 15px;
+            background: #f8fafc;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .phase-title {
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Nav injected by nav.js -->
+
+    <div class="container">
+
+        <!-- ARABIC CONTENT -->
+        <div id="content-ar" class="visible">
+            <header class="hero" style="padding: 20px 0;">
+                <h1>توزيع الميزانية (Budget Allocation) 📊</h1>
+                <div class="subtitle">تمويل "القمع المعكوس"</div>
+            </header>
+
+            <div class="card">
+                <div class="section-title">مصفوفة التمويل (The Diamond Funding)</div>
+                <div class="percentage-bar">
+                    <div class="bar-segment bg-meta">50% Showroom</div>
+                    <div class="bar-segment bg-snap">25% Sweeper</div>
+                    <div class="bar-segment bg-link">15% Sniper</div>
+                    <div class="bar-segment bg-wa">10% Closer</div>
+                </div>
+                <ul>
+                    <li><strong>Instagram (The Showroom) - 50%:</strong> عرض "سلسلة رمضان" لإقناع (عمر وسارة) بالجودة.
+                    </li>
+                    <li><strong>Snapchat (The Sweeper) - 25%:</strong> جلب ترافيك ضخم (Volume) باستخدام "الرابط السحري".
+                    </li>
+                    <li><strong>LinkedIn (The Sniper) - 15%:</strong> ميزانية خاصة لصيد عقود الشركات (خالد - B2B).</li>
+                    <li><strong>WhatsApp (The Closer) - 10%:</strong> استهداف السلات المتروكة (Retention).</li>
+                </ul>
+
+                <div class="budget-phase">
+                    <div class="phase-title">توقيت الصرف (80/20 Rule):</div>
+                    <p><strong>20% (مرحلة التغذية):</strong> صرف منخفض للتحقق من العرروض (Validation).</p>
+                    <p><strong>80% (مرحلة الحصاد):</strong> ضخ الميزانية الكبرى عند ثبوت الـ Conversion (الهجوم).</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="section-title">مؤشرات الأداء (Success Metrics)</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>المؤشر (KPI)</th>
+                            <th>الهدف (Target)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>CAC (Cost Per Acquisition)</strong></td>
+                            <td>منخفض جداً (بسبب الـ Viral Loop).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>ROAS (العائد الإجمالي)</strong></td>
+                            <td>هدف: <strong>3:1</strong> (يصل لـ 5:1 في المواسم).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>B2B Lead Cost</strong></td>
+                            <td>أقل من $50 (لاستهداف الشركات).</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="card missing-data">
+                <div class="section-title">⚠️ بانتظار الموافقة</div>
+                <div class="missing-item">
+                    <span>اعتماد ميزانية المرحلة الأولى (Validation)؟</span>
+                    <span class="placeholder">بانتظار التوقيع</span>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ENGLISH CONTENT -->
+        <div id="content-en" class="hidden">
+            <header class="hero" style="padding: 20px 0;">
+                <h1>Budget Allocation 📊</h1>
+                <div class="subtitle">Funding the Inverted Funnel</div>
+            </header>
+
+            <div class="card">
+                <div class="section-title">The Diamond Funding Matrix</div>
+                <div class="percentage-bar">
+                    <div class="bar-segment bg-meta">50% Showroom</div>
+                    <div class="bar-segment bg-snap">25% Sweeper</div>
+                    <div class="bar-segment bg-link">15% Sniper</div>
+                    <div class="bar-segment bg-wa">10% Closer</div>
+                </div>
+                <ul>
+                    <li><strong>Instagram (The Showroom) - 50%:</strong> Showcasing "Ramadan Series" to convert Omar &
+                        Sarah.</li>
+                    <li><strong>Snapchat (The Sweeper) - 25%:</strong> Mass Traffic driving via "Magic Link".</li>
+                    <li><strong>LinkedIn (The Sniper) - 15%:</strong> Special budget for hunting B2B Contracts (Khaled).
+                    </li>
+                    <li><strong>WhatsApp (The Closer) - 10%:</strong> Retargeting & Abandoned Carts.</li>
+                </ul>
+
+                <div class="budget-phase">
+                    <div class="phase-title">Spending Timeline (80/20 Rule):</div>
+                    <p><strong>20% (Feeding Phase):</strong> Low spend for Offer Validation.</p>
+                    <p><strong>80% (Harvesting Phase):</strong> Heavy scaling once Conversion is proven.</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="section-title">Success Metrics</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Metric</th>
+                            <th>Target</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>CAC</strong></td>
+                            <td>Extremely Low (Viral Loop effect).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>ROAS</strong></td>
+                            <td>Goal: <strong>3:1</strong> (Scaling to 5:1 seasonally).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>B2B Lead Cost</strong></td>
+                            <td>Below $50 (Corporate Targeting).</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="card missing-data">
+                <div class="section-title">⚠️ Pending Approval</div>
+                <div class="missing-item">
+                    <span>Approve Phase 1 (Validation) Budget?</span>
+                    <span class="placeholder">Pending Sig.</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        <p>© 2026 Lenci. All rights reserved.</p>
+    </footer>
+
+    <script src="nav.js"></script>
+</body>
+
+</html>

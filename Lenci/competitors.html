@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lenci | Competitors Matrix</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Inter:wght@400;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="lenci.css">
+    <style>
+        .comparison-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin-top: 20px;
+            font-size: 0.95rem;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 12px;
+            text-align: center;
+            border-bottom: 1px solid #e5e7eb;
+            vertical-align: middle;
+        }
+
+        .comparison-table th {
+            background: #f8fafc;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .lenci-col {
+            background: rgba(59, 130, 246, 0.05);
+            border-left: 2px solid var(--primary-color);
+            border-right: 2px solid var(--primary-color);
+        }
+
+        .lenci-head {
+            background: var(--primary-color) !important;
+            color: white !important;
+            border-radius: 8px 8px 0 0;
+        }
+
+        .lenci-bot {
+            border-bottom: 2px solid var(--primary-color);
+            border-radius: 0 0 8px 8px;
+        }
+
+        .verdict-box {
+            margin-top: 30px;
+            padding: 20px;
+            background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+            border-radius: 12px;
+            border: 1px solid #bfdbfe;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Nav injected by nav.js -->
+
+    <div class="container">
+
+        <!-- ARABIC CONTENT -->
+        <div id="content-ar" class="visible">
+            <header class="hero" style="padding: 20px 0;">
+                <h1>لماذا يربح لنسي؟ (Why Lenci Wins?) 🦁</h1>
+                <div class="subtitle">أين نقف في السوق؟</div>
+            </header>
+
+            <div class="card">
+                <div class="section-title">مقارنة الميزات (Feature Comparison)</div>
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>الميزة (Feature)</th>
+                            <th class="lenci-head">لنسي (Lenci) 🦁</th>
+                            <th>Kive (العالمي) 🤖</th>
+                            <th>المصور التقليدي 📸</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>التكلفة</td>
+                            <td class="lenci-col"><strong>$ (منخفضة جداً)</strong></td>
+                            <td>منخفضة</td>
+                            <td>$$$$ (عالية جداً)</td>
+                        </tr>
+                        <tr>
+                            <td>السرعة</td>
+                            <td class="lenci-col"><strong>ثوانٍ (فوري)</strong></td>
+                            <td>دقائق</td>
+                            <td>أسابيع</td>
+                        </tr>
+                        <tr>
+                            <td>طريقة الإدخال</td>
+                            <td class="lenci-col"><strong>رابط المتجر (Magic Link)</strong></td>
+                            <td>رابط المتجر</td>
+                            <td>شحن المنتجات</td>
+                        </tr>
+                        <tr>
+                            <td>التوطين (الذوق)</td>
+                            <td class="lenci-col"><strong>سعودي/عربي</strong></td>
+                            <td>طابع غربي عام</td>
+                            <td>ممتاز لكن مكلف</td>
+                        </tr>
+                        <tr>
+                            <td>المجتمع والدعم</td>
+                            <td class="lenci-col lenci-bot"><strong>واتساب + دعم شخصي</strong></td>
+                            <td>لا يوجد (Self-Serve)</td>
+                            <td>تواصل متعب</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="verdict-box">
+                    <h3>الاستنتاج (The Verdict)</h3>
+                    <p>المنافسون (Kive) لديهم التقنية، لكن <strong>لنسي يملك "الهوية"</strong>.<br>
+                        نحن لا نقدم صوراً عامة، بل صوراً تتحدث بلسان <strong>الثقافة السعودية والخليجية</strong>
+                        (عبايات، قهوة، بخور) وبأسعار محلية.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ENGLISH CONTENT -->
+        <div id="content-en" class="hidden">
+            <header class="hero" style="padding: 20px 0;">
+                <h1>Why Lenci Wins? 🦁</h1>
+                <div class="subtitle">Market Position</div>
+            </header>
+
+            <div class="card">
+                <div class="section-title">Feature Comparison</div>
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Feature</th>
+                            <th class="lenci-head">Lenci 🦁</th>
+                            <th>Kive (Global) 🤖</th>
+                            <th>Trad. Photographer 📸</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Cost</td>
+                            <td class="lenci-col"><strong>$ (Very Low)</strong></td>
+                            <td>$$ (Mid)</td>
+                            <td>$$$$ (Very High)</td>
+                        </tr>
+                        <tr>
+                            <td>Speed</td>
+                            <td class="lenci-col"><strong>Seconds (Instant)</strong></td>
+                            <td>Minutes</td>
+                            <td>Weeks</td>
+                        </tr>
+                        <tr>
+                            <td>Input Method</td>
+                            <td class="lenci-col"><strong>Magic Store Link</strong></td>
+                            <td>Magic Store Link</td>
+                            <td>Shipping Products</td>
+                        </tr>
+                        <tr>
+                            <td>Localization</td>
+                            <td class="lenci-col"><strong>Saudi/Arab Taste</strong></td>
+                            <td>Generic Western</td>
+                            <td>Great but Pricey</td>
+                        </tr>
+                        <tr>
+                            <td>Support</td>
+                            <td class="lenci-col lenci-bot"><strong>WhatsApp + Personal</strong></td>
+                            <td>Self-Serve</td>
+                            <td>Hard Communication</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="verdict-box">
+                    <h3>The Verdict</h3>
+                    <p>Competitors (Kive) have the tech, but <strong>Lenci owns the "Identity"</strong>.<br>
+                        We don't just generate generic photos; we speak the <strong>Saudi & Gulf Culture</strong>
+                        (Abayas, Coffee, Oud) at local prices.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        <p>© 2026 Lenci. All rights reserved.</p>
+    </footer>
+
+    <script src="nav.js"></script>
+</body>
+
+</html>
