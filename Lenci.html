@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lenci Launch Strategy</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --accent-bg: #f3f4f6;
+            --text-dark: #1f2937;
+            --text-light: #4b5563;
+            --card-bg: #ffffff;
+            --warning-bg: #fef3c7;
+            --warning-text: #92400e;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: var(--accent-bg);
+            color: var(--text-dark);
+            margin: 0;
+            padding: 0;
+            transition: all 0.3s ease;
+            line-height: 1.6;
+        }
+
+        /* English Overrides */
+        body.lang-en {
+            font-family: 'Inter', sans-serif;
+            direction: ltr;
+        }
+
+        /* Container */
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: var(--text-light);
+            font-weight: 600;
+        }
+
+        /* Toggle Button */
+        .toggle-container {
+            position: fixed;
+            top: 20px;
+            right: 20px; /* Default for RTL */
+            z-index: 1000;
+        }
+        
+        body.lang-en .toggle-container {
+            right: auto;
+            left: 20px;
+        }
+
+        button.lang-btn {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-family: inherit;
+            font-weight: bold;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s, background 0.2s;
+        }
+
+        button.lang-btn:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        /* Cards */
+        .card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 20px;
+            border-bottom: 2px solid var(--accent-bg);
+            padding-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Icons placeholder style */
+        .icon {
+            color: var(--primary-color);
+        }
+
+        /* Lists */
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        ul li {
+            position: relative;
+            padding-inline-start: 25px;
+            margin-bottom: 10px;
+            color: var(--text-light);
+        }
+
+        ul li::before {
+            content: "•";
+            color: var(--primary-color);
+            font-weight: bold;
+            font-size: 1.5em;
+            position: absolute;
+            left: 0; /* For LTR */
+            right: auto;
+            top: -5px;
+        }
+
+        body[dir="rtl"] ul li::before {
+            right: 0;
+            left: auto;
+        }
+
+        /* Missing Data Section */
+        .missing-data {
+            background-color: var(--warning-bg);
+            border: 1px solid #fcd34d;
+        }
+
+        .missing-data .section-title {
+            color: var(--warning-text);
+            border-color: #fde68a;
+        }
+
+        .missing-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .placeholder {
+            color: red;
+            font-family: monospace;
+            background: #fee2e2;
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
+
+        /* Visibility Utilities */
+        .hidden { display: none; }
+        .visible { display: block; }
+
+    </style>
+</head>
+<body>
+
+    <div class="toggle-container">
+        <button class="lang-btn" onclick="toggleLanguage()">Switch to English 🇺🇸</button>
+    </div>
+
+    <div class="container">
+        
+        <div id="content-ar" class="visible">
+            <header>
+                <h1>استراتيجية إطلاق لنسي 🚀</h1>
+                <div class="subtitle">استراتيجية اختراق السوق المباشر | 2026</div>
+            </header>
+
+            <div class="card">
+                <div class="section-title">1. الفلسفة الأساسية (القمع المعكوس)</div>
+                <p>تعتمد الاستراتيجية على تجاهل قمع التسويق التقليدي واستهداف العملاء الجاهزين فوراً.</p>
+                <ul>
+                    <li><strong>النموذج:</strong> الخدمة المباشرة (Direct Service) بدون حواجز.</li>
+                    <li><strong>التكتيك:</strong> "أضيق مكان في القمع" - التركيز على لحظة الاحتياج للصورة.</li>
+                    <li><strong>الشعار:</strong> ابدأ من حيث انتهى اصحاب الأداء.</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <div class="section-title">2. الجمهور المستهدف</div>
+                <ul>
+                    <li><strong>الشريحة:</strong> أصحاب المتاجر الرقمية في السعودية والوطن العربي.</li>
+                    <li><strong>الحالة الذهنية:</strong> يبحث عن حل سريع، يكره التعامل مع المصورين، ميزانيته محدودة.</li>
+                    <li><strong>المشكلة:</strong> تكلفة التصوير العالية + الوقت الضائع في التنسيق.</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <div class="section-title">3. استراتيجية الاستحواذ </div>
+                <ul>
+                    <li><strong>الإعلانات:</strong> التركيز 80% على Instagram Reels (محتوى مباشر: مشكلة -> حل-> نتيجة).</li>
+                    <li><strong>المسار:</strong> الإعلان ينقل العميل مباشرة إلى "تطبيق الويب" للتجربة مثل shot.new .</li>
+                    <li><strong>التسجيل:</strong> بدون بطاقة ائتمان فقط بوضع الدومين الخاص به يرى صور متجره تم تحويلها بشكل احترافي.</li>
+                    <li><strong>عامل الجذب:</strong> تجربة سحرية فورية (Freemium).</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <div class="section-title">4. التميز عن المنافس (Kive)</div>
+                <ul>
+                    <li><strong>نقطة التشابه:</strong> السرعة والسهولة (نقل تجربة المستخدم الناجحة).</li>
+                    <li><strong>نقطة التفوق (Lenci Edge):</strong> بناء المجتمع (Community) + إعادة استهداف عبر واتساب + فهم الذوق المحلي السعودي والعربي.</li>
+                </ul>
+            </div>
+
+            <div class="card missing-data">
+                <div class="section-title">⚠️ بيانات بانتظار الاعتماد (للنقاش مع الإدارة)</div>
+                <div class="missing-item">
+                    <span>نموذج التسعير (اشتراك أم باقات؟)</span>
+                    <span class="placeholder">؟؟؟</span>
+                </div>
+                <div class="missing-item">
+                    <span>عرض "الخطاف" (عدد الصور المجانية)</span>
+                    <span class="placeholder">؟؟؟</span>
+                </div>
+                <div class="missing-item">
+                    <span>ميزانية الإطلاق التجريبي (Testing Budget)</span>
+                    <span class="placeholder">؟؟؟ ريال</span>
+                </div>
+            </div>
+        </div>
+
+        <div id="content-en" class="hidden">
+            <header>
+                <h1>Lenci Go-To-Market Strategy 🚀</h1>
+                <div class="subtitle">Direct Market Penetration Strategy | 2026</div>
+            </header>
+
+            <div class="card">
+                <div class="section-title">1. Core Philosophy (The Inverted Funnel)</div>
+                <p>Strategy based on ignoring the traditional marketing funnel and targeting ready-to-buy users immediately.</p>
+                <ul>
+                    <li><strong>Model:</strong> Direct Service with zero friction.</li>
+                    <li><strong>Tactic:</strong> "The Neck of the Funnel" - Focusing on the moment of need.</li>
+                    <li><strong>Motto:</strong> Start where others ended (Benchmarking Kive).</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <div class="section-title">2. Target Audience (ICP)</div>
+                <ul>
+                    <li><strong>Segment:</strong> Digital Store Owners in Saudi Arabia and GCC.</li>
+                    <li><strong>State of Mind:</strong> Needs a quick fix, hates coordinating with photographers, budget-conscious.</li>
+                    <li><strong>Pain Point:</strong> High photography costs + Time wasted on logistics.</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <div class="section-title">3. Acquisition Strategy</div>
+                <ul>
+                    <li><strong>Ads:</strong> 90% Focus on Instagram Reels (Direct Response: Problem -> Solution).</li>
+                    <li><strong>Flow:</strong> Ad redirects directly to the Web App/Editor.</li>
+                    <li><strong>Sign Up:</strong> Instant Google Auth (One-Click) with NO Credit Card required.</li>
+                    <li><strong>The Hook:</strong> Immediate magic experience (Freemium).</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <div class="section-title">4. Competitive Edge (Vs. Kive)</div>
+                <ul>
+                    <li><strong>Parity:</strong> Speed and Ease of use (Replicating the successful UX).</li>
+                    <li><strong>The Lenci Edge:</strong> Community Building + WhatsApp Retargeting + Localized Saudi Taste.</li>
+                </ul>
+            </div>
+
+            <div class="card missing-data">
+                <div class="section-title">⚠️ Pending Approval Data (To Discuss with Manager)</div>
+                <div class="missing-item">
+                    <span>Pricing Model (Subscription vs. Pay-as-you-go)</span>
+                    <span class="placeholder">???</span>
+                </div>
+                <div class="missing-item">
+                    <span>The Hook Offer (Free limit cap)</span>
+                    <span class="placeholder">???</span>
+                </div>
+                <div class="missing-item">
+                    <span>Launch Testing Budget</span>
+                    <span class="placeholder">??? SAR</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        function toggleLanguage() {
+            const body = document.body;
+            const arContent = document.getElementById('content-ar');
+            const enContent = document.getElementById('content-en');
+            const btn = document.querySelector('button.lang-btn');
+            const html = document.documentElement;
+
+            if (body.classList.contains('lang-en')) {
+                // Switch to Arabic
+                body.classList.remove('lang-en');
+                html.setAttribute('dir', 'rtl');
+                html.setAttribute('lang', 'ar');
+                arContent.classList.remove('hidden');
+                arContent.classList.add('visible');
+                enContent.classList.remove('visible');
+                enContent.classList.add('hidden');
+                btn.textContent = 'Switch to English 🇺🇸';
+            } else {
+                // Switch to English
+                body.classList.add('lang-en');
+                html.setAttribute('dir', 'ltr');
+                html.setAttribute('lang', 'en');
+                enContent.classList.remove('hidden');
+                enContent.classList.add('visible');
+                arContent.classList.remove('visible');
+                arContent.classList.add('hidden');
+                btn.textContent = 'التبديل للعربية 🇸🇦';
+            }
+        }
+    </script>
+</body>
+</html>
