@@ -17,6 +17,7 @@ const translations = {
         retention: 'الاحتفاظ',
         budget: 'الميزانية',
         timeline: 'تايم لاين',
+        checklist: 'قائمة المهام',
         langBtn: 'Switch to English'
     },
     en: {
@@ -31,6 +32,7 @@ const translations = {
         retention: 'Retention',
         budget: 'Budget',
         timeline: 'Timeline',
+        checklist: 'Checklist',
         langBtn: 'التبديل للعربية'
     }
 };
@@ -46,7 +48,8 @@ const navItems = [
     { key: 'journey', href: 'journey.html' },
     { key: 'retention', href: 'retention.html' },
     { key: 'budget', href: 'budget.html' },
-    { key: 'timeline', href: 'timeline.html' }
+    { key: 'timeline', href: 'timeline.html' },
+    { key: 'checklist', href: 'checklist.html' }
 ];
 
 document.addEventListener('DOMContentLoaded', () => {
