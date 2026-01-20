@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lenci | Future Vision</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Inter:wght@400;600;700;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="lenci.css">
+
+    <style>
+        .app-mockup {
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 30px;
+            text-align: center;
+            border: 2px dashed #cbd5e1;
+            margin: 20px 0;
+            position: relative;
+        }
+
+        .integration-badge {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--primary-color);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.85rem;
+            box-shadow: var(--shadow-md);
+        }
+
+        .flow-step {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid #e5e7eb;
+        }
+
+        .step-num {
+            background: #e0f2fe;
+            color: var(--primary-color);
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .market-card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            border: 1px solid #e5e7eb;
+            transition: transform 0.2s;
+        }
+
+        .market-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-color);
+        }
+
+        .market-logo {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Nav injected by JS -->
+
+    <div class="container">
+
+        <div id="content-ar" class="visible">
+            <header class="hero">
+                <h1>عصر الاندماج (The Embedded Era) 🔌</h1>
+                <div class="tagline">لنسي في قلب سلة وزد</div>
+            </header>
+
+            <div class="card">
+                <div class="section-title">الرؤية: من أداة إلى نظام (From Tool to Native)</div>
+                <p>
+                    حالياً: العميل يأتي إلينا (Destination Site). <br>
+                    <strong>المستقبل:</strong> نحن نذهب للعميل في منزله (Native Plugin).
+                </p>
+                <div class="app-mockup">
+                    <div class="integration-badge">الشكل النهائي</div>
+                    <h3>زر "صور بـ Lenci" داخل سلة</h3>
+                    <p style="color: #64748b; font-size: 0.9rem;">
+                        تخيل التاجر يفتح لوحة تحكم متجره، وبجانب زر "تعديل المنتج" يجد أيقونة لنسي.<br>
+                        بضغطة واحدة، يتم تحسين صور المنتج وتحديثها في المتجر فوراً.
+                    </p>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="section-title">تجربة المستخدم السلسة (The Frictionless Flow)</div>
+                <div class="flow-step">
+                    <div class="step-num">1</div>
+                    <div><strong>التثبيت:</strong> التاجر يدخل متجر تطبيقات سلة/زد -> يبحث عن Lenci -> تثبيت.</div>
+                </div>
+                <div class="flow-step">
+                    <div class="step-num">2</div>
+                    <div><strong>المزامنة:</strong> التطبيق يسحب كل المنتجات والصور الحالية أوتوماتيكياً.</div>
+                </div>
+                <div class="flow-step">
+                    <div class="step-num">3</div>
+                    <div><strong>السحر:</strong> التاجر يختار "قالب رمضان" -> لنسي ينفذ الـ Bulk Action على 100 منتج.
+                    </div>
+                </div>
+                <div class="flow-step">
+                    <div class="step-num">4</div>
+                    <div><strong>النشر:</strong> الصور الجديدة تظهر في واجهة المتجر للعملاء فوراً (بدون تحميل ورفع
+                        يدوي).</div>
+                </div>
+            </div>
+
+            <div class="dashboard-grid" style="grid-template-columns: repeat(2, 1fr);">
+                <div class="market-card">
+                    <div class="market-logo">🛍️</div>
+                    <h3 style="margin-top: 0;">Salla App Store</h3>
+                    <p style="font-size: 0.9rem; margin-bottom: 0;">الوصول لأكثر من 40,000 تاجر</p>
+                </div>
+                <div class="market-card">
+                    <div class="market-logo">🛒</div>
+                    <h3 style="margin-top: 0;">Zid App Market</h3>
+                    <p style="font-size: 0.9rem; margin-bottom: 0;">استهداف كبار التجار والشركات</p>
+                </div>
+            </div>
+
+        </div>
+
+        <div id="content-en" class="hidden">
+            <header class="hero">
+                <h1>The Embedded Era 🔌</h1>
+                <div class="tagline">Lenci Inside Salla & Zid</div>
+            </header>
+
+            <div class="card">
+                <div class="section-title">Vision: From Tool to Native</div>
+                <p>
+                    Currently: User comes to us (Destination Site). <br>
+                    <strong>Future:</strong> We go to the user's home (Native Plugin).
+                </p>
+                <div class="app-mockup">
+                    <div class="integration-badge">End Game</div>
+                    <h3>"Shoot with Lenci" Button inside Salla</h3>
+                    <p style="color: #64748b; font-size: 0.9rem;">
+                        Imagine the merchant opens their dashboard, and next to "Edit Product" sits the Lenci icon.<br>
+                        One click, product photos are enhanced and updated instantly.
+                    </p>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="section-title">The Frictionless Flow</div>
+                <div class="flow-step">
+                    <div class="step-num">1</div>
+                    <div><strong>Install:</strong> Merchant visits App Store -> Search Lenci -> Install.</div>
+                </div>
+                <div class="flow-step">
+                    <div class="step-num">2</div>
+                    <div><strong>Sync:</strong> App fetches all existing products & photos auto-magically.</div>
+                </div>
+                <div class="flow-step">
+                    <div class="step-num">3</div>
+                    <div><strong>Magic:</strong> Select 'Ramadan Template' -> Lenci runs Bulk Action on 100 SKUs.</div>
+                </div>
+                <div class="flow-step">
+                    <div class="step-num">4</div>
+                    <div><strong>Publish:</strong> New photos go live on storefront instantly (No manual
+                        download/upload).</div>
+                </div>
+            </div>
+
+            <div class="dashboard-grid" style="grid-template-columns: repeat(2, 1fr);">
+                <div class="market-card">
+                    <div class="market-logo">🛍️</div>
+                    <h3 style="margin-top: 0;">Salla App Store</h3>
+                    <p style="font-size: 0.9rem; margin-bottom: 0;">Access to 40,000+ Merchants</p>
+                </div>
+                <div class="market-card">
+                    <div class="market-logo">🛒</div>
+                    <h3 style="margin-top: 0;">Zid App Market</h3>
+                    <p style="font-size: 0.9rem; margin-bottom: 0;">Targeting Enterprise & Big Brands</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        <p>© 2026 Lenci. All rights reserved.</p>
+    </footer>
+
+    <script src="nav.js"></script>
+</body>
+
+</html>

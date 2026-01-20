@@ -14,6 +14,7 @@ const translations = {
 
         // Items
         vision: 'الرؤية',
+        future_vision: 'الرؤية المستقبلية + (Embed)',
         master: 'الاستراتيجية الشاملة',
         competitors: 'المنافسون',
 
@@ -39,6 +40,7 @@ const translations = {
 
         // Items
         vision: 'Vision',
+        future_vision: 'Future Integration',
         master: 'Master Strategy',
         competitors: 'Competitors',
 
@@ -65,6 +67,7 @@ const navItems = [
         children: [
             { key: 'master', href: 'Lenci.html' },
             { key: 'vision', href: 'vision.html' },
+            { key: 'future_vision', href: 'future.html' },
             { key: 'competitors', href: 'competitors.html' }
         ]
     },
