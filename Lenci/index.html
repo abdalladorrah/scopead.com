@@ -211,13 +211,19 @@
 
     <script src="nav.js"></script>
     <script>
-        // Simple Countdown Logic
-        const launchDate = new Date();
-        launchDate.setDate(launchDate.getDate() + 30); // 30 days from now
+        // Countdown to Fixed Launch Date: Feb 1st, 2026
+        // Month is 0-indexed (Jan=0, Feb=1)
+        const launchDate = new Date('2026-02-01T00:00:00');
 
         function updateCountdown() {
             const now = new Date();
             const diff = launchDate - now;
+
+            if (diff <= 0) {
+                // Launch Time Reached
+                document.querySelectorAll('.countdown').forEach(el => el.innerText = "00d 00h 00m");
+                return;
+            }
 
             const days = Math.floor(diff / (1000 * 60 * 60 * 24));
             const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
@@ -227,7 +233,7 @@
             document.getElementById('countdown').innerText = text;
             if (document.getElementById('countdown-en')) document.getElementById('countdown-en').innerText = text;
         }
-        setInterval(updateCountdown, 1000 * 60); // Update every minute
+        setInterval(updateCountdown, 60000); // Update every minute
         updateCountdown();
     </script>
 </body>

@@ -1,55 +1,95 @@
 /**
  * nav.js
- * Handles dynamic navigation rendering and language toggling.
- * Now supports localized links and floating language button.
+ * Handles dynamic navigation rendering, nested dropdowns, and language toggling.
  */
 
 const translations = {
     ar: {
-        dashboard: 'الرئيسية',
+        dashboard: '📊 الرئيسية',
+
+        // Categories
+        cat_strategy: 'الاستراتيجية',
+        cat_exec: 'التنفيذ',
+        cat_market: 'دراسة السوق',
+
+        // Items
         vision: 'الرؤية',
-        persona: 'بيرسونا',
+        master: 'الاستراتيجية الشاملة',
         competitors: 'المنافسون',
-        strategy: 'الاستراتيجية',
-        creatives: 'الإعلانات',
-        plan: 'الخطة',
-        journey: 'الرحلة',
-        retention: 'الاحتفاظ',
+
+        plan: 'خطة العمل',
         budget: 'الميزانية',
-        timeline: 'تايم لاين',
+        timeline: 'الجدول الزمني',
         checklist: 'قائمة المهام',
+
+        creatives: 'الإعلانات',
+        persona: 'الشخصيات',
+        journey: 'رحلة العميل',
+        retention: 'الاحتفاظ',
+
         langBtn: 'Switch to English'
     },
     en: {
-        dashboard: 'Dashboard',
+        dashboard: '📊 Dashboard',
+
+        // Categories
+        cat_strategy: 'Strategy',
+        cat_exec: 'Execution',
+        cat_market: 'Market Insights',
+
+        // Items
         vision: 'Vision',
-        persona: 'Persona',
+        master: 'Master Strategy',
         competitors: 'Competitors',
-        strategy: 'Strategy',
-        creatives: 'Creatives',
-        plan: 'Plan',
-        journey: 'Journey',
-        retention: 'Retention',
+
+        plan: 'Action Plan',
         budget: 'Budget',
         timeline: 'Timeline',
         checklist: 'Checklist',
+
+        creatives: 'Ad Creatives',
+        persona: 'Personas',
+        journey: 'User Journey',
+        retention: 'Retention',
+
         langBtn: 'التبديل للعربية'
     }
 };
 
 const navItems = [
     { key: 'dashboard', href: 'index.html' },
-    { key: 'vision', href: 'vision.html' },
-    { key: 'persona', href: 'persona.html' },
-    { key: 'competitors', href: 'competitors.html' },
-    { key: 'strategy', href: 'Lenci.html' },
-    { key: 'creatives', href: 'creatives.html' },
-    { key: 'plan', href: 'plan.html' },
-    { key: 'journey', href: 'journey.html' },
-    { key: 'retention', href: 'retention.html' },
-    { key: 'budget', href: 'budget.html' },
-    { key: 'timeline', href: 'timeline.html' },
-    { key: 'checklist', href: 'checklist.html' }
+
+    // STRATEGY DROPDOWN
+    {
+        key: 'cat_strategy',
+        children: [
+            { key: 'master', href: 'Lenci.html' },
+            { key: 'vision', href: 'vision.html' },
+            { key: 'competitors', href: 'competitors.html' }
+        ]
+    },
+
+    // EXECUTION DROPDOWN
+    {
+        key: 'cat_exec',
+        children: [
+            { key: 'plan', href: 'plan.html' },
+            { key: 'budget', href: 'budget.html' },
+            { key: 'timeline', href: 'timeline.html' },
+            { key: 'checklist', href: 'checklist.html' }
+        ]
+    },
+
+    // MARKET DROPDOWN
+    {
+        key: 'cat_market',
+        children: [
+            { key: 'creatives', href: 'creatives.html' },
+            { key: 'persona', href: 'persona.html' },
+            { key: 'journey', href: 'journey.html' },
+            { key: 'retention', href: 'retention.html' }
+        ]
+    }
 ];
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -72,10 +112,28 @@ function renderNavigation(lang = 'ar') {
 
     const t = translations[lang];
 
-    // Generate Links HTML
+    // Generate Links HTML (Recursive-ish logic for depth 1)
     let linksHTML = '';
+
     navItems.forEach(item => {
-        linksHTML += `<a href="${item.href}" class="nav-link" data-page="${item.href}">${t[item.key]}</a>`;
+        if (item.children) {
+            // Dropdown
+            let subItems = '';
+            item.children.forEach(sub => {
+                subItems += `<a href="${sub.href}" class="dropdown-item" data-page="${sub.href}">${t[sub.key]}</a>`;
+            });
+
+            linksHTML += `
+            <div class="dropdown">
+                <div class="nav-link dropdown-toggle">${t[item.key]}</div>
+                <div class="dropdown-menu">
+                    ${subItems}
+                </div>
+            </div>`;
+        } else {
+            // Single Link
+            linksHTML += `<a href="${item.href}" class="nav-link" data-page="${item.href}">${t[item.key]}</a>`;
+        }
     });
 
     const navHTML = `
@@ -102,19 +160,54 @@ function renderNavigation(lang = 'ar') {
 
     // Set Active Link
     const currentPage = window.location.pathname.split('/').pop() || 'index.html';
-    const links = document.querySelectorAll('.nav-link');
+    const links = document.querySelectorAll('.nav-link, .dropdown-item');
+
     links.forEach(link => {
         if (link.getAttribute('data-page') === currentPage) {
             link.classList.add('active');
+
+            // If it's inside a dropdown, highlight parent too? 
+            // Optional, but good UX.
+            const parentDropdown = link.closest('.dropdown');
+            if (parentDropdown) {
+                const toggle = parentDropdown.querySelector('.dropdown-toggle');
+                if (toggle) toggle.classList.add('active');
+            }
         }
     });
 }
 
-// Mobile Menu Toggle
+// Mobile Menu Toggle with Animation & Scroll Lock
 function toggleMobileMenu() {
     const linksContainer = document.querySelector('.nav-links');
-    linksContainer.classList.toggle('mobile-visible');
+    const menuBtn = document.querySelector('.mobile-menu-btn');
+    const body = document.body;
+
+    const isVisible = linksContainer.classList.contains('mobile-visible');
+
+    if (isVisible) {
+        // Close Menu
+        linksContainer.classList.remove('mobile-visible');
+        menuBtn.innerHTML = '☰'; // Hamburger Icon
+        body.classList.remove('menu-open');
+    } else {
+        // Open Menu
+        linksContainer.classList.add('mobile-visible');
+        menuBtn.innerHTML = '✕'; // Close Icon
+        body.classList.add('menu-open');
+    }
 }
+
+// Auto-Close Menu on Link Click (Delegation)
+document.addEventListener('click', (e) => {
+    // Check if clicked element is a link (nav-link or dropdown-item)
+    // AND it has an href (so it's not a folder toggler)
+    const isLink = (e.target.classList.contains('nav-link') || e.target.classList.contains('dropdown-item')) && e.target.hasAttribute('href');
+
+    if (isLink && document.body.classList.contains('menu-open')) {
+        toggleMobileMenu(); // Close it
+    }
+});
 
 // Language Logic
 function initLanguage() {
