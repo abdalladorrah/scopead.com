@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MVP Marketing Team</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Inter:wght@400;600;700;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="lenci.css">
+    <link rel="stylesheet" href="premium.css">
+</head>
+
+<body>
+
+    <!-- Nav injected by JS -->
+
+    <div class="container">
+
+        <div id="content-ar" class="visible">
+            <header class="hero">
+                <h1 id="hero-title-ar"></h1>
+                <div class="tagline" id="hero-tagline-ar"></div>
+            </header>
+
+            <!-- Alert Container -->
+            <div id="alert-container-ar"></div>
+
+            <h2 class="section-title">🚀 الفريق (The Trio)</h2>
+            <div class="dashboard-grid" id="team-grid-ar">
+                <!-- Injected dynamically -->
+            </div>
+
+            <h2 class="section-title" id="output-title-ar"></h2>
+            <div class="card" id="output-card-ar">
+                <!-- Injected dynamically -->
+            </div>
+
+            <h2 class="section-title" id="stack-title-ar"></h2>
+            <div class="stack-grid" id="stack-grid-ar" id="stack-section-ar">
+                <!-- Injected dynamically -->
+            </div>
+
+            <h2 class="section-title" id="hiring-title-ar"></h2>
+            <div class="dashboard-grid" id="hiring-grid-ar">
+                <!-- Injected dynamically -->
+            </div>
+
+            <!-- Role Section -->
+            <div style="margin-top: 60px;">
+                <h2 class="section-title" id="role-title-ar"></h2>
+                <div id="role-container-ar"></div>
+            </div>
+        </div>
+
+        <div id="content-en" class="hidden">
+            <header class="hero">
+                <h1 id="hero-title-en"></h1>
+                <div class="tagline" id="hero-tagline-en"></div>
+            </header>
+
+            <!-- Alert Container -->
+            <div id="alert-container-en"></div>
+
+            <h2 class="section-title">🚀 The Trio</h2>
+            <div class="dashboard-grid" id="team-grid-en">
+                <!-- Injected dynamically -->
+            </div>
+
+            <h2 class="section-title" id="output-title-en"></h2>
+            <div class="card" id="output-card-en">
+                <!-- Injected dynamically -->
+            </div>
+
+            <h2 class="section-title" id="stack-title-en"></h2>
+            <div class="stack-grid" id="stack-grid-en" id="stack-section-en">
+                <!-- Injected dynamically -->
+            </div>
+
+            <h2 class="section-title" id="hiring-title-en"></h2>
+            <div class="dashboard-grid" id="hiring-grid-en">
+                <!-- Injected dynamically -->
+            </div>
+
+            <!-- Role Section -->
+            <div style="margin-top: 60px;">
+                <h2 class="section-title" id="role-title-en"></h2>
+                <div id="role-container-en"></div>
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        <p id="footer-text"></p>
+    </footer>
+
+    <script src="js/core.js"></script>
+    <script src="js/data_general.js"></script>
+    <script src="js/data_dashboard.js"></script>
+    <script src="js/nav.js"></script>
+    <script src="js/components.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const dashboard = projectData.dashboard;
+            const general = projectData.general;
+
+            // Footer
+            if (general && general.footerText) {
+                document.getElementById('footer-text').textContent = general.footerText;
+            }
+
+            // Common Render Function
+            function renderDashboard(lang) {
+                const suffix = lang === 'ar' ? '-ar' : '-en';
+
+                // Hero
+                document.getElementById('hero-title' + suffix).textContent = dashboard.hero.title[lang];
+                document.getElementById('hero-tagline' + suffix).textContent = dashboard.hero.tagline[lang];
+
+                // Alert (New)
+                if (dashboard.alert) {
+                    const alertContainer = document.getElementById('alert-container' + suffix);
+                    if (alertContainer) {
+                        alertContainer.innerHTML = `
+                            <div class="hiring-alert">
+                                <h3>${dashboard.alert.title[lang]}</h3>
+                                <p>${dashboard.alert.message[lang]}</p>
+                            </div>
+                        `;
+                    }
+                }
+
+                // Team
+                const teamGrid = document.getElementById('team-grid' + suffix);
+                teamGrid.innerHTML = '';
+                dashboard.team.forEach((member, index) => {
+                    const colors = ['#3b82f6', '#10b981', '#f59e0b']; // Blue, Green, Yellow
+                    const color = colors[index % colors.length];
+                    const toggleId = `toggle-team-${lang}-${index}`;
+
+                    teamGrid.innerHTML += `
+                        <div class="metric-card" style="text-align: ${lang === 'ar' ? 'right' : 'left'}; border-top: 4px solid ${color};">
+                            <h3 style="color: ${color}; margin-top: 0; font-size: 1.4rem;">${member.role[lang]}</h3>
+                            <p style="font-weight: bold; color: #e2e8f0; margin-bottom: 5px;">${member.vibe[lang]}</p>
+                            <p style="color: #cbd5e1; font-size: 0.95rem;">${member.job[lang]}</p>
+                            
+                            <!-- Toggle Button -->
+                            <button class="details-toggle" onclick="toggleDetails('${toggleId}')">
+                                <span>${lang === 'ar' ? '🔎 تفاصيل ومخاطر' : '🔎 Deep Dive & Risks'}</span>
+                            </button>
+
+                            <!-- Hidden Content -->
+                            <div class="details-content" id="${toggleId}">
+                                <div style="margin-bottom: 10px; border-bottom: 1px dashed rgba(255,255,255,0.2); padding-bottom: 10px;">
+                                    <strong style="color: #60a5fa;">${lang === 'ar' ? 'ماذا يفعل بالضبط؟' : 'Specifics:'}</strong>
+                                    <p style="margin: 5px 0; color: #e2e8f0;">${member.details ? member.details[lang] : ''}</p>
+                                </div>
+                                <div class="cons-box">
+                                    ${member.cons ? member.cons[lang] : ''}
+                                </div>
+                            </div>
+                        </div>`;
+                });
+
+                // Output
+                document.getElementById('output-title' + suffix).textContent = dashboard.output.title[lang];
+                let outputHTML = `<p class="subtitle" style="color: #475569; font-size: 1.1rem;">${dashboard.output.intro[lang]}</p>`;
+                if (dashboard.output.items) {
+                    outputHTML += '<ul style="margin-top: 20px;">';
+                    dashboard.output.items.forEach(item => {
+                        outputHTML += `
+                            <li style="margin-bottom: 15px;">
+                                <strong style="color: var(--secondary-color); font-size: 1.2rem;">${item.title[lang]}:</strong> 
+                                <span style="display: block; margin-top: 5px; color: var(--text-muted);">${item.desc[lang]}</span>
+                            </li>`;
+                    });
+                    outputHTML += '</ul>';
+                }
+                document.getElementById('output-card' + suffix).innerHTML = outputHTML;
+
+                // Stack (New Section)
+                if (dashboard.stack && document.getElementById('stack-section-' + suffix)) {
+                    document.getElementById('stack-title-' + suffix).textContent = dashboard.stack.title[lang];
+                    const stackGrid = document.getElementById('stack-grid-' + suffix);
+                    stackGrid.innerHTML = '';
+                    dashboard.stack.tools.forEach(tool => {
+                        stackGrid.innerHTML += `
+                            <div class="stack-item">
+                                <span class="stack-name">${tool.name}</span>
+                                <span class="stack-desc">${tool.desc[lang]}</span>
+                            </div>`;
+                    });
+                }
+
+                // Hiring
+                document.getElementById('hiring-title' + suffix).textContent = dashboard.hiring.title[lang];
+                const hiringGrid = document.getElementById('hiring-grid' + suffix);
+                hiringGrid.innerHTML = '';
+
+                dashboard.hiring.rules.forEach((rule, index) => {
+                    const colors = ['#ef4444', '#8b5cf6', '#ec4899'];
+                    const color = colors[index % colors.length];
+                    hiringGrid.innerHTML += `
+                        <div class="card" style="padding: 20px; border-top: 4px solid ${color}; box-shadow: var(--shadow-md);">
+                            <h3 style="color: ${color}; margin-top: 0;">${rule.name[lang]}</h3>
+                            <div class="rule-trigger-box">
+                                <strong>${lang === 'ar' ? '🚨 الشرط' : '🚨 Trigger'}:</strong> 
+                                <span>${rule.trigger[lang].replace('Trigger:', '').replace('الشرط:', '')}</span>
+                            </div>
+                            <p style="color: var(--text-muted); font-size: 0.95rem;">${rule.why[lang]}</p>
+                            ${rule.cons ? `<div class="cons-box" style="margin-top: 15px; color: #fecaca; background: rgba(127, 29, 29, 0.4); border-color: rgba(239, 68, 68, 0.4);">${rule.cons[lang]}</div>` : ''}
+                        </div>`;
+                });
+
+                // Role Evolution (New Section)
+                if (dashboard.my_role) {
+                    document.getElementById('role-title' + suffix).textContent = dashboard.my_role.title[lang];
+                    const roleContainer = document.getElementById('role-container' + suffix);
+
+                    let roleHTML = `<p class="subtitle" style="color: #cbd5e1;">${dashboard.my_role.intro[lang]}</p>`;
+                    roleHTML += `<div class="role-timeline">`;
+
+                    dashboard.my_role.phases.forEach(phase => {
+                        roleHTML += `
+                           <div class="role-step">
+                                <div class="role-number">${phase.step}</div>
+                                <div class="role-content">
+                                    <h3 class="role-title">${phase.title[lang]}</h3>
+                                    <p>${phase.desc[lang]}</p>
+                                </div>
+                           </div> 
+                        `;
+                    });
+
+                    roleHTML += `</div>`;
+                    roleContainer.innerHTML = roleHTML;
+                }
+            }
+
+            renderDashboard('ar');
+            renderDashboard('en');
+        });
+
+        // Global Toggle Function
+        function toggleDetails(id) {
+            const el = document.getElementById(id);
+            if (el) {
+                el.classList.toggle('active');
+                const btn = el.previousElementSibling;
+                if (btn.classList.contains('details-toggle')) {
+                    // Optional: Change Text or Icon logic here if needed
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roadmap | Marketing Team</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Inter:wght@400;600;700;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="lenci.css">
+    <link rel="stylesheet" href="premium.css">
+    <style>
+        /* Specific Roadmap Styles */
+        .roadmap-phase {
+            margin-bottom: 60px;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .phase-header {
+            margin-bottom: 30px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 20px;
+        }
+
+        .phase-title {
+            color: white;
+            font-size: 2rem;
+            margin-bottom: 5px;
+        }
+
+        .phase-subtitle {
+            color: var(--primary-color);
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .phase-badge {
+            display: inline-block;
+            background: rgba(16, 185, 129, 0.2);
+            color: #34d399;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            margin-top: 10px;
+        }
+
+        .timeline-box {
+            position: relative;
+            padding-left: 30px;
+        }
+
+        body[dir="rtl"] .timeline-box {
+            padding-left: 0;
+            padding-right: 30px;
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 30px;
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: var(--shadow-md);
+            border-left: 5px solid var(--primary-color);
+            transition: transform 0.3s;
+        }
+
+        body[dir="rtl"] .timeline-item {
+            border-left: none;
+            border-right: 5px solid var(--primary-color);
+        }
+
+        .timeline-item:hover {
+            transform: scale(1.01);
+        }
+
+        .item-role {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: var(--secondary-color);
+            margin-bottom: 10px;
+        }
+
+        .trigger-box {
+            background: #fff1f2;
+            color: #be123c;
+            padding: 10px;
+            border-radius: 8px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .action-box {
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <!-- Arabic Content (Default) -->
+        <div id="content-ar" class="visible">
+            <header class="hero" style="padding: 40px 0;">
+                <h1 id="page-title-ar"></h1>
+                <div class="tagline" id="page-desc-ar"></div>
+                <p id="page-intro-ar" style="max-width: 800px; margin: 0 auto; color: #cbd5e1;"></p>
+            </header>
+
+            <div id="roadmap-content-ar">
+                <!-- Injected via JS -->
+            </div>
+        </div>
+
+        <!-- English Content (Hidden) -->
+        <div id="content-en" class="hidden">
+            <header class="hero" style="padding: 40px 0;">
+                <h1 id="page-title-en"></h1>
+                <div class="tagline" id="page-desc-en"></div>
+                <p id="page-intro-en" style="max-width: 800px; margin: 0 auto; color: #cbd5e1;"></p>
+            </header>
+
+            <div id="roadmap-content-en">
+                <!-- Injected via JS -->
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        <p id="footer-text"></p>
+    </footer>
+
+    <script src="js/core.js"></script>
+    <script src="js/data_general.js"></script>
+    <script src="js/data_roadmap.js"></script>
+    <script src="js/nav.js"></script>
+    <script src="js/components.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const data = projectData.roadmap;
+            const general = projectData.general;
+
+            // Footer (Shared)
+            if (general) document.getElementById('footer-text').textContent = general.footerText;
+
+            // Render Function
+            function renderRoadmap(lang) {
+                const suffix = lang === 'ar' ? '-ar' : '-en';
+
+                // Header
+                document.getElementById('page-title' + suffix).textContent = data.hero.title[lang];
+                document.getElementById('page-desc' + suffix).textContent = data.hero.tagline[lang];
+                document.getElementById('page-intro' + suffix).textContent = data.intro[lang];
+
+                // Phases
+                const container = document.getElementById('roadmap-content' + suffix);
+                container.innerHTML = ''; // Clear existing
+
+                data.phases.forEach(phase => {
+                    let stepsHTML = '';
+
+                    phase.steps.forEach(step => {
+                        const triggerText = step.trigger ? step.trigger[lang] : '';
+                        const whyOrAction = step.why ? step.why[lang] : (step.action ? step.action[lang] : (step.details ? step.details[lang] : ''));
+
+                        stepsHTML += `
+                            <div class="timeline-item">
+                                <div class="item-role">
+                                    ${step.priority ? `<span style="font-size:0.8em; opacity:0.6">#${step.priority} </span>` : ''} 
+                                    ${step.role[lang]}
+                                </div>
+                                
+                                <div class="trigger-box">
+                                    <span>⚡ ${lang === 'ar' ? 'شرط التنفيذ (Trigger)' : 'Execution Trigger'}:</span>
+                                    <span>${triggerText}</span>
+                                </div>
+
+                                <div class="action-box">
+                                    <strong>📝 ${lang === 'ar' ? 'التفاصيل:' : 'Details:'}</strong> ${whyOrAction}
+                                </div>
+                            </div>
+                        `;
+                    });
+
+                    container.innerHTML += `
+                        <div class="roadmap-phase">
+                            <div class="phase-header">
+                                <div class="phase-title">${phase.title[lang]}</div>
+                                <div class="phase-subtitle">${phase.subtitle[lang]}</div>
+                                <div class="phase-badge">${phase.status[lang]}</div>
+                                <p style="color: #94a3b8; margin-top: 15px;">${phase.description[lang]}</p>
+                            </div>
+                            <div class="timeline-box">
+                                ${stepsHTML}
+                            </div>
+                        </div>
+                    `;
+                });
+            }
+
+            // Render Both Languages
+            renderRoadmap('ar');
+            renderRoadmap('en');
+        });
+    </script>
+</body>
+
+</html>
