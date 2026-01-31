@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Yemeni Village | Future Vision</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Inter:wght@400;600;700;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="lenci.css">
+    <link rel="stylesheet" href="premium.css">
+</head>
+
+<body>
+
+    <!-- Nav injected by JS -->
+
+    <div class="container">
+
+        <!-- ARABIC CONTENT -->
+        <div id="content-ar" class="visible">
+            <header class="hero">
+                <h1 id="fut-title-ar"></h1>
+                <div class="tagline" id="fut-subtitle-ar"></div>
+            </header>
+
+            <div id="expansion-sections-ar">
+                <!-- Injected via JS -->
+            </div>
+        </div>
+
+        <!-- ENGLISH CONTENT -->
+        <div id="content-en" class="hidden">
+            <header class="hero">
+                <h1 id="fut-title-en"></h1>
+                <div class="tagline" id="fut-subtitle-en"></div>
+            </header>
+
+            <div id="expansion-sections-en">
+                <!-- Injected via JS -->
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        <p id="footer-text"></p>
+    </footer>
+
+    <script src="js/core.js"></script>
+    <script src="js/data_general.js"></script>
+    <script src="js/data_future.js"></script>
+    <script src="js/nav.js"></script>
+    <script src="js/components.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const data = projectData.future;
+            const general = projectData.general;
+
+            document.getElementById('footer-text').textContent = general.footerText;
+
+            // Render Function
+            function renderFuture(lang) {
+                const suffix = lang === 'ar' ? '-ar' : '-en';
+
+                document.getElementById('fut-title' + suffix).textContent = data.intro.title[lang];
+                document.getElementById('fut-subtitle' + suffix).textContent = data.intro.subtitle[lang];
+
+                const container = document.getElementById('expansion-sections' + suffix);
+                data.phases.forEach(phase => {
+                    let itemsHtml = '';
+                    phase.items.forEach(item => {
+                        itemsHtml += `
+                        <div class="expansion-card">
+                            <div class="expansion-badge" style="background: ${item.badgeColor};">${item.badge[lang]}</div>
+                            <h3>${item.title[lang]}</h3>
+                            <p>${item.desc[lang]}</p>
+                        </div>`;
+                    });
+                    container.innerHTML += `
+                    <div class="card">
+                        <div class="section-title">${phase.title[lang]}</div>
+                        <div class="expansion-grid">${itemsHtml}</div>
+                    </div>`;
+                });
+            }
+
+            renderFuture('ar');
+            renderFuture('en');
+        });
+    </script>
+</body>
+
+</html>

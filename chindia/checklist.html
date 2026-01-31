@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Yemeni Village | Marketing Checklist</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Inter:wght@400;600;700;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="lenci.css">
+    <link rel="stylesheet" href="premium.css">
+</head>
+
+<body>
+
+    <!-- Nav injected by JS -->
+
+    <div class="container">
+
+        <!-- ARABIC CONTENT -->
+        <div id="content-ar" class="visible">
+            <header class="hero">
+                <h1 id="check-title-ar"></h1>
+                <div class="tagline" id="check-subtitle-ar"></div>
+            </header>
+
+            <div id="checklist-groups-ar">
+                <!-- Injected via JS -->
+            </div>
+        </div>
+
+        <!-- ENGLISH CONTENT -->
+        <div id="content-en" class="hidden">
+            <header class="hero">
+                <h1 id="check-title-en"></h1>
+                <div class="tagline" id="check-subtitle-en"></div>
+            </header>
+
+            <div id="checklist-groups-en">
+                <!-- Injected via JS -->
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        <p id="footer-text"></p>
+    </footer>
+
+    <script src="js/core.js"></script>
+    <script src="js/data_general.js"></script>
+    <script src="js/data_checklist.js"></script>
+    <script src="js/nav.js"></script>
+    <script src="js/components.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const data = projectData.checklist;
+            const general = projectData.general;
+
+            document.getElementById('footer-text').textContent = general.footerText;
+
+            // Render Function
+            function renderChecklist(lang) {
+                const suffix = lang === 'ar' ? '-ar' : '-en';
+
+                document.getElementById('check-title' + suffix).textContent = data.title[lang];
+                document.getElementById('check-subtitle' + suffix).textContent = data.tagline[lang];
+
+                const container = document.getElementById('checklist-groups' + suffix);
+                data.groups.forEach(group => {
+                    let itemsHtml = '';
+                    group.items.forEach(item => {
+                        const tagHtml = item.tag ? `<span class="tag-pill ${item.tag.class}">${item.tag.text}</span>` : '';
+                        itemsHtml += `
+                        <div class="check-item">
+                            <div class="checkbox"></div>
+                            <div class="item-text">
+                                <div class="item-title">${item.title[lang]} ${tagHtml}</div>
+                                <div class="item-desc">${item.desc[lang]}</div>
+                            </div>
+                        </div>`;
+                    });
+
+                    container.innerHTML += `
+                    <div class="checklist-group">
+                        <div class="group-title">${group.title[lang]}</div>
+                        ${itemsHtml}
+                    </div>`;
+                });
+            }
+
+            renderChecklist('ar');
+            renderChecklist('en');
+
+            // Add Click Events (Delegation)
+            document.addEventListener('click', (e) => {
+                if (e.target.classList.contains('checkbox')) {
+                    e.target.classList.toggle('checked');
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

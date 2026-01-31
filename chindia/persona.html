@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Yemeni Village | The 6 Strategic Personas</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Inter:wght@400;600;700;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="lenci.css">
+    <link rel="stylesheet" href="premium.css">
+</head>
+
+<body>
+
+    <!-- Nav injected by nav.js -->
+
+    <div class="container">
+
+        <!-- ARABIC CONTENT -->
+        <div id="content-ar" class="visible">
+            <div class="persona-header">
+                <h1 id="persona-title-ar"></h1>
+                <p id="persona-subtitle-ar"></p>
+            </div>
+
+            <div class="matrix-grid" id="personas-grid-ar">
+                <!-- Injected via JS -->
+            </div>
+        </div>
+
+        <!-- ENGLISH CONTENT -->
+        <div id="content-en" class="hidden">
+            <div class="persona-header">
+                <h1 id="persona-title-en"></h1>
+                <p id="persona-subtitle-en"></p>
+            </div>
+
+            <div class="matrix-grid" id="personas-grid-en">
+                <!-- Injected via JS -->
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        <p id="footer-text"></p>
+    </footer>
+
+    <script src="js/core.js"></script>
+    <script src="js/data_general.js"></script>
+    <script src="js/data_personas.js"></script>
+    <script src="js/nav.js"></script>
+    <script src="js/components.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const data = projectData.personas;
+            const general = projectData.general;
+
+            document.getElementById('footer-text').textContent = general.footerText;
+
+            // Render Function
+            function renderPersonas(lang) {
+                const suffix = lang === 'ar' ? '-ar' : '-en';
+
+                document.getElementById('persona-title' + suffix).textContent = data.title[lang];
+                document.getElementById('persona-subtitle' + suffix).textContent = data.subtitle[lang];
+
+                const container = document.getElementById('personas-grid' + suffix);
+                data.list.forEach(p => {
+                    container.innerHTML += `
+                    <div class="persona-card ${p.colorClass}">
+                        <div class="p-header">
+                            <span>${p.name[lang]}</span>
+                            <span class="tag" style="background: ${p.tag.color};">${p.tag.text}</span>
+                        </div>
+                        <div class="p-body">
+                            <div class="info-row">${p.demographics[lang]}</div>
+                            <div class="info-row"><span class="info-label">${lang === 'ar' ? 'الدافع' : 'Driver'}:</span> ${p.driver[lang]}</div>
+                            <div class="strategy-box">
+                                <strong style="display: block; margin-bottom: 5px;">${p.strategy.title[lang]}</strong>
+                                ${p.strategy.text[lang]}
+                            </div>
+                        </div>
+                    </div>`;
+                });
+            }
+
+            renderPersonas('ar');
+            renderPersonas('en');
+        });
+    </script>
+</body>
+
+</html>

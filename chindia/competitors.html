@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Yemeni Village | Competitor Deep Dive</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Inter:wght@400;600;700;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="lenci.css">
+    <link rel="stylesheet" href="premium.css">
+</head>
+
+<body>
+
+    <!-- Nav injected by nav.js -->
+
+    <div class="container">
+
+        <!-- ARABIC CONTENT -->
+        <div id="content-ar" class="visible">
+            <header class="hero">
+                <h1 id="comp-title-ar"></h1>
+                <div class="tagline" id="comp-subtitle-ar"></div>
+            </header>
+
+            <div class="card">
+                <div class="section-title" id="sec-landscape-ar"></div>
+                <div style="overflow-x: auto;">
+                    <table class="comparison-table">
+                        <thead id="comp-head-ar">
+                            <!-- Injected via JS -->
+                        </thead>
+                        <tbody id="comp-table-ar">
+                            <!-- Injected via JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="section-title" id="sec-swot-ar"></div>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;"
+                    id="swot-grid-ar">
+                    <!-- Injected via JS -->
+                </div>
+            </div>
+        </div>
+
+        <!-- ENGLISH CONTENT -->
+        <div id="content-en" class="hidden">
+            <header class="hero">
+                <h1 id="comp-title-en"></h1>
+                <div class="tagline" id="comp-subtitle-en"></div>
+            </header>
+
+            <div class="card">
+                <div class="section-title" id="sec-landscape-en"></div>
+                <div style="overflow-x: auto;">
+                    <table class="comparison-table">
+                        <thead id="comp-head-en">
+                            <!-- Injected via JS -->
+                        </thead>
+                        <tbody id="comp-table-en">
+                            <!-- Injected via JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="section-title" id="sec-swot-en"></div>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;"
+                    id="swot-grid-en">
+                    <!-- Injected via JS -->
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        <p id="footer-text"></p>
+    </footer>
+
+    <script src="js/core.js"></script>
+    <script src="js/data_general.js"></script>
+    <script src="js/data_competitors.js"></script>
+    <script src="js/nav.js"></script>
+    <script src="js/components.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const data = projectData.competitors;
+            const general = projectData.general;
+
+            document.getElementById('footer-text').textContent = general.footerText;
+
+            // Render Function
+            function renderCompetitors(lang) {
+                const suffix = lang === 'ar' ? '-ar' : '-en';
+
+                document.getElementById('comp-title' + suffix).textContent = data.intro.title[lang];
+                document.getElementById('comp-subtitle' + suffix).textContent = data.intro.subtitle[lang];
+                document.getElementById('sec-landscape' + suffix).textContent = data.sections.landscape[lang];
+                document.getElementById('sec-swot' + suffix).textContent = data.sections.swot[lang];
+
+                // Table Headers
+                const tableHead = document.getElementById('comp-head' + suffix);
+                tableHead.innerHTML = `
+                    <tr>
+                        <th>${data.headers.name[lang]}</th>
+                        <th>${data.headers.position[lang]}</th>
+                        <th>${data.headers.benchmark[lang]}</th>
+                        <th>${data.headers.exploit[lang]}</th>
+                        <th>${data.headers.strategy[lang]}</th>
+                    </tr>
+                `;
+
+                const tableBody = document.getElementById('comp-table' + suffix);
+
+                // Regular Competitors
+                data.list.forEach(c => {
+                    tableBody.innerHTML += `
+                    <tr>
+                        <td><strong>${c.name[lang]}</strong></td>
+                        <td>${c.position[lang]}</td>
+                        <td>${c.benchmark[lang]}</td>
+                        <td>${c.exploit[lang]}</td>
+                        <td>${c.strategy[lang]}</td>
+                    </tr>`;
+                });
+
+                // Self (The Village)
+                tableBody.innerHTML += `
+                <tr>
+                    <td class="lenci-head"><strong>${data.self.name[lang]}</strong></td>
+                    <td class="lenci-col">${data.self.position[lang]}</td>
+                    <td class="lenci-col">${data.self.benchmark[lang]}</td>
+                    <td class="lenci-col">${data.self.exploit[lang]}</td>
+                    <td class="lenci-col lenci-bot">${data.self.strategy[lang]}</td>
+                </tr>`;
+
+                // SWOT
+                const swotGrid = document.getElementById('swot-grid' + suffix);
+                const swotItems = [
+                    { key: 'strengths', bg: '#ecfdf5', border: '#10b981', headColor: '#047857' },
+                    { key: 'weaknesses', bg: '#fef2f2', border: '#ef4444', headColor: '#b91c1c' },
+                    { key: 'opportunities', bg: '#eff6ff', border: '#3b82f6', headColor: '#1d4ed8' },
+                    { key: 'threats', bg: '#fff7ed', border: '#f59e0b', headColor: '#b45309' }
+                ];
+
+                swotItems.forEach(item => {
+                    const swotTitles = {
+                        ar: { strengths: 'نقاط القوة', weaknesses: 'نقاط الضعف', opportunities: 'الفرص', threats: 'التهديدات' },
+                        en: { strengths: 'Strengths', weaknesses: 'Weaknesses', opportunities: 'Opportunities', threats: 'Threats' }
+                    };
+
+                    const listHtml = data.swot[item.key].map(val => `<li>${val[lang]}</li>`).join('');
+                    swotGrid.innerHTML += `
+                    <div style="background: ${item.bg}; padding: 20px; border-radius: 12px; border: 1px solid ${item.border}; height: 100%;">
+                        <h4 style="color: ${item.headColor}; margin-top: 0; font-size: 1.1rem;">${swotTitles[lang][item.key]}</h4>
+                        <ul style="font-size: 0.95rem; line-height: 1.5; margin-bottom: 0;">${listHtml}</ul>
+                    </div>`;
+                });
+            }
+
+            renderCompetitors('ar');
+            renderCompetitors('en');
+        });
+    </script>
+</body>
+
+</html>

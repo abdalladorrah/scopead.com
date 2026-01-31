@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Yemeni Village | Operational Constitution</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Inter:wght@400;600;700;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="lenci.css">
+    <link rel="stylesheet" href="premium.css">
+</head>
+
+<body>
+
+    <!-- Nav injected by nav.js -->
+
+    <div class="container">
+
+        <!-- ARABIC CONTENT -->
+        <div id="content-ar" class="visible">
+            <header class="hero">
+                <h1 id="strat-title-ar"></h1>
+                <div class="tagline" id="strat-subtitle-ar"></div>
+            </header>
+
+            <div class="dashboard-grid" id="metrics-grid-ar">
+                <!-- Injected via JS -->
+            </div>
+
+            <div class="card">
+                <div class="section-title" id="sec-identity-ar"></div>
+                <p id="who-we-are-ar"></p>
+            </div>
+
+            <div class="card">
+                <div class="section-title" id="sec-balance-ar"></div>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;"
+                    id="pillars-grid-ar">
+                    <!-- Injected via JS -->
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="section-title" id="sec-north-ar"></div>
+                <p style="font-size: 1.1rem; font-weight: bold; color: var(--primary-color);" id="north-star-ar"></p>
+
+                <div class="section-title" style="margin-top: 20px;" id="sec-equation-ar"></div>
+                <div id="equation-ar"
+                    style="background: #f8fafc; padding: 15px; border-radius: 8px; font-family: monospace; direction: ltr; text-align: center; font-size: 1.1rem; color: #1e3a8a;">
+                </div>
+            </div>
+        </div>
+
+        <!-- ENGLISH CONTENT -->
+        <div id="content-en" class="hidden">
+            <header class="hero">
+                <h1 id="strat-title-en"></h1>
+                <div class="tagline" id="strat-subtitle-en"></div>
+            </header>
+
+            <div class="dashboard-grid" id="metrics-grid-en">
+                <!-- Injected via JS -->
+            </div>
+
+            <div class="card">
+                <div class="section-title" id="sec-identity-en"></div>
+                <p id="who-we-are-en"></p>
+            </div>
+
+            <div class="card">
+                <div class="section-title" id="sec-balance-en"></div>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;"
+                    id="pillars-grid-en">
+                    <!-- Injected via JS -->
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="section-title" id="sec-north-en"></div>
+                <p style="font-size: 1.1rem; font-weight: bold; color: var(--primary-color);" id="north-star-en"></p>
+
+                <div class="section-title" style="margin-top: 20px;" id="sec-equation-en"></div>
+                <div id="equation-en"
+                    style="background: #f8fafc; padding: 15px; border-radius: 8px; font-family: monospace; direction: ltr; text-align: center; font-size: 1.1rem; color: #1e3a8a;">
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        <p id="footer-text"></p>
+    </footer>
+
+    <script src="js/core.js"></script>
+    <script src="js/data_general.js"></script>
+    <script src="js/data_vision.js"></script>
+    <script src="js/data_strategy.js"></script>
+    <script src="js/nav.js"></script>
+    <script src="js/components.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const data = projectData.strategy;
+            const general = projectData.general;
+
+            document.getElementById('footer-text').textContent = general.footerText;
+
+            // Common Render Function
+            function renderStrategy(lang) {
+                const suffix = lang === 'ar' ? '-ar' : '-en';
+
+                document.getElementById('strat-title' + suffix).textContent = data.header.title[lang];
+                document.getElementById('strat-subtitle' + suffix).textContent = data.header.subtitle[lang];
+                document.getElementById('who-we-are' + suffix).textContent = projectData.vision.statement[lang];
+                document.getElementById('north-star' + suffix).textContent = data.northStar[lang];
+                document.getElementById('equation' + suffix).textContent = data.equation;
+
+                // Section titles
+                document.getElementById('sec-identity' + suffix).textContent = data.sections.identity[lang];
+                document.getElementById('sec-balance' + suffix).textContent = data.sections.balance[lang];
+                document.getElementById('sec-north' + suffix).textContent = data.sections.northStar[lang];
+                document.getElementById('sec-equation' + suffix).textContent = data.sections.equation[lang];
+
+                const metricsGrid = document.getElementById('metrics-grid' + suffix);
+                data.metrics.forEach(m => {
+                    metricsGrid.innerHTML += `
+                    <div class="metric-card">
+                        <div class="metric-value">${m.val[lang]}</div>
+                        <div class="metric-label">${m.label[lang]}</div>
+                    </div>`;
+                });
+
+                const pillarsGrid = document.getElementById('pillars-grid' + suffix);
+                data.pillars.forEach(p => {
+                    pillarsGrid.innerHTML += `
+                    <div style="background: ${p.bg}; padding: 15px; border-radius: 8px; border: 1px solid rgba(0,0,0,0.05);">
+                        <h3 style="margin-top: 0; color: #1e3a8a;">${p.title[lang]}</h3>
+                        <p style="margin-bottom: 0; font-size: 0.95rem; color: #4b5563;">${p.desc[lang]}</p>
+                    </div>`;
+                });
+            }
+
+            renderStrategy('ar');
+            renderStrategy('en');
+        });
+    </script>
+</body>
+
+</html>

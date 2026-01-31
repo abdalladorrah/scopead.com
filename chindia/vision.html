@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Yemeni Village | Brand Vision</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Inter:wght@400;600;700;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="lenci.css">
+    <link rel="stylesheet" href="premium.css">
+</head>
+
+<body>
+
+    <!-- Nav injected by nav.js -->
+
+    <div class="container">
+
+        <!-- ARABIC CONTENT -->
+        <div id="content-ar" class="visible">
+            <header class="hero">
+                <h1 id="hero-title-ar"></h1>
+                <div class="tagline" id="hero-subtitle-ar"></div>
+            </header>
+
+            <div class="card">
+                <div class="vision-statement" id="statement-ar"></div>
+            </div>
+
+            <div class="highlight-box">
+                <h3 style="color: #9a3412;" id="promise-title-ar"></h3>
+                <p id="promise-text-ar"></p>
+            </div>
+
+            <div class="stat-grid" id="stats-grid-ar">
+                <!-- Injected dynamically -->
+            </div>
+        </div>
+
+        <!-- ENGLISH CONTENT -->
+        <div id="content-en" class="hidden">
+            <header class="hero">
+                <h1 id="hero-title-en"></h1>
+                <div class="tagline" id="hero-subtitle-en"></div>
+            </header>
+
+            <div class="card">
+                <div class="vision-statement" id="statement-en"></div>
+            </div>
+
+            <div class="highlight-box">
+                <h3 style="color: #9a3412;" id="promise-title-en"></h3>
+                <p id="promise-text-en"></p>
+            </div>
+
+            <div class="stat-grid" id="stats-grid-en">
+                <!-- Injected dynamically -->
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        <p id="footer-text"></p>
+    </footer>
+
+    <script src="js/core.js"></script>
+    <script src="js/data_general.js"></script>
+    <script src="js/data_vision.js"></script>
+    <script src="js/nav.js"></script>
+    <script src="js/components.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const data = projectData.vision;
+            const general = projectData.general;
+
+            document.getElementById('footer-text').textContent = general.footerText;
+
+            // Common Render Function
+            function renderVision(lang) {
+                const suffix = lang === 'ar' ? '-ar' : '-en';
+
+                document.getElementById('hero-title' + suffix).textContent = data.hero.title[lang];
+                document.getElementById('hero-subtitle' + suffix).textContent = data.hero.subtitle[lang];
+                document.getElementById('statement' + suffix).textContent = data.statement[lang];
+                document.getElementById('promise-title' + suffix).textContent = data.promise.title[lang];
+                document.getElementById('promise-text' + suffix).textContent = data.promise.text[lang];
+
+                const statsGrid = document.getElementById('stats-grid' + suffix);
+                data.stats.forEach(stat => {
+                    statsGrid.innerHTML += `
+                        <div class="stat-card">
+                            <span class="stat-label">${stat.label[lang]}</span>
+                            <span class="stat-value">${stat.value[lang]}</span>
+                        </div>`;
+                });
+            }
+
+            renderVision('ar');
+            renderVision('en');
+        });
+    </script>
+</body>
+
+</html>

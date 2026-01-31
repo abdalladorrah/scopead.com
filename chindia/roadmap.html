@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Yemeni Village | Action Roadmap</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Inter:wght@400;600;700;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="lenci.css">
+    <link rel="stylesheet" href="premium.css">
+</head>
+
+<body>
+    <div class="container">
+        <!-- ARABIC CONTENT -->
+        <div id="content-ar" class="visible">
+            <header class="hero">
+                <h1 id="roadmap-title-ar"></h1>
+                <div class="tagline" id="roadmap-tagline-ar"></div>
+            </header>
+
+            <div id="roadmap-content-ar">
+                <!-- Injected via JS -->
+            </div>
+        </div>
+
+        <!-- ENGLISH CONTENT -->
+        <div id="content-en" class="hidden">
+            <header class="hero">
+                <h1 id="roadmap-title-en"></h1>
+                <div class="tagline" id="roadmap-tagline-en"></div>
+            </header>
+            <div id="roadmap-content-en">
+                <!-- Injected via JS -->
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p id="footer-text"></p>
+    </footer>
+
+    <script src="js/core.js"></script>
+    <script src="js/data_general.js"></script>
+    <script src="js/data_roadmap.js"></script>
+    <script src="js/nav.js"></script>
+    <script src="js/components.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const data = projectData.roadmap;
+            const general = projectData.general;
+            document.getElementById('footer-text').textContent = general.footerText;
+
+            function renderRoadmap(lang) {
+                const suffix = lang === 'ar' ? '-ar' : '-en';
+                document.getElementById('roadmap-title' + suffix).textContent = data.title[lang];
+                document.getElementById('roadmap-tagline' + suffix).textContent = data.subtitle[lang];
+
+                const container = document.getElementById('roadmap-content' + suffix);
+                container.innerHTML = '';
+
+                data.phases.forEach((p, idx) => {
+                    // Status Badge Logic
+                    let statusColor = '#cbd5e1'; // Gray (Pending)
+                    let statusText = { ar: 'قيد الانتظار', en: 'Pending' };
+
+                    if (p.status === 'done') {
+                        statusColor = '#10b981'; // Green
+                        statusText = { ar: 'تم الإنجاز', en: 'Completed' };
+                    } else if (p.status === 'active') {
+                        statusColor = '#f59e0b'; // Orange
+                        statusText = { ar: 'جاري العمل', en: 'In Progress' };
+                    }
+
+                    container.innerHTML += `
+                    <div class="card" style="border-right: 4px solid ${statusColor}; border-left: 4px solid ${statusColor};">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                            <span style="font-size: 0.9em; opacity: 0.8;">${p.date[lang]}</span>
+                            <span style="font-size: 0.8em; background: ${statusColor}; color: white; padding: 2px 8px; border-radius: 4px;">
+                                ${statusText[lang]}
+                            </span>
+                        </div>
+                        <div class="section-title" style="margin-bottom: 5px;">
+                            ${p.title[lang]}
+                        </div>
+                        <p>${p.desc[lang]}</p>
+                    </div>`;
+                });
+            }
+
+            renderRoadmap('ar');
+            renderRoadmap('en');
+        });
+    </script>
+</body>
+
+</html>

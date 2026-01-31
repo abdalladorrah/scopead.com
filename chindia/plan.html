@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Yemeni Village | Q1 Execution Plan</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Inter:wght@400;600;700;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="lenci.css">
+    <link rel="stylesheet" href="premium.css">
+</head>
+
+<body>
+
+    <!-- Nav injected by nav.js -->
+
+    <div class="container">
+
+        <!-- ARABIC CONTENT -->
+        <div id="content-ar" class="visible">
+            <header class="hero">
+                <h1 id="q1-title-ar"></h1>
+                <div class="tagline" id="q1-tagline-ar"></div>
+            </header>
+
+            <div class="card" id="weekend-card-ar">
+                <div class="section-title" id="weekend-title-ar"></div>
+                <ul style="line-height: 1.6;" id="weekend-list-ar">
+                    <!-- Injected via JS -->
+                </ul>
+            </div>
+
+            <div id="months-container-ar">
+                <!-- Injected via JS -->
+            </div>
+
+            <div class="card">
+                <div class="section-title" id="inf-title-ar"></div>
+                <ul style="line-height: 1.8;" id="inf-list-ar">
+                    <!-- Injected via JS -->
+                </ul>
+            </div>
+        </div>
+
+        <!-- ENGLISH CONTENT -->
+        <div id="content-en" class="hidden">
+            <header class="hero">
+                <h1 id="q1-title-en"></h1>
+                <div class="tagline" id="q1-tagline-en"></div>
+            </header>
+
+            <div class="card" id="weekend-card-en">
+                <div class="section-title" id="weekend-title-en"></div>
+                <ul style="line-height: 1.6;" id="weekend-list-en">
+                    <!-- Injected via JS -->
+                </ul>
+            </div>
+
+            <div id="months-container-en">
+                <!-- Injected via JS -->
+            </div>
+
+            <div class="card">
+                <div class="section-title" id="inf-title-en"></div>
+                <ul style="line-height: 1.8;" id="inf-list-en">
+                    <!-- Injected via JS -->
+                </ul>
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        <p id="footer-text"></p>
+    </footer>
+
+    <script src="js/core.js"></script>
+    <script src="js/data_general.js"></script>
+    <script src="js/data_plan.js"></script>
+    <script src="js/nav.js"></script>
+    <script src="js/components.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const data = projectData.plan;
+            const general = projectData.general;
+
+            document.getElementById('footer-text').textContent = general.footerText;
+
+            // Common Render Logic
+            function renderPlan(lang) {
+                const suffix = lang === 'ar' ? '-ar' : '-en';
+
+                // Titles
+                document.getElementById('q1-title' + suffix).textContent = data.q1Title[lang];
+                document.getElementById('q1-tagline' + suffix).textContent = data.q1Tagline[lang];
+
+                // Weekend Push
+                document.getElementById('weekend-title' + suffix).textContent = data.weekendPush.title[lang];
+                const weekendList = document.getElementById('weekend-list' + suffix);
+                data.weekendPush.items.forEach(item => {
+                    weekendList.innerHTML += `<li>${item.message[lang]}</li>`;
+                });
+
+                // Months
+                const monthsContainer = document.getElementById('months-container' + suffix);
+                data.months.forEach(m => {
+                    let weeksHtml = '';
+                    m.weeks.forEach(w => {
+                        weeksHtml += `
+                        <div class="checklist-item">
+                            <span class="week-tag">${w.week}</span>
+                            <div>${w.task[lang]}</div>
+                        </div>`;
+                    });
+                    monthsContainer.innerHTML += `
+                    <div class="phase-card">
+                        <div class="phase-title">${m.name[lang]}</div>
+                        ${weeksHtml}
+                    </div>`;
+                });
+
+                // Influencers
+                document.getElementById('inf-title' + suffix).textContent = data.influencers.title[lang];
+                const infList = document.getElementById('inf-list' + suffix);
+                data.influencers.tiers.forEach(t => {
+                    infList.innerHTML += `<li><strong>${t.tier}:</strong> ${t.role[lang]}</li>`;
+                });
+            }
+
+            renderPlan('ar');
+            renderPlan('en');
+        });
+    </script>
+</body>
+
+</html>

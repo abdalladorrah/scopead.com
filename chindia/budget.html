@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Yemeni Village | Marketing Budget</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Inter:wght@400;600;700;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="lenci.css">
+    <link rel="stylesheet" href="premium.css">
+</head>
+
+<body>
+
+    <!-- Nav injected by nav.js -->
+
+    <div class="container">
+
+        <!-- ARABIC CONTENT -->
+        <div id="content-ar" class="visible">
+            <div class="budget-header">
+                <h1 id="budget-title-ar"></h1>
+                <div id="budget-subtitle-ar"></div>
+                <div class="total-budget" id="total-val-ar"></div>
+            </div>
+
+            <div class="card">
+                <div class="section-title" id="sec-philosophy-ar"></div>
+                <p id="philosophy-ar"></p>
+
+                <h4 style="margin-top: 20px; color: var(--secondary-color);" id="sec-google-ar"></h4>
+                <div id="google-ads-ar">
+                    <!-- Injected via JS -->
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="section-title" id="sec-allocation-ar"></div>
+                <div id="budget-rows-ar">
+                    <!-- Injected via JS -->
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="section-title" id="sec-kpis-ar"></div>
+                <ul style="line-height: 1.8;" id="kpi-list-ar">
+                    <!-- Injected via JS -->
+                </ul>
+            </div>
+        </div>
+
+        <!-- ENGLISH CONTENT -->
+        <div id="content-en" class="hidden">
+            <div class="budget-header">
+                <h1 id="budget-title-en"></h1>
+                <div id="budget-subtitle-en"></div>
+                <div class="total-budget" id="total-val-en"></div>
+            </div>
+
+            <div class="card">
+                <div class="section-title" id="sec-philosophy-en"></div>
+                <p id="philosophy-en"></p>
+
+                <h4 style="margin-top: 20px; color: var(--secondary-color);" id="sec-google-en"></h4>
+                <div id="google-ads-en">
+                    <!-- Injected via JS -->
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="section-title" id="sec-allocation-en"></div>
+                <div id="budget-rows-en">
+                    <!-- Injected via JS -->
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="section-title" id="sec-kpis-en"></div>
+                <ul style="line-height: 1.8;" id="kpi-list-en">
+                    <!-- Injected via JS -->
+                </ul>
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        <p id="footer-text"></p>
+    </footer>
+
+    <script src="js/core.js"></script>
+    <script src="js/data_general.js"></script>
+    <script src="js/data_budget.js"></script>
+    <script src="js/nav.js"></script>
+    <script src="js/components.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const data = projectData.budget;
+            const general = projectData.general;
+
+            document.getElementById('footer-text').textContent = general.footerText;
+
+            // Common Render Function
+            function renderBudget(lang) {
+                const suffix = lang === 'ar' ? '-ar' : '-en';
+
+                // Titles & Subtitles
+                document.getElementById('budget-title' + suffix).textContent = data.title[lang];
+                document.getElementById('budget-subtitle' + suffix).textContent = data.subtitle[lang];
+                document.getElementById('total-val' + suffix).textContent = data.total[lang];
+                document.getElementById('philosophy' + suffix).textContent = data.philosophy[lang];
+
+                // Section Headers
+                document.getElementById('sec-philosophy' + suffix).textContent = data.sections.philosophy[lang];
+                document.getElementById('sec-google' + suffix).textContent = data.sections.googleAds[lang];
+                document.getElementById('sec-allocation' + suffix).textContent = data.sections.allocation[lang];
+                document.getElementById('sec-kpis' + suffix).textContent = data.sections.kpis[lang];
+
+                // Google Ads
+                const adsContainer = document.getElementById('google-ads' + suffix);
+                data.googleAds.forEach(ad => {
+                    adsContainer.innerHTML += `
+                    <div style="background: #f1f5f9; padding: 15px; border-radius: 8px; margin-bottom: 15px; border-${lang === 'ar' ? 'right' : 'left'}: 4px solid var(--primary-color);">
+                        <strong style="color: #1e40af; display: block; margin-bottom: 5px;">Headline: ${ad.headline[lang]}</strong>
+                        <span style="color: #475569; font-size: 0.95rem;">${ad.desc[lang]}</span>
+                    </div>`;
+                });
+
+                // Allocation Rows
+                const rowsContainer = document.getElementById('budget-rows' + suffix);
+                data.items.forEach(item => {
+                    rowsContainer.innerHTML += `
+                    <div class="budget-row ${item.colorClass}" style="direction: ${lang === 'ar' ? 'rtl' : 'ltr'};">
+                        <div>
+                            <strong style="display: block; font-size: 1.1rem;">${item.name[lang]}</strong>
+                            <div style="font-size:0.9rem; color:#64748b;">${item.desc[lang]}</div>
+                        </div>
+                        <div style="text-align: ${lang === 'ar' ? 'left' : 'right'};">
+                            <span class="amt">${item.amount} ${lang === 'ar' ? 'ريال' : 'SAR'}</span>
+                            <div class="pct" style="display: inline-block; background: #e0f2fe; color: #0369a1; padding: 2px 8px; border-radius: 6px; font-size: 0.8rem; margin-${lang === 'ar' ? 'right' : 'left'}: 10px;">${item.pct}</div>
+                        </div>
+                    </div>`;
+                });
+
+                // KPIs
+                const kpiList = document.getElementById('kpi-list' + suffix);
+                data.kpis.forEach(k => {
+                    kpiList.innerHTML += `<li><strong>${k.label}:</strong> ${k.val}</li>`;
+                });
+            }
+
+            renderBudget('ar');
+            renderBudget('en');
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Yemeni Village | Visual Gastronomy</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Inter:wght@400;600;700;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="lenci.css">
+    <link rel="stylesheet" href="premium.css">
+</head>
+
+<body>
+
+    <!-- Nav injected by nav.js -->
+
+    <div class="container">
+
+        <!-- ARABIC CONTENT -->
+        <div id="content-ar" class="visible">
+            <header class="hero">
+                <h1 id="creative-title-ar"></h1>
+                <div class="tagline" id="creative-subtitle-ar"></div>
+            </header>
+
+            <div id="channels-container-ar">
+                <!-- Injected via JS -->
+            </div>
+        </div>
+
+        <!-- ENGLISH CONTENT -->
+        <div id="content-en" class="hidden">
+            <header class="hero">
+                <h1 id="creative-title-en"></h1>
+                <div class="tagline" id="creative-subtitle-en"></div>
+            </header>
+
+            <div id="channels-container-en">
+                <!-- Injected via JS -->
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        <p id="footer-text"></p>
+    </footer>
+
+    <script src="js/core.js"></script>
+    <script src="js/data_general.js"></script>
+    <script src="js/data_creatives.js"></script>
+    <script src="js/nav.js"></script>
+    <script src="js/components.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const data = projectData.creatives;
+            const general = projectData.general;
+
+            document.getElementById('footer-text').textContent = general.footerText;
+
+            // Render Function
+            function renderCreatives(lang) {
+                const suffix = lang === 'ar' ? '-ar' : '-en';
+
+                document.getElementById('creative-title' + suffix).textContent = data.title[lang];
+                document.getElementById('creative-subtitle' + suffix).textContent = data.subtitle[lang];
+
+                const container = document.getElementById('channels-container' + suffix);
+                data.list.forEach(c => {
+                    let adsHtml = '';
+                    c.ads.forEach(ad => {
+                        const badgeColor = ad.badge.toLowerCase().includes('reel') ? '#f43f5e' :
+                            ad.badge.toLowerCase().includes('linkedin') ? '#0a66c2' : '#3b82f6';
+                        adsHtml += `
+                        <div class="ad-card">
+                            <span class="ad-badge" style="background: ${badgeColor};">${ad.badge}</span>
+                            <h3>${ad.title[lang]}</h3>
+                            <p>${ad.content[lang]}</p>
+                        </div>`;
+                    });
+
+                    container.innerHTML += `
+                    <div class="channel-section" style="margin-bottom: 40px;">
+                        <div class="channel-title">${c.channel[lang]}</div>
+                        <div class="ad-grid">${adsHtml}</div>
+                    </div>`;
+                });
+            }
+
+            renderCreatives('ar');
+            renderCreatives('en');
+        });
+    </script>
+</body>
+
+</html>
